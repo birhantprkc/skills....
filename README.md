@@ -6,6 +6,13 @@
 
 A set of agent skills that help improve different parts of a product, from animations and typography to layout and colors.
 
+## Skills
+
+- **better-ui** — design engineering details that make interfaces feel polished: border radius, shadows, animations, micro-interactions.
+- **better-typography** — web typography from choosing fonts to spacing, wrapping and accessibility.
+- **better-colors** — OKLCH color space: palette generation, contrast, gamut handling and theming.
+- **better-accessibility** — focus states, keyboard support, ARIA, forms, screen readers, hit areas and motion.
+
 ## Install
 
 ```bash

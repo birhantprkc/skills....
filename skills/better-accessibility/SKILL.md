@@ -34,63 +34,51 @@ Style `:focus-visible`, not bare `:focus`, so keyboard users get a ring and mous
 
 ### 3. Full Keyboard Support
 
-Every pointer interaction needs a keyboard path, following the ARIA APG patterns: Escape closes overlays, arrow keys move within composite widgets (tabs, menus, listboxes), Tab moves between widgets, Enter and Space activate.
+Every pointer interaction needs a keyboard path, following the ARIA APG patterns: Escape closes overlays, arrow keys move within composite widgets (tabs, menus, listboxes), Tab moves between widgets, Enter and Space activate. Only `tabindex="0"` (join the natural tab order) and `tabindex="-1"` (programmatic focus) — never positive values, which break the natural order. Composite widgets use roving tabindex: the active item is `0`, all others `-1`.
 
-### 4. Never Positive tabindex
-
-Only `tabindex="0"` (join the natural tab order) and `tabindex="-1"` (programmatic focus only). Positive values break the natural order. Composite widgets use roving tabindex: the active item is `0`, all others `-1`.
-
-### 5. Trap and Restore Focus
+### 4. Trap and Restore Focus
 
 Modals set `inert` on the background content, move focus inside on open, and return focus to the trigger on close. Add `overscroll-behavior: contain` so background content doesn't scroll.
 
-### 6. Minimum Hit Area
+### 5. Minimum Hit Area
 
 Interactive elements need a 44×44px hit area for touch or mobile contexts, at least 40×40px on desktop; WCAG 2.5.8's hard floor is 24×24px. Extend with a pseudo-element if the visible element is smaller. Never let hit areas of two elements overlap.
 
-### 7. Every Control Has a Label
+### 6. Label and Type Every Control
 
-Every input gets a `<label for>` or wrapping `<label>`; a placeholder is never a label. Label and control share one hit target — no dead zones between a checkbox and its text.
+Every input gets a `<label for>` or wrapping `<label>`; a placeholder is never a label, and label and control share one hit target — no dead zones between a checkbox and its text. Add `autocomplete` with a meaningful `name`, and the correct `type` and `inputmode` for the keyboard. Never block paste; users paste passwords and one-time codes.
 
-### 8. Errors That Announce
+### 7. Errors That Announce
 
-Mark failing fields with `aria-invalid="true"` and point `aria-describedby` at the inline error text. On submit, focus the first invalid field. Allow incomplete submission so validation can surface; don't block typing.
+Keep submit enabled until the request starts, then disable with a spinner while keeping the original label. Validate on submit: mark failing fields with `aria-invalid="true"`, point `aria-describedby` at the inline error text, and focus the first invalid field. When a control must look unavailable, prefer `aria-disabled="true"` (stays focusable and discoverable) over `disabled`.
 
-### 9. Autocomplete and Correct Types
-
-Use `autocomplete` tokens with a meaningful `name`, and the correct `type` and `inputmode` for the keyboard. Never block paste; users paste passwords and one-time codes.
-
-### 10. Accessible Names Everywhere
+### 8. Accessible Names Everywhere
 
 Icon-only buttons need a descriptive `aria-label`. Visible label text must appear in the accessible name. Decorative elements get `aria-hidden="true"` — never on a focusable element.
 
-### 11. Don't Rely on Color Alone
+### 9. Don't Rely on Color Alone
 
 Status needs a redundant cue: icon, text, or underline alongside the color. Contrast floors: `4.5:1` for text, `3:1` for UI components and focus indicators (the WCAG 2 minimums; `better-colors` prefers APCA thresholds). For fixing contrast, use the `better-colors` skill.
 
-### 12. Honor prefers-reduced-motion
+### 10. Honor prefers-reduced-motion
 
 Wrap motion in `@media (prefers-reduced-motion: no-preference)` so it is opt-in. Under reduced motion, replace slides and scales with opacity crossfades; kill parallax and autoplay entirely.
 
-### 13. Announce Dynamic Content
+### 11. Announce Dynamic Content
 
 Toasts and inline validation use `aria-live="polite"` (`role="status"`); reserve `assertive` (`role="alert"`) for errors. The live region must exist empty in the DOM before its content is injected, or it won't announce.
 
-### 14. Alt Text by Purpose
+### 12. Alt Text by Purpose
 
 Decorative images get `alt=""`, informative images describe the meaning, functional images describe the action: a search icon button is `alt="Search"`, not `alt="magnifying glass"`.
 
-### 15. Structure Is Navigation
+### 13. Structure Is Navigation
 
 One `<h1>` per page, no skipped heading levels, exactly one `<main>`. A "Skip to content" link is the first focusable element, and anchored headings get `scroll-margin-top`.
 
-### 16. Survive Zoom and Text Resize
+### 14. Survive Zoom and Text Resize
 
 The page must work at 200% zoom and reflow at 320px width without horizontal scrolling. Use `min-height` instead of fixed `height` on text containers, prefer `rem` breakpoints where they fit the codebase's conventions, and never use `user-scalable=no` or `maximum-scale=1`.
-
-### 17. Don't Disable Submit Buttons
-
-Keep submit enabled until the request starts, then disable with a spinner while keeping the original label. When a control must look unavailable, prefer `aria-disabled="true"` (stays focusable and discoverable) over `disabled`.
 
 ## Common Mistakes
 
@@ -126,19 +114,28 @@ Always present changes as a markdown table with **Before** and **After** columns
 | `button:focus { outline: none; }` | `button:focus-visible { outline: 2px solid; outline-offset: 2px; }` |
 | `focus:outline-none` on menu items | Replaced with `focus-visible:outline-2 focus-visible:outline-offset-2` |
 
+#### Errors that announce
+| Before | After |
+| --- | --- |
+| Error shown only as `border-red-500` | Added `aria-invalid="true"` + `aria-describedby="email-error"` with inline error text |
+| Submit disabled until the form is valid | Submit stays enabled; on failure, focus moves to the first invalid field |
+
+#### Minimum hit area
+| Before | After |
+| --- | --- |
+| `size-4` icon-only button | Hit area extended to 44×44px with `after:absolute after:size-11` |
+
 Rows should cite the specific file and the specific property that changed when it isn't obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely: empty tables add noise.
 
 ## Review Checklist
 
 - [ ] Native elements used before ARIA; no `<div onClick>`
 - [ ] `:focus-visible` rings on all interactive elements, never removed without replacement
-- [ ] Full keyboard path: Escape closes, arrows navigate composites, Enter/Space activate
-- [ ] No positive `tabindex`; roving tabindex in composite widgets
+- [ ] Full keyboard path: Escape closes, arrows navigate composites; no positive `tabindex`
 - [ ] Modals trap focus with `inert` and restore it on close
 - [ ] Interactive elements have 44×44px hit areas for touch/mobile, or at least 40×40px in desktop UI
-- [ ] Every form control has a programmatic label; no placeholder-as-label
-- [ ] Errors use `aria-invalid` + `aria-describedby`; first invalid field focused on submit
-- [ ] Inputs have `autocomplete`, correct `type`/`inputmode`; paste never blocked
+- [ ] Every control has a label, `autocomplete`, correct `type`/`inputmode`; paste never blocked
+- [ ] Submit stays enabled; errors use `aria-invalid` + `aria-describedby`; first invalid field focused
 - [ ] Icon-only controls have `aria-label`; decorative elements `aria-hidden`
 - [ ] No color-only status cues; text and UI contrast meet `4.5:1` / `3:1`
 - [ ] Motion wrapped in `prefers-reduced-motion: no-preference`
@@ -146,7 +143,6 @@ Rows should cite the specific file and the specific property that changed when i
 - [ ] Alt text matches image purpose (decorative `""`, functional = action)
 - [ ] One `<h1>`, no skipped levels, one `<main>`, skip link present
 - [ ] Layout survives 200% zoom and 320px reflow; zoom never blocked
-- [ ] Submit buttons stay enabled; `aria-disabled` preferred over `disabled`
 
 ## Reference Files
 
