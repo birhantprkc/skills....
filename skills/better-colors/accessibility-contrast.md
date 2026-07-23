@@ -23,9 +23,11 @@ WCAG 2 is still required when making formal WCAG 2.x conformance claims. It uses
 
 | Content Type | AA | AAA |
 | --- | --- | --- |
-| Normal text (<18px / <14px bold) | 4.5:1 | 7:1 |
-| Large text (>=18px / >=14px bold) | 3:1 | 4.5:1 |
+| Normal text (<24px / <18.5px bold) | 4.5:1 | 7:1 |
+| Large text (>=24px / >=18.5px bold) | 3:1 | 4.5:1 |
 | UI components & graphical objects | 3:1 | n/a |
+
+WCAG defines "large text" in points: 18pt ≈ `24px`, or 14pt bold ≈ `18.5px`.
 
 ## Fixing contrast with oklch
 

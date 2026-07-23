@@ -7,6 +7,8 @@ description: Web typography from choosing fonts to spacing, wrapping and accessi
 
 Good typography is mostly restraint. A sensible scale, comfortable spacing and enough contrast beat any clever effect. A label, a table cell, a marketing headline and an article paragraph should not share one set of rules. Apply these principles when building or reviewing anything with text in it.
 
+When reviewing, read the page instead of scanning the code: squint to check the hierarchy holds, read one full paragraph for comfort, and resize the viewport to catch bad wrapping, widows and truncation at real content lengths.
+
 **Match the project's styling system.** Before suggesting or writing any fix, check how the codebase styles things and express every change in that system: Tailwind utilities in a Tailwind project, plain declarations in CSS, CSS Modules, styled-components or StyleX. The [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind equivalent. Never introduce a second styling approach just to apply a typography fix.
 
 ## Quick Reference
@@ -84,7 +86,7 @@ iOS Safari zooms the whole page when an input's text is smaller than `16px`. Kee
 
 ### 16. Size and Contrast Floors
 
-Body text `16px` (the web default and the right reading size). UI text can go smaller: `14px` for inputs and menus (inputs still need `16px` on mobile, see principle 15), `13px` for captions, rarely below `12px`. WCAG AA: `4.5:1` contrast for regular text, `3:1` for large text (roughly `24px` and up).
+Body text `16px` (the web default and the right reading size). UI text can go smaller: `14px` for inputs and menus (inputs still need `16px` on mobile, see principle 15), `13px` for captions, rarely below `12px`. WCAG AA: `4.5:1` contrast for regular text, `3:1` for large text (`24px` and up, or `18.5px`+ bold).
 
 ### 17. Font Smoothing on the Root
 

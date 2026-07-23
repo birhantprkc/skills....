@@ -7,13 +7,15 @@ description: Design engineering principles for making interfaces feel polished. 
 
 Great interfaces rarely come from a single thing. It's usually a collection of small details that compound into a great experience. Apply these principles when building or reviewing UI code.
 
-Typography (text wrapping, font smoothing, tabular numbers, spacing) is covered by the `better-typography` skill; use that for anything text-related.
+When reviewing, slow the interface down: replay motion at 10% speed in the browser's Animations panel and walk every state — hover, focus, active, loading, empty. What feels off at 10% speed is what's subtly wrong at full speed.
+
+Typography (text wrapping, font smoothing, tabular numbers, spacing) is covered by the `better-typography` skill; use that for anything text-related. Accessibility (hit areas, focus states, keyboard support, ARIA) is covered by the `better-accessibility` skill.
 
 ## Quick Reference
 
 | Category | When to Use |
 | --- | --- |
-| [Surfaces](surfaces.md) | Border radius, optical alignment, shadows, image outlines, hit areas |
+| [Surfaces](surfaces.md) | Border radius, optical alignment, shadows, image outlines |
 | [Animations](animations.md) | Interruptible animations, enter/exit transitions, icon animations, scale on press |
 | [Performance](performance.md) | Transition specificity, `will-change` usage |
 
@@ -67,10 +69,6 @@ Always specify exact properties: `transition-property: scale, opacity`. Tailwind
 
 Only for `transform`, `opacity`, `filter`, the properties the GPU can composite. Never use `will-change: all`. Only add when you notice first-frame stutter.
 
-### 13. Minimum Hit Area
-
-Interactive elements need a 44×44px hit area for touch or mobile contexts. In desktop interfaces, use at least 40×40px. Extend with a pseudo-element if the visible element is smaller. Never let hit areas of two elements overlap.
-
 ## Common Mistakes
 
 | Mistake | Fix |
@@ -82,7 +80,6 @@ Interactive elements need a 44×44px hit area for touch or mobile contexts. In d
 | Animation plays on page load | Add `initial={false}` to `AnimatePresence` |
 | `transition: all` on elements | Specify exact properties |
 | First-frame animation stutter | Add `will-change: transform` (sparingly) |
-| Tiny hit areas on small controls | Extend with a pseudo-element to 44×44px for touch/mobile, or at least 40×40px in desktop UI |
 
 ## Review Output Format
 
@@ -116,7 +113,6 @@ Rows should cite the specific file and the specific property that changed when i
 - [ ] AnimatePresence uses `initial={false}` for default-state elements
 - [ ] No `transition: all`, only specific properties
 - [ ] `will-change` only on transform/opacity/filter, never `all`
-- [ ] Interactive elements have 44×44px hit areas for touch/mobile, or at least 40×40px in desktop UI
 
 ## Reference Files
 

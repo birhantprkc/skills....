@@ -92,7 +92,7 @@ WCAG AA contrast:
 | Text | Minimum |
 | --- | --- |
 | Regular text | `4.5:1` |
-| Large text (~`24px`+) | `3:1` |
+| Large text (`24px`+, or `18.5px`+ bold) | `3:1` |
 
 Bigger, heavier letters stay legible at lower contrast.
 

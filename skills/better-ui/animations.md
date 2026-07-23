@@ -13,7 +13,7 @@ Users change intent mid-interaction. If animations aren't interruptible, the int
 | **Behavior** | Interpolate toward latest state | Run on a fixed timeline |
 | **Interruptible** | Yes, retargets mid-animation | No, restarts from beginning |
 | **Use for** | Interactive state changes (hover, toggle, open/close) | Staged sequences that run once (enter animations, loading) |
-| **Duration** | Adapts to remaining distance | Fixed regardless of state |
+| **Duration** | Fixed; retargets the value mid-flight, not the timeline | Fixed timeline, restarts from the beginning |
 
 ```css
 /* Good: interruptible transition for a toggle */
@@ -225,7 +225,7 @@ function IconButton({ isActive, ActiveIcon, InactiveIcon }) {
           className={cn(
             "absolute inset-0 flex items-center justify-center",
             "transition-[opacity,filter,scale] duration-300",
-            "cubic-bezier(0.2, 0, 0, 1)",
+            "ease-[cubic-bezier(0.2,0,0,1)]",
             isActive
               ? "scale-100 opacity-100 blur-0"
               : "scale-[0.25] opacity-0 blur-[4px]"
@@ -236,7 +236,7 @@ function IconButton({ isActive, ActiveIcon, InactiveIcon }) {
         <div
           className={cn(
             "transition-[opacity,filter,scale] duration-300",
-            "cubic-bezier(0.2, 0, 0, 1)",
+            "ease-[cubic-bezier(0.2,0,0,1)]",
             isActive
               ? "scale-[0.25] opacity-0 blur-[4px]"
               : "scale-100 opacity-100 blur-0"
