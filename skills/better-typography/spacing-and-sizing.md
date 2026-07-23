@@ -101,4 +101,4 @@ Fonts reserve space above and below the letters, which is why text sits slightly
 }
 ```
 
-Browser support is still limited; treat it as progressive enhancement.
+Supported in Chromium (133+) and Safari (18.2+), not yet Firefox; treat it as progressive enhancement — unsupported browsers keep the default leading.
