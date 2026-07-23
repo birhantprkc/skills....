@@ -1,11 +1,13 @@
 ---
 name: better-accessibility
-description: Accessibility engineering for product interfaces, from focus states and keyboard support to ARIA, forms, and screen readers. Use when building or reviewing UI components, modals, menus, forms, custom widgets, or fixing keyboard and screen-reader issues. Triggers on accessibility, a11y, WCAG, aria, focus ring, focus-visible, keyboard navigation, tab order, tabindex, screen reader, sr-only, aria-live, alt text, hit area, touch target, target size, prefers-reduced-motion, skip link, semantic HTML, aria-label, form errors, disabled buttons, "not keyboard accessible".
+description: Accessibility engineering for product interfaces, from focus states and keyboard support to ARIA, forms, and screen readers. Use when building or reviewing UI components, modals, menus, forms, custom widgets, or when the user says "make this accessible" or reports keyboard or screen-reader issues. Triggers on accessibility, a11y, WCAG, aria, focus ring, focus-visible, focus trap, keyboard navigation, tab order, tabindex, screen reader, sr-only, aria-live, alt text, hit area, touch target, prefers-reduced-motion, skip link, semantic HTML, aria-label, form errors, disabled buttons, "not keyboard accessible".
 ---
 
 # Accessibility that comes with the craft
 
 Accessibility is not a compliance checkbox bolted on at the end; it is the floor for interface craft. Most of it is free if you use the platform: native elements ship with keyboard support, real labels announce themselves, and a visible focus ring is one CSS rule. Apply these principles when building or reviewing UI code, and match the project's existing styling system (Tailwind vs. plain CSS vs. CSS-in-JS) when applying fixes.
+
+When reviewing, walk the interface as a keyboard-only user first — every flow must complete without a mouse — then as a screen-reader user: does each control announce a name, a role, and its state? When unsure, prefer the platform default over a custom rebuild, and remove ARIA rather than add it.
 
 Contrast math (APCA thresholds, fixing contrast in OKLCH) is covered by the `better-colors` skill; text sizes, iOS input zoom, and RTL are covered by the `better-typography` skill.
 

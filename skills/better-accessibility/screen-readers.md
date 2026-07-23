@@ -27,6 +27,15 @@ Tailwind ships this as `sr-only`. For skip links, add a focus variant that un-hi
 
 Use it for context that sighted users get visually: `<span class="sr-only">Opens in new tab</span>`, table caption text, or the label of an icon-only control when `aria-label` isn't an option.
 
+## Choosing how to announce a change
+
+Work down this list and stop at the first match:
+
+1. **Focus moves there anyway** (opened modal, first invalid field on submit) — nothing extra needed; the focus move is the announcement.
+2. **Tied to a specific control** (field error, character count) — `aria-describedby` on the control; it's announced with the field.
+3. **Non-urgent, not tied to a control** (toast, "Saved", result count, loading state) — polite live region / `role="status"`.
+4. **Urgent and not tied to a control** (form-level failure, session expiring) — `role="alert"`.
+
 ## Live regions
 
 Live regions announce content that changes without a page load: toasts, validation, search-result counts, loading states.

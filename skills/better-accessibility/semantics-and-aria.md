@@ -20,6 +20,14 @@ No ARIA is better than bad ARIA: a screen reader trusts your roles, so a wrong r
 | `<button>` | Actions — submit, toggle, open, delete | Free focus, Enter *and* Space activation, form semantics |
 | `<div onClick>` | Nothing | No role, no focus, no keyboard; screen readers see plain text |
 
+```tsx
+// Bad: invisible to keyboard and screen readers
+<div onClick={openSettings}>Settings</div>
+
+// Good: focus, Enter/Space activation, and semantics for free
+<button onClick={openSettings}>Settings</button>
+```
+
 If it looks clickable it must be clickable — and the reverse: if it's clickable it must be a real interactive element. Rebuilding a link as a button (or vice versa) breaks user expectations; a "button" that navigates should be a styled `<a>`.
 
 If a native element is truly impossible, the full polyfill is `role="button"` + `tabindex="0"` + Enter and Space handlers — which is why the native element is always less code.
