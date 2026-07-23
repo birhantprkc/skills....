@@ -19,7 +19,7 @@ Every control needs a programmatic label: `<label for>` pointing at the input's 
 
 Label and control must share one hit target: clicking the text "Send me updates" toggles the checkbox, with no dead zone between them. Mark required fields with native `required` plus a visible indicator explained once per form ("* required").
 
-Placeholders, when used *in addition to* a label, should show an example pattern and end with `…`: `placeholder="name@company.com…"`.
+Placeholders, when used *in addition to* a label, show an example of the expected format: `placeholder="name@company.com"`.
 
 ## Error messaging
 
@@ -81,6 +81,6 @@ Disable spellcheck on emails, codes, and usernames: `spellcheck="false"`.
 ## Submit behavior
 
 - Keep submit enabled until the request starts, then disable it and show a spinner *while keeping the original label* — "Save" with a spinner, not a bare spinner. The label is what tells assistive tech which button is busy.
-- Announce results: send success or error messages through a polite live region (see [screen-readers.md](screen-readers.md)).
+- Announce results: success goes through a polite live region. For submit failures, focus the first invalid field — the focus move is the announcement; reserve `role="alert"` for form-level errors not tied to a field (see [screen-readers.md](screen-readers.md)).
 - Warn on unsaved changes before navigation, and never lose typed input to a re-render — hydration must preserve focus and value.
 - Enter submits from any focused input; in `<textarea>`, ⌘/Ctrl+Enter submits.

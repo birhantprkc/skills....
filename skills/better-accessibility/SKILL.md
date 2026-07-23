@@ -5,7 +5,7 @@ description: Accessibility engineering for product interfaces, from focus states
 
 # Accessibility that comes with the craft
 
-Accessibility is not a compliance checkbox bolted on at the end; it is the floor for interface craft. Most of it is free if you use the platform: native elements ship with keyboard support, real labels announce themselves, and a visible focus ring is one CSS rule. Apply these principles when building or reviewing UI code.
+Accessibility is not a compliance checkbox bolted on at the end; it is the floor for interface craft. Most of it is free if you use the platform: native elements ship with keyboard support, real labels announce themselves, and a visible focus ring is one CSS rule. Apply these principles when building or reviewing UI code, and match the project's existing styling system (Tailwind vs. plain CSS vs. CSS-in-JS) when applying fixes.
 
 Contrast math (APCA thresholds, fixing contrast in OKLCH) is covered by the `better-colors` skill; text sizes, iOS input zoom, and RTL are covered by the `better-typography` skill.
 
@@ -28,7 +28,7 @@ The first rule of ARIA: don't use ARIA when a native element exists. `<button>` 
 
 ### 2. Visible Focus Rings
 
-Style `:focus-visible`, not bare `:focus`, so keyboard users get a ring and mouse users don't. Use `outline: 2px solid` with `outline-offset: 2px` and at least `3:1` contrast against adjacent colors. Don't set `outline-color`: leaving it `auto` respects the focus color the user has configured in their OS and browser. Never `outline: none` without a visible replacement.
+Style `:focus-visible`, not bare `:focus`, so keyboard users get a ring and mouse users don't. The browser's default ring (`outline-style: auto`) renders the focus color the user configured in their OS and browser — prefer keeping it and only adding `outline-offset: 2px`. If the design needs a custom ring, use `outline: 2px solid` with no color (it renders `currentColor`, never a hardcoded brand color) at `3:1` contrast against adjacent colors. Never `outline: none` without a visible replacement.
 
 ### 3. Full Keyboard Support
 
@@ -64,7 +64,7 @@ Icon-only buttons need a descriptive `aria-label`. Visible label text must appea
 
 ### 11. Don't Rely on Color Alone
 
-Status needs a redundant cue: icon, text, or underline alongside the color. Contrast floors: `4.5:1` for text, `3:1` for UI components and focus indicators. For fixing contrast, use the `better-colors` skill.
+Status needs a redundant cue: icon, text, or underline alongside the color. Contrast floors: `4.5:1` for text, `3:1` for UI components and focus indicators (the WCAG 2 minimums; `better-colors` prefers APCA thresholds). For fixing contrast, use the `better-colors` skill.
 
 ### 12. Honor prefers-reduced-motion
 
@@ -95,7 +95,7 @@ Keep submit enabled until the request starts, then disable with a spinner while 
 | Mistake | Fix |
 | --- | --- |
 | `outline: none` to remove the focus ring | Style `:focus-visible` instead; mouse clicks won't show it |
-| Hardcoded brand color on focus rings | Leave `outline-color` as `auto`; it follows the user's OS/browser focus color |
+| Hardcoded brand color on focus rings | Keep the default ring (`outline-style: auto`) or use colorless `outline: 2px solid` (`currentColor`) |
 | `<div onClick>` for a button or link | `<button>` for actions, `<a href>` for navigation |
 | Placeholder used as the only label | Add a visible `<label for>`; placeholders disappear on input |
 | Positive `tabindex` to fix focus order | Fix the DOM order; only use `0` and `-1` |

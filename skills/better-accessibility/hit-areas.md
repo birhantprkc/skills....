@@ -19,19 +19,19 @@ The visible element can stay small; the hit area is what must be big. If it look
 
 ## Expanding the hit area
 
-If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area with a pseudo-element.
+If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area with a pseudo-element. Put the pseudo-element on the wrapping `<label>` or `<button>`, not on the `<input>` itself — replaced elements don't render `::before`/`::after` reliably.
 
 ### CSS Example
 
 ```css
-/* Small checkbox with expanded 44px hit area */
-.checkbox {
+/* Small checkbox with expanded 44px hit area — on the wrapping label */
+.checkbox-label {
   position: relative;
   width: 20px;
   height: 20px;
 }
 
-.checkbox::after {
+.checkbox-label::after {
   content: "";
   position: absolute;
   top: 50%;

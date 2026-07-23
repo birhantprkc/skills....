@@ -8,6 +8,7 @@ Native elements first, landmarks, accessible names, and the ARIA rules that keep
 2. Don't change native semantics unless you really have to.
 3. Every interactive ARIA control must be keyboard-operable — a role is a promise of the full keyboard model, states, and behavior.
 4. Never put `role="presentation"` or `aria-hidden="true"` on a focusable element.
+5. All interactive elements must have an accessible name.
 
 No ARIA is better than bad ARIA: a screen reader trusts your roles, so a wrong role is worse than none.
 
@@ -34,7 +35,7 @@ If a native element is truly impossible, the full polyfill is `role="button"` + 
 
 Name precedence: `aria-labelledby` > `aria-label` > native label (`<label>`, text content, `alt`) > `title` attribute.
 
-- Prefer visible text or `aria-labelledby` over `aria-label`: `aria-label` is invisible, drifts out of sync with the UI, and browsers don't auto-translate it.
+- Prefer visible text or `aria-labelledby` over `aria-label`: `aria-label` is invisible, drifts out of sync with the UI, and translation tools handle it inconsistently.
 - Icon-only buttons always need a name: `<button aria-label="Close">` with the icon `aria-hidden="true"`.
 - The visible label must appear inside the accessible name (WCAG 2.5.3 Label in Name). A button showing "Send" with `aria-label="Submit message"` breaks voice control users who say "click Send".
 - Accessible names must exist even when the design omits visible labels.

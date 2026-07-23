@@ -6,39 +6,37 @@ Focus rings, skip links, tabindex, focus trapping, and the APG keyboard patterns
 
 Style `:focus-visible`, not bare `:focus`. The browser shows `:focus-visible` for keyboard and assistive-tech focus but suppresses it for mouse clicks, where focus is already obvious. Never write `outline: none` or `focus:outline-none` without a visible replacement — that removes keyboard navigation for sighted keyboard users.
 
-The baseline recipe: `2px` solid outline, `2px` offset, at least `3:1` contrast against the colors it sits on (WCAG 2.4.11 non-text contrast applies to focus indicators). Always respect the focus color the user has set: don't specify `outline-color`. Its initial value `auto` renders the platform focus ring, which follows the accent color the user configured in their OS and browser — a hardcoded brand color overrides that choice.
+Always respect the focus color the user has set. The platform focus ring — the color the user configured in their OS and browser — only renders with the default `outline-style: auto`; a custom `outline: 2px solid` does *not* pick it up (with no color set, it renders `currentColor`). So the preference order is:
 
 ```css
-/* Good: no outline-color — `auto` uses the user's configured focus color */
+/* Best: keep the user's own ring, just give it breathing room */
+:focus-visible {
+  outline-offset: 2px;
+}
+
+/* Custom ring when the design requires one: no color set, so it renders
+   currentColor and adapts to the text color instead of a hardcoded brand color */
 :focus-visible {
   outline: 2px solid;
   outline-offset: 2px;
 }
 
-/* Bad: hardcoded color overrides the user's OS/browser accent color */
+/* Bad: hardcoded brand color overrides the user's choice */
 :focus-visible {
   outline: 2px solid #2563eb;
 }
 ```
 
 ```tsx
-// Tailwind: width and offset only, no outline color utility
+// Tailwind (v4: outline-2 sets both solid style and 2px width), no color utility
 <button className="focus-visible:outline-2 focus-visible:outline-offset-2">
   Save
 </button>
 ```
 
-For elements that sit on unknown or varied backgrounds (images, user content), keep the `auto` outline color and add a contrasting halo behind it with `box-shadow` — the halo guarantees separation on any background while the ring itself stays the user's color:
+A custom ring needs at least `3:1` contrast against the colors it sits on (WCAG 1.4.11 Non-text Contrast covers focus indicators).
 
-```css
-:focus-visible {
-  outline: 2px solid;
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px oklch(1 0 0 / 0.9);
-}
-```
-
-In `forced-colors: active` (Windows High Contrast), outline colors map to the system `Highlight` palette automatically — one more reason to lean on `auto` instead of fighting it.
+In `forced-colors: active` (Windows High Contrast), outline colors map to the system `Highlight` palette automatically — one more reason not to fight the defaults.
 
 Group focus styles with `:focus-within` when a wrapper should light up while an inner input has focus (e.g. a search box with an icon inside the border).
 
@@ -99,14 +97,16 @@ Modals must trap focus. The modern technique is the `inert` attribute on everyth
 ```tsx
 // On open
 document.getElementById("app-content").inert = true;
-dialogRef.current.querySelector("[autofocus], button, [href], input")?.focus();
+const dialog = dialogRef.current;
+(dialog.querySelector("[autofocus]") ??
+  dialog.querySelector("button, [href], input, select, textarea"))?.focus();
 
 // On close
 document.getElementById("app-content").inert = false;
 triggerRef.current?.focus(); // always return focus to the element that opened it
 ```
 
-Native `<dialog>` with `showModal()` gives you the trap, `inert` background, and Escape handling for free — prefer it. Either way:
+Native `<dialog>` with `showModal()` gives you the trap, `inert` background, and Escape handling for free — prefer it. A custom overlay that can't use `<dialog>` needs `role="dialog"`, `aria-modal="true"`, and an accessible name (`aria-labelledby` pointing at its heading). Either way:
 
 - On open, focus the first focusable element; for destructive confirmations, focus the least destructive action instead.
 - On close, return focus to the trigger. If the trigger no longer exists, move focus to the nearest logical container.

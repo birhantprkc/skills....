@@ -33,7 +33,7 @@ Live regions announce content that changes without a page load: toasts, validati
 
 | Mechanism | Politeness | Use for |
 | --- | --- | --- |
-| `role="status"` (= `aria-live="polite"`) | Waits for a pause | Toasts, "Saved", result counts, loading updates |
+| `role="status"` (= `aria-live="polite"` + `aria-atomic="true"`) | Waits for a pause | Toasts, "Saved", result counts, loading updates |
 | `role="alert"` (= `aria-live="assertive"` + `aria-atomic="true"`) | Interrupts immediately | Errors and urgent problems only |
 
 The rules that make them actually work:
