@@ -27,3 +27,23 @@ The command discovers the full collection and lets you choose which skills to in
 ```bash
 npx skills add jakubkrehel/skills --skill '*'
 ```
+
+## Use
+
+The default review mode is `full`. Pass `quick` for a shorter review, and add the screen, flow, or feature after the mode.
+
+In Claude Code:
+
+```text
+/better-interface
+/better-interface quick
+/better-interface full checkout flow
+```
+
+In Codex:
+
+```text
+$better-interface
+$better-interface quick
+$better-interface full checkout flow
+```
