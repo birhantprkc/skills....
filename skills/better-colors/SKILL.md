@@ -1,6 +1,6 @@
 ---
 name: better-colors
-description: OKLCH color space for web projects. Convert hex/rgb/hsl to oklch, generate palettes, check contrast, handle gamut boundaries, and theme with Tailwind v4. Triggers on oklch, color conversion, palette generation, contrast ratio, gamut, display p3, design tokens, hue drift, chroma, dark mode colors.
+description: OKLCH color space and color usage for web projects. Convert hex/rgb/hsl to oklch, generate palettes, check contrast, handle gamut boundaries, theme with Tailwind v4, and apply color with meaning. Triggers on oklch, color conversion, palette generation, contrast ratio, gamut, display p3, design tokens, semantic color tokens, hue drift, chroma, dark mode colors, accent color, color meaning, light and dark appearance, increased contrast.
 ---
 
 # OKLCH Colors
@@ -15,6 +15,7 @@ OKLCH is a perceptually uniform color space where the numbers actually mean what
 | Palettes | Generate scales, multi-hue, dark mode | [palette-generation.md](palette-generation.md) |
 | Contrast | APCA/WCAG checks, reporting failures, fixing on request | [accessibility-contrast.md](accessibility-contrast.md) |
 | Gamut & Tailwind | P3 fallbacks, `@theme` scales, gamut clamping | [gamut-and-tailwind.md](gamut-and-tailwind.md) |
+| Usage | Semantic tokens, one meaning per color, primary-action emphasis, appearance variants | [color-usage.md](color-usage.md) |
 
 ## Why OKLCH
 
@@ -82,6 +83,10 @@ This keeps feedback scannable and diff-friendly. Each row is a self-contained ch
 | Dark mode with hand-picked colors | Derive from light palette by reversing L mapping |
 | Hex in Tailwind v4 `@theme` | Convert to oklch values |
 | Alpha with comma syntax | Use slash: `oklch(L C H / alpha)` |
+| Same hue means two different things (link color reused decoratively) | One color, one meaning; give the second use a neutral |
+| Semantic token used outside its role (separator as text) | Add a token for the missing role; never borrow by value |
+| Several colored control backgrounds in one view | Fill only the single primary action; secondaries stay neutral |
+| Palette verified only in light mode | Recheck every foreground/background pair in both appearances |
 
 ## Reference Files
 
@@ -89,3 +94,4 @@ This keeps feedback scannable and diff-friendly. Each row is a self-contained ch
 - [palette-generation.md](palette-generation.md): Scale convention, generation algorithm, multi-hue palettes, dark mode, why not HSL
 - [accessibility-contrast.md](accessibility-contrast.md): APCA and WCAG 2 thresholds, fixing contrast with L, lightness gap guide, hue drift detection
 - [gamut-and-tailwind.md](gamut-and-tailwind.md): sRGB vs P3, gamut clamping, CSS fallback patterns, Tailwind v4 @theme and migration
+- [color-usage.md](color-usage.md): Semantic tokens, one meaning per color, primary-action emphasis, cultural color, appearance variants

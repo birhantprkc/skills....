@@ -9,6 +9,8 @@ Good typography is mostly restraint. A sensible scale, comfortable spacing and e
 
 When reviewing, read the page instead of scanning the code: squint to check the hierarchy holds, read one full paragraph for comfort, and resize the viewport to catch bad wrapping, widows and truncation at real content lengths.
 
+The words themselves — button labels, error messages, empty states — are covered by the `better-writing` skill; this skill covers how text renders.
+
 **Match the project's styling system.** Before suggesting or writing any fix, check how the codebase styles things and express every change in that system: Tailwind utilities in a Tailwind project, plain declarations in CSS, CSS Modules, styled-components or StyleX. The [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind equivalent. Never introduce a second styling approach just to apply a typography fix.
 
 ## Quick Reference
@@ -38,7 +40,7 @@ When a weight or style is not loaded, the browser synthesizes it. That is a safe
 
 ### 4. Fewer Fonts, Sizes and Weights
 
-Rarely use more than three fonts. Weight and size define hierarchy, but overusing them hurts readability quickly. Pair for contrast, not similarity: a serif headline with a sans body reads as deliberate, two near-identical sans-serifs read as a mistake.
+Rarely use more than three fonts. Weight and size define hierarchy, but overusing them hurts readability quickly. Pair for contrast, not similarity: a serif headline with a sans body reads as deliberate, two near-identical sans-serifs read as a mistake. Below `18px`, stay at weight `400`+; weights under `300` are display-only (`28px`+), they disappear at text sizes.
 
 ### 5. Use a Type Scale with Semantic Names
 
@@ -50,7 +52,7 @@ Map each heading level used on a page to a descending step of the type scale: a 
 
 ### 7. Line-Height by Role
 
-Headings tighter, around `1.1`. Body copy `1.5` to `1.6`. Prefer unitless values so line-height scales with the font size; fixed values like `24px` do not.
+Headings tighter, around `1.1`. Body copy `1.5` to `1.6`. Prefer unitless values so line-height scales with the font size; fixed values like `24px` do not. Tight line-height is for short text: anything that wraps to three or more lines needs at least `1.4`, even in height-constrained rows.
 
 ### 8. Letter-Spacing by Size
 
@@ -145,6 +147,8 @@ Rows should cite the specific file and property when it is not obvious from the 
 | Selectable button labels in native-feel UI | `user-select: none`, keep selection on real content |
 | Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |
 | Tailwind classes dropped into a CSS-in-JS codebase (or the reverse) | Express the fix in the styling system the project already uses |
+| Thin/Light weight on `14px` UI text | Weight `400`+ below `18px`; thin weights are display-only |
+| `leading-none` on a three-line card description | At least `1.4` on any text that wraps to 3+ lines |
 
 ## Review Checklist
 
@@ -166,3 +170,4 @@ Rows should cite the specific file and property when it is not obvious from the 
 - [ ] `antialiased` applied once on the root layout
 - [ ] Directional properties are logical (`inline-start`, `start`)
 - [ ] Any styled `::selection` stays legible
+- [ ] No thin weights below `18px`; 3+ line text keeps line-height ≥ `1.4`

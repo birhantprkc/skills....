@@ -1,6 +1,6 @@
 # Animations
 
-Interruptible animations, enter/exit transitions, and contextual icon animations.
+Interruptible animations, enter/exit transitions, contextual icon animations, and motion restraint.
 
 ## Interruptible Animations
 
@@ -377,3 +377,26 @@ Don't use `initial={false}` when the component relies on its `initial` prop to s
 ```
 
 Verify the component still looks right on a full page refresh before applying this.
+
+## Motion Restraint
+
+Motion is a budget, not a garnish. Three rules decide whether an animation belongs at all:
+
+- **No custom animation on high-frequency interactions.** An animation on something users trigger constantly — every keystroke, every list-row hover, every tab switch in a work tool — charges its attention cost on every single trigger. Reserve expressive motion for infrequent moments (first load of a view, success states, empty states); high-frequency interactions get instant feedback or the subtlest possible transition (`opacity`/`background-color` at ≤150ms).
+- **Motion is never the only feedback channel.** Every state change an animation communicates must also be visible when the animation doesn't run — a color change, an icon swap, a label. Users with reduced motion enabled, and anyone who blinked, still need to see what happened.
+- **Brief and precise beats prominent.** If a shorter, smaller animation communicates the same thing, use it. When in doubt, cut the duration, not the clarity.
+
+```css
+/* Good: high-frequency hover gets a minimal transition */
+.row:hover {
+  background-color: var(--surface-hover);
+  transition: background-color 100ms ease-out;
+}
+
+/* Bad: every hover replays a full entrance */
+.row:hover .row-icon {
+  animation: bounceIn 500ms;
+}
+```
+
+Techniques for honoring `prefers-reduced-motion` (fades instead of movement, spring bounce to `0`, no animated blurs) are covered by the `better-accessibility` skill — apply them to every animation in this file.

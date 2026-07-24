@@ -13,7 +13,7 @@ Each skill lives in `skills/<skill-name>/`:
 - `SKILL.md` — the entry point. YAML frontmatter with `name` (matching the directory) and `description` (one-line summary, "Use when..." guidance, and a "Triggers on ..." keyword list that agents match against). The body opens with a short philosophy paragraph, then a **Quick Reference** table linking to the reference files, then numbered **Core Principles**.
 - Supporting `.md` reference files — deeper topic docs linked from the Quick Reference table via relative paths (e.g. `typography.md`, `palette-generation.md`).
 
-Current skills: `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space), `better-accessibility` (accessibility engineering).
+Current skills: `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
 
 ## Authoring conventions
 

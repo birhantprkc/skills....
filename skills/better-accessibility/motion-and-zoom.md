@@ -50,6 +50,23 @@ Reduced motion means reduced, not eliminated — it targets vestibular triggers,
 
 Animations must be interruptible and driven by user input — nothing should autoplay or refuse to stop. Under reduced motion, carousels start paused.
 
+### Reduction techniques
+
+When adapting an animation instead of removing it:
+
+- **Fade instead of move.** Replace positional movement (`translate`, slides) with an opacity crossfade — the state change stays visible without the motion.
+- **Springs lose their bounce.** Set spring `bounce`/overshoot to `0` under reduced motion; oscillation is a vestibular trigger even over small distances.
+- **Never animate blur.** Animated `filter: blur()` reads as a focus pull; snap between blur states or drop the blur entirely.
+- **Avoid animated depth changes.** Scaling an element up toward the viewer (zoom transitions) is among the strongest triggers; crossfade instead.
+
+## Autoplay and timed UI
+
+Motion the user didn't ask for, and UI that acts on its own schedule:
+
+- **No autoplaying media without visible controls** (WCAG 2.2.2): anything that moves, blinks or updates automatically for more than 5 seconds needs a visible pause/stop control. Muted looping hero videos included.
+- **Prefer explicit dismissal over timers.** Auto-dismissing toasts are acceptable only for low-stakes confirmations; anything containing an action, an error, or information the user may need to act on stays until dismissed. If a toast must time out, 5 seconds is the floor, and hovering or focusing it pauses the timer.
+- **Never put critical information only in a timed element.** A vanished toast with the only link to an undo action is data loss on a schedule.
+
 ## Zoom and reflow
 
 - **200% zoom** (WCAG 1.4.4): all content and functionality must survive text scaled to 200%. Never block zoom: no `user-scalable=no`, no `maximum-scale=1`. Safari ignores the cap but every other browser enforces it.

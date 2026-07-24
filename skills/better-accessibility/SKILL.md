@@ -1,6 +1,6 @@
 ---
 name: better-accessibility
-description: Accessibility engineering for product interfaces, from focus states and keyboard support to ARIA, forms, and screen readers. Use when building or reviewing UI components, modals, menus, forms, custom widgets, or when the user says "make this accessible" or reports keyboard or screen-reader issues. Triggers on accessibility, a11y, WCAG, aria, focus ring, focus-visible, focus trap, keyboard navigation, tab order, tabindex, screen reader, sr-only, aria-live, alt text, hit area, touch target, prefers-reduced-motion, skip link, semantic HTML, aria-label, form errors, disabled buttons, "not keyboard accessible".
+description: Accessibility engineering for product interfaces, from focus states and keyboard support to ARIA, forms, and screen readers. Use when building or reviewing UI components, modals, menus, forms, custom widgets, or when the user says "make this accessible" or reports keyboard or screen-reader issues. Triggers on accessibility, a11y, WCAG, aria, focus ring, focus-visible, focus trap, keyboard navigation, tab order, tabindex, screen reader, sr-only, aria-live, alt text, hit area, touch target, prefers-reduced-motion, autoplay, toast duration, skip link, semantic HTML, aria-label, form errors, disabled buttons, "not keyboard accessible".
 ---
 
 # Accessibility that comes with the craft
@@ -20,7 +20,7 @@ Contrast math (APCA thresholds, fixing contrast in OKLCH) is covered by the `bet
 | [Forms](forms.md) | Labels, autocomplete, error messaging, input types |
 | [Screen Readers](screen-readers.md) | Visually hidden content, live regions, toasts, alt text, SVG |
 | [Hit Areas](hit-areas.md) | Target sizes, expanding hit areas, collision rules |
-| [Motion & Zoom](motion-and-zoom.md) | `prefers-reduced-motion`, 200% zoom, reflow, rem vs px |
+| [Motion & Zoom](motion-and-zoom.md) | `prefers-reduced-motion`, autoplay and timed UI, 200% zoom, reflow, rem vs px |
 
 ## Core Principles
 
@@ -62,7 +62,7 @@ Status needs a redundant cue: icon, text, or underline alongside the color. Cont
 
 ### 10. Honor prefers-reduced-motion
 
-Wrap motion in `@media (prefers-reduced-motion: no-preference)` so it is opt-in. Under reduced motion, replace slides and scales with opacity crossfades; kill parallax and autoplay entirely.
+Wrap motion in `@media (prefers-reduced-motion: no-preference)` so it is opt-in. Under reduced motion, replace slides and scales with opacity crossfades; kill parallax and autoplay entirely. Independent of the preference: autoplaying media needs a visible pause control, and toasts carrying actions or errors stay until dismissed.
 
 ### 11. Announce Dynamic Content
 
@@ -139,6 +139,7 @@ Rows should cite the specific file and the specific property that changed when i
 - [ ] Icon-only controls have `aria-label`; decorative elements `aria-hidden`
 - [ ] No color-only status cues; text and UI contrast meet `4.5:1` / `3:1`
 - [ ] Motion wrapped in `prefers-reduced-motion: no-preference`
+- [ ] Autoplaying media has a visible pause control; important toasts don't auto-dismiss
 - [ ] Dynamic updates announced via pre-rendered polite live regions
 - [ ] Alt text matches image purpose (decorative `""`, functional = action)
 - [ ] One `<h1>`, no skipped levels, one `<main>`, skip link present
@@ -151,4 +152,4 @@ Rows should cite the specific file and the specific property that changed when i
 - [forms.md](forms.md): Labels, autocomplete, error messaging, input types
 - [screen-readers.md](screen-readers.md): Visually hidden content, live regions, toasts, alt text, SVG
 - [hit-areas.md](hit-areas.md): Target sizes, expanding hit areas, collision rules
-- [motion-and-zoom.md](motion-and-zoom.md): `prefers-reduced-motion`, 200% zoom, reflow, rem vs px
+- [motion-and-zoom.md](motion-and-zoom.md): `prefers-reduced-motion`, autoplay and timed UI, 200% zoom, reflow, rem vs px

@@ -68,3 +68,9 @@ p {
 ```
 
 The same applies to `padding` and every other directional property.
+
+Three refinements for mixed-direction content:
+
+- **Long paragraphs align by their own language.** A one- or two-line snippet follows the surrounding UI's direction, but a paragraph of three or more lines aligns to its own script's direction: an English paragraph stays start-aligned LTR even inside an RTL interface. `text-align: start` with the correct `lang`/`dir` on the paragraph element handles this.
+- **Never reverse digits.** Numbers keep their digit order in every direction — a phone number or "541" reads identically in RTL. Browsers handle this via the Unicode bidi algorithm; don't fight it with manual reordering, and wrap mixed number/text values in `<bdi>` if adjacent RTL text disturbs them.
+- **Mirror meaningful sequences.** When the arrangement of elements encodes progression — star ratings, step indicators, progress bars — the sequence mirrors in RTL (stars fill from the trailing side). Flexbox and grid with logical properties mirror automatically; hand-positioned elements don't.

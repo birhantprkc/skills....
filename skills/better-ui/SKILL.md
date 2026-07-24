@@ -1,6 +1,6 @@
 ---
 name: better-ui
-description: Design engineering principles for making interfaces feel polished. Use when building UI components, reviewing frontend code, implementing animations, hover states, shadows, borders, micro-interactions, enter/exit animations, or any visual detail work. Triggers on UI polish, design details, "make it feel better", "feels off", stagger animations, border radius, optical alignment, image outlines, box shadows.
+description: Design engineering principles for making interfaces feel polished. Use when building UI components, reviewing frontend code, implementing animations, hover states, shadows, borders, micro-interactions, enter/exit animations, choosing or reviewing icons, or any visual detail work. Triggers on UI polish, design details, "make it feel better", "feels off", stagger animations, border radius, optical alignment, image outlines, box shadows, icons, icon stroke weight, icon states, motion restraint.
 ---
 
 # Details that make interfaces feel better
@@ -9,14 +9,15 @@ Great interfaces rarely come from a single thing. It's usually a collection of s
 
 When reviewing, slow the interface down: replay motion at 10% speed in the browser's Animations panel and walk every state — hover, focus, active, loading, empty. What feels off at 10% speed is what's subtly wrong at full speed.
 
-Typography (text wrapping, font smoothing, tabular numbers, spacing) is covered by the `better-typography` skill; use that for anything text-related. Accessibility (hit areas, focus states, keyboard support, ARIA) is covered by the `better-accessibility` skill.
+Typography (text wrapping, font smoothing, tabular numbers, spacing) is covered by the `better-typography` skill; use that for anything text-related. Accessibility (hit areas, focus states, keyboard support, ARIA) is covered by the `better-accessibility` skill. Layout structure (grouping, spacing between sections, breakpoints) is covered by the `better-layout` skill.
 
 ## Quick Reference
 
 | Category | When to Use |
 | --- | --- |
 | [Surfaces](surfaces.md) | Border radius, optical alignment, shadows, image outlines |
-| [Animations](animations.md) | Interruptible animations, enter/exit transitions, icon animations, scale on press |
+| [Animations](animations.md) | Interruptible animations, enter/exit transitions, icon animations, scale on press, motion restraint |
+| [Icons](icons.md) | Icon stroke weight, states via `currentColor`, outline vs fill, sizing, RTL flipping |
 | [Performance](performance.md) | Transition specificity, `will-change` usage |
 
 ## Core Principles
@@ -69,6 +70,18 @@ Always specify exact properties: `transition-property: scale, opacity`. Tailwind
 
 Only for `transform`, `opacity`, `filter`, the properties the GPU can composite. Never use `will-change: all`. Only add when you notice first-frame stutter.
 
+### 13. Match Icon Stroke to Text Weight
+
+An icon next to text carries the text's optical weight: `1.5px` stroke beside regular (400) text, `2px` beside semibold (600). One stroke weight per icon set; never mix libraries on one surface.
+
+### 14. One SVG, Recolored per State
+
+Icons use `currentColor` and get their states (hover, selected, disabled) from CSS color and opacity, never from separate assets. Outline variant is the default; fill variant marks the active state.
+
+### 15. Motion Restraint
+
+No custom animation on high-frequency interactions: the attention cost repeats on every trigger. Motion is never the only feedback channel; every animated state change also needs a static cue (color, icon, label).
+
 ## Common Mistakes
 
 | Mistake | Fix |
@@ -80,6 +93,10 @@ Only for `transform`, `opacity`, `filter`, the properties the GPU can composite.
 | Animation plays on page load | Add `initial={false}` to `AnimatePresence` |
 | `transition: all` on elements | Specify exact properties |
 | First-frame animation stutter | Add `will-change: transform` (sparingly) |
+| Hairline icon beside bold text | Match the stroke width to the text weight |
+| Separate icon assets per state | One `currentColor` SVG, states via CSS |
+| Filled icons everywhere | Outline as default, fill only for the active state |
+| Entrance animation on every hover or keystroke | Instant feedback or ≤150ms opacity/color transition |
 
 ## Review Output Format
 
@@ -113,9 +130,13 @@ Rows should cite the specific file and the specific property that changed when i
 - [ ] AnimatePresence uses `initial={false}` for default-state elements
 - [ ] No `transition: all`, only specific properties
 - [ ] `will-change` only on transform/opacity/filter, never `all`
+- [ ] Icon stroke weight matches adjacent text weight; one weight per set
+- [ ] Icons use `currentColor` with CSS-driven states; outline default, fill active
+- [ ] No custom animation on high-frequency interactions; animated states have static cues
 
 ## Reference Files
 
 - [surfaces.md](surfaces.md): Border radius, optical alignment, shadows, image outlines
-- [animations.md](animations.md): Interruptible animations, enter/exit transitions, icon animations, scale on press
+- [animations.md](animations.md): Interruptible animations, enter/exit transitions, icon animations, scale on press, motion restraint
+- [icons.md](icons.md): Icon stroke weight, states via `currentColor`, outline vs fill, sizing, RTL flipping
 - [performance.md](performance.md): Transition specificity, `will-change` usage
