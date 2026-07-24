@@ -4,9 +4,9 @@ Focus rings, skip links, tabindex, focus trapping, and the APG keyboard patterns
 
 ## Focus rings
 
-Style `:focus-visible`, not bare `:focus`. The browser shows `:focus-visible` for keyboard and assistive-tech focus but suppresses it for mouse clicks, where focus is already obvious. Never write `outline: none` or `focus:outline-none` without a visible replacement — that removes keyboard navigation for sighted keyboard users.
+Style `:focus-visible`, not bare `:focus`. The browser shows `:focus-visible` for keyboard and assistive-tech focus but suppresses it for mouse clicks, where focus is already obvious. Never write `outline: none` or `focus:outline-none` without a visible replacement; that removes keyboard navigation for sighted keyboard users.
 
-Always respect the focus color the user has set. The platform focus ring — the color the user configured in their OS and browser — only renders with the default `outline-style: auto`; a custom `outline: 2px solid` does *not* pick it up (with no color set, it renders `currentColor`). So the preference order is:
+Always respect the focus color the user has set. The platform focus ring (the color the user configured in their OS and browser) only renders with the default `outline-style: auto`; a custom `outline: 2px solid` does *not* pick it up (with no color set, it renders `currentColor`). So the preference order is:
 
 ```css
 /* Best: keep the user's own ring, just give it breathing room */
@@ -36,7 +36,7 @@ Always respect the focus color the user has set. The platform focus ring — the
 
 A custom ring needs at least `3:1` contrast against the colors it sits on (WCAG 1.4.11 Non-text Contrast covers focus indicators).
 
-In `forced-colors: active` (Windows High Contrast), outline colors map to the system `Highlight` palette automatically — one more reason not to fight the defaults.
+In `forced-colors: active` (Windows High Contrast), outline colors map to the system `Highlight` palette automatically, one more reason not to fight the defaults.
 
 Group focus styles with `:focus-within` when a wrapper should light up while an inner input has focus (e.g. a search box with an icon inside the border).
 
@@ -67,9 +67,9 @@ Give in-page anchor targets `scroll-margin-top` (e.g. `scroll-margin-top: 80px` 
 
 ## tabindex rules
 
-- `tabindex="0"` — adds an element to the natural tab order. Only for custom interactive elements that aren't natively focusable.
-- `tabindex="-1"` — focusable via JavaScript only (`el.focus()`). Use for headings you move focus to, modal containers, and roving-tabindex members.
-- Positive `tabindex` — never. It hijacks the tab order for the whole page; fix the DOM order instead.
+- `tabindex="0"`: adds an element to the natural tab order. Only for custom interactive elements that aren't natively focusable.
+- `tabindex="-1"`: focusable via JavaScript only (`el.focus()`). Use for headings you move focus to, modal containers, and roving-tabindex members.
+- Positive `tabindex`: never. It hijacks the tab order for the whole page; fix the DOM order instead.
 
 ### Roving tabindex
 
@@ -92,7 +92,7 @@ Composite widgets (tabs, menus, toolbars, radio groups) occupy a single Tab stop
 
 ## Focus trapping and restoration
 
-Modals must trap focus. The modern technique is the `inert` attribute on everything behind the dialog — it removes background content from the tab order and from assistive tech in one move:
+Modals must trap focus. The modern technique is the `inert` attribute on everything behind the dialog; it removes background content from the tab order and from assistive tech in one move:
 
 ```tsx
 // On open
@@ -106,7 +106,7 @@ document.getElementById("app-content").inert = false;
 triggerRef.current?.focus(); // always return focus to the element that opened it
 ```
 
-Native `<dialog>` with `showModal()` gives you the trap, `inert` background, and Escape handling for free — prefer it. A custom overlay that can't use `<dialog>` needs `role="dialog"`, `aria-modal="true"`, and an accessible name (`aria-labelledby` pointing at its heading). Either way:
+Native `<dialog>` with `showModal()` gives you the trap, `inert` background, and Escape handling for free; prefer it. A custom overlay that can't use `<dialog>` needs `role="dialog"`, `aria-modal="true"`, and an accessible name (`aria-labelledby` pointing at its heading). Either way:
 
 - On open, focus the first focusable element; for destructive confirmations, focus the least destructive action instead.
 - On close, return focus to the trigger. If the trigger no longer exists, move focus to the nearest logical container.
@@ -114,7 +114,7 @@ Native `<dialog>` with `showModal()` gives you the trap, `inert` background, and
 
 ## Keyboard patterns (ARIA APG)
 
-Native elements come with these behaviors; custom widgets must implement them. A role is a promise — if you give something `role="tab"`, users expect the full tab keyboard model.
+Native elements come with these behaviors; custom widgets must implement them. A role is a promise: if you give something `role="tab"`, users expect the full tab keyboard model.
 
 | Widget | Keys |
 | --- | --- |

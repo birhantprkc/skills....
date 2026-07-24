@@ -8,23 +8,23 @@ Interactive elements need a 44×44px hit area for touch or mobile contexts. In d
 
 | Standard | Minimum |
 | --- | --- |
-| WCAG 2.5.8 (AA) | 24×24px — the hard floor |
+| WCAG 2.5.8 (AA) | 24×24px, the hard floor |
 | WCAG 2.5.5 (AAA) | 44×44px |
 | Apple HIG | 44×44pt |
 | Material Design | 48×48dp |
 
-Treat 44px as the baseline for primary controls and 24px as an absolute floor for dense UI only. WCAG 2.5.8's spacing exception: an undersized target passes if a 24px circle centered on it doesn't intersect any other target's circle — in practice, 20px targets need at least a 4px gap.
+Treat 44px as the baseline for primary controls and 24px as an absolute floor for dense UI only. WCAG 2.5.8's spacing exception: an undersized target passes if a 24px circle centered on it doesn't intersect any other target's circle; in practice, 20px targets need at least a 4px gap.
 
-The visible element can stay small; the hit area is what must be big. If it looks clickable, it must be clickable across its whole visual extent — no dead zones (a checkbox and its label share one hit target).
+The visible element can stay small; the hit area is what must be big. If it looks clickable, it must be clickable across its whole visual extent: no dead zones (a checkbox and its label share one hit target).
 
 ## Expanding the hit area
 
-If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area with a pseudo-element. Put the pseudo-element on the wrapping `<label>` or `<button>`, not on the `<input>` itself — replaced elements don't render `::before`/`::after` reliably.
+If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area with a pseudo-element. Put the pseudo-element on the wrapping `<label>` or `<button>`, not on the `<input>` itself; replaced elements don't render `::before`/`::after` reliably.
 
 ### CSS Example
 
 ```css
-/* Small checkbox with expanded 44px hit area — on the wrapping label */
+/* Small checkbox with expanded 44px hit area, on the wrapping label */
 .checkbox-label {
   position: relative;
   width: 20px;
@@ -52,7 +52,7 @@ If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area
 
 ### Layout alternative
 
-When the element can afford real box size, skip the pseudo-element and let the box itself be the target — this also gives the browser the real geometry for scrolling and gestures:
+When the element can afford real box size, skip the pseudo-element and let the box itself be the target; this also gives the browser the real geometry for scrolling and gestures:
 
 ```css
 .icon-button {

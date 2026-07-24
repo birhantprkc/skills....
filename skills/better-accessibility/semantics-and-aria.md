@@ -6,7 +6,7 @@ Native elements first, landmarks, accessible names, and the ARIA rules that keep
 
 1. If a native HTML element with the semantics and behavior you need exists, use it instead of repurposing another element with ARIA.
 2. Don't change native semantics unless you really have to.
-3. Every interactive ARIA control must be keyboard-operable — a role is a promise of the full keyboard model, states, and behavior.
+3. Every interactive ARIA control must be keyboard-operable; a role is a promise of the full keyboard model, states, and behavior.
 4. Never put `role="presentation"` or `aria-hidden="true"` on a focusable element.
 5. All interactive elements must have an accessible name.
 
@@ -16,8 +16,8 @@ No ARIA is better than bad ARIA: a screen reader trusts your roles, so a wrong r
 
 | Element | Use for | Why |
 | --- | --- | --- |
-| `<a href>` | Navigation — anything that goes somewhere or changes the URL | Free Cmd/Ctrl/middle-click, right-click → copy link, Enter activation |
-| `<button>` | Actions — submit, toggle, open, delete | Free focus, Enter *and* Space activation, form semantics |
+| `<a href>` | Navigation: anything that goes somewhere or changes the URL | Free Cmd/Ctrl/middle-click, right-click → copy link, Enter activation |
+| `<button>` | Actions: submit, toggle, open, delete | Free focus, Enter *and* Space activation, form semantics |
 | `<div onClick>` | Nothing | No role, no focus, no keyboard; screen readers see plain text |
 
 ```tsx
@@ -28,16 +28,16 @@ No ARIA is better than bad ARIA: a screen reader trusts your roles, so a wrong r
 <button onClick={openSettings}>Settings</button>
 ```
 
-If it looks clickable it must be clickable — and the reverse: if it's clickable it must be a real interactive element. Rebuilding a link as a button (or vice versa) breaks user expectations; a "button" that navigates should be a styled `<a>`.
+If it looks clickable it must be clickable, and the reverse: if it's clickable it must be a real interactive element. Rebuilding a link as a button (or vice versa) breaks user expectations; a "button" that navigates should be a styled `<a>`.
 
-If a native element is truly impossible, the full polyfill is `role="button"` + `tabindex="0"` + Enter and Space handlers — which is why the native element is always less code.
+If a native element is truly impossible, the full polyfill is `role="button"` + `tabindex="0"` + Enter and Space handlers, which is why the native element is always less code.
 
 ## Landmarks and headings
 
 - Exactly one `<main>` per page. `<header>`, `<nav>`, `<aside>`, `<footer>` map to landmarks screen-reader users jump between.
 - Multiple landmarks of the same type need distinguishing labels: `<nav aria-label="Primary">`, `<nav aria-label="Breadcrumbs">`.
-- One `<h1>` per page; never skip heading levels (`h2` → `h4`). Headings are structure, not styling — style a heading level with CSS instead of picking the tag by size.
-- `<title>` matches the current context, most specific first: `Billing — Settings — Acme`.
+- One `<h1>` per page; never skip heading levels (`h2` → `h4`). Headings are structure, not styling; style a heading level with CSS instead of picking the tag by size.
+- `<title>` matches the current context, most specific first: `Billing · Settings · Acme`.
 
 ## Accessible names
 
@@ -74,9 +74,10 @@ Add `translate="no"` to brand names, code tokens, and identifiers so auto-transl
 
 ## Disabled states
 
-Native `disabled` removes a control from the tab order entirely — keyboard and screen-reader users can't discover that it exists or why it's unavailable. `aria-disabled="true"` keeps the control focusable and announced as unavailable, but you must block the action in your handler.
+Native `disabled` supplies the platform's complete disabled behavior: it removes the control from the tab order, suppresses activation, applies `:disabled`, and excludes form controls from submission. Use it when a native control is genuinely unavailable. `aria-disabled="true"` only announces the state; it does not change focusability, suppress behavior, or add disabled styling.
 
 - Don't disable submit buttons at all: keep them enabled, validate on submit, and focus the first error (see [forms.md](forms.md)).
-- When a control must look unavailable, prefer `aria-disabled="true"` so it stays discoverable, and say why nearby (or in a tooltip).
+- Use `aria-disabled="true"` when keeping a control discoverable in the tab order is an intentional requirement, or when a custom control cannot use native `disabled`.
+- With `aria-disabled="true"`, block pointer and keyboard activation in the handler, prevent form submission where applicable, add explicit styling (including forced-colors support), and explain why the action is unavailable nearby.
 - Never set both `disabled` and `aria-disabled` on the same element.
 - Disabled controls are exempt from contrast minimums, but keep them legible anyway.

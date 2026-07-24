@@ -2,7 +2,7 @@
 
 Contrast is always measured between a **foreground color** (text, icon, or UI element) and the **background color** it sits on. When checking contrast, identify the background the element will be rendered against, typically the nearest parent's background color.
 
-**Report, don't repaint.** When a check fails, report it — the failing foreground/background pair, its measured Lc or ratio, and the threshold it misses — and leave the colors unchanged. A project's colors are a design decision; only apply the fix below when the user asks for one.
+**Report, don't repaint.** When a check fails, report it (the failing foreground/background pair, its measured Lc or ratio, and the threshold it misses) and leave the colors unchanged. A project's colors are a design decision; only apply the fix below when the user asks for one.
 
 ## APCA thresholds (recommended)
 
@@ -35,7 +35,7 @@ WCAG defines "large text" in points: 18pt ≈ `24px`, or 14pt bold ≈ `18.5px`.
 
 ## Fixing contrast with oklch (on request)
 
-In hex/rgb, fixing contrast means trial and error across three channels. In oklch, contrast is controlled by **lightness (L) alone**: adjust the L distance between the foreground and its background:
+In hex/rgb, fixing contrast means trial and error across three channels. In oklch, lightness (L) is the clearest first lever: adjust the L distance between the foreground and its background while preserving C and H when possible:
 
 ```css
 /* Failing: text too close in lightness to its background (Lc ≈ 50) */
@@ -49,7 +49,7 @@ background: oklch(0.95 0.02 250); /* background: unchanged */
 
 Note that mid-lightness backgrounds cap the achievable contrast: on a background of L 0.75, even pure black text only reaches about Lc 60; body text needs a background near the light or dark extreme.
 
-Chroma has negligible effect on contrast: always adjust L, never C.
+Adjust L first, then remeasure the rendered foreground/background pair. Chroma and hue can still affect the converted color, gamut mapping, and measured contrast; reduce C when needed to keep the adjusted color in gamut.
 
 ## Quick lightness gap guide
 
@@ -62,7 +62,7 @@ The gap is asymmetric because APCA is polarity-aware: mirrored pairs don't score
 
 ## Light vs dark color detection
 
-A background counts as light when its oklch lightness exceeds 0.73 — the APCA crossover on neutral backgrounds:
+A background counts as light when its oklch lightness exceeds 0.73, the APCA crossover on neutral backgrounds:
 
 ```
 if L > 0.73 → use dark text on this background

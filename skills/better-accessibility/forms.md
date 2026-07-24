@@ -4,14 +4,14 @@ Labels, autocomplete, error messaging, input types, and submit behavior.
 
 ## Labels
 
-Every control needs a programmatic label: `<label for>` pointing at the input's `id`, or a wrapping `<label>`. A placeholder is never a label — it disappears the moment the user types and usually fails contrast.
+Every control needs a programmatic label: `<label for>` pointing at the input's `id`, or a wrapping `<label>`. A placeholder is never a label: it disappears the moment the user types and usually fails contrast.
 
 ```html
 <!-- Good: explicit association -->
 <label for="email">Email</label>
 <input id="email" type="email" autocomplete="email" />
 
-<!-- Good: wrapping label — label and control share one hit target -->
+<!-- Good: wrapping label, so label and control share one hit target -->
 <label>
   <input type="checkbox" /> Send me updates
 </label>
@@ -39,10 +39,10 @@ The complete pattern:
 
 - `aria-invalid="true"` on the failing field, removed once fixed.
 - `aria-describedby` links the field to its inline error so screen readers announce it with the field.
-- Errors render inline next to their fields, with an icon or text — never a red border alone (color-only cues fail).
+- Errors render inline next to their fields, with an icon or text, never a red border alone (color-only cues fail).
 - On submit, focus the first invalid field.
 - Allow incomplete submission so validation can surface; don't disable submit until valid (see below).
-- Accept free text and validate after — don't block typing or filter characters as the user types. Trim values before validating; autocomplete and text expansion add trailing spaces.
+- Accept free text and validate after; don't block typing or filter characters as the user types. Trim values before validating; autocomplete and text expansion add trailing spaces.
 
 ## Autocomplete and input types
 
@@ -66,7 +66,7 @@ Correct `type` and `inputmode` pick the right mobile keyboard:
 | Input | Use |
 | --- | --- |
 | Email, URL, phone | `type="email"`, `type="url"`, `type="tel"` |
-| OTP / PIN / card number | `type="text" inputmode="numeric"` — keeps text semantics, no spinner |
+| OTP / PIN / card number | `type="text" inputmode="numeric"` (keeps text semantics, no spinner) |
 | Money, decimals | `type="text" inputmode="decimal"` |
 | True numeric quantity | `type="number"` |
 
@@ -74,13 +74,13 @@ Disable spellcheck on emails, codes, and usernames: `spellcheck="false"`.
 
 ## Never fight the user's tools
 
-- Never block paste in `<input>` or `<textarea>` — users paste passwords and one-time codes.
+- Never block paste in `<input>` or `<textarea>`; users paste passwords and one-time codes.
 - Stay compatible with password managers and 2FA autofill: real `<form>`, correct `autocomplete`, no fake inputs.
 - Never use `user-scalable=no` or `maximum-scale=1` to stop iOS input zoom; keep mobile input text at `16px` instead (covered in `better-typography`).
 
 ## Submit behavior
 
-- Keep submit enabled until the request starts, then disable it and show a spinner *while keeping the original label* — "Save" with a spinner, not a bare spinner. The label is what tells assistive tech which button is busy.
-- Announce results: success goes through a polite live region. For submit failures, focus the first invalid field — the focus move is the announcement; reserve `role="alert"` for form-level errors not tied to a field (see [screen-readers.md](screen-readers.md)).
-- Warn on unsaved changes before navigation, and never lose typed input to a re-render — hydration must preserve focus and value.
+- Keep submit enabled until the request starts, then disable it and show a spinner *while keeping the original label*: "Save" with a spinner, not a bare spinner. The label is what tells assistive tech which button is busy.
+- Announce results: success goes through a polite live region. For submit failures, focus the first invalid field; the focus move is the announcement, and reserve `role="alert"` for form-level errors not tied to a field (see [screen-readers.md](screen-readers.md)).
+- Warn on unsaved changes before navigation, and never lose typed input to a re-render; hydration must preserve focus and value.
 - Enter submits from any focused input; in `<textarea>`, ⌘/Ctrl+Enter submits.
