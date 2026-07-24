@@ -7,7 +7,7 @@ description: Accessibility engineering for product interfaces, from focus states
 
 Accessibility is not a compliance checkbox bolted on at the end; it is the floor for interface craft. Most of it is free if you use the platform: native elements ship with keyboard support, real labels announce themselves, and a visible focus ring is one CSS rule. Apply these principles when building or reviewing UI code, and match the project's existing styling system (Tailwind vs. plain CSS vs. CSS-in-JS) when applying fixes.
 
-When reviewing, walk the interface as a keyboard-only user first — every flow must complete without a mouse — then as a screen-reader user: does each control announce a name, a role, and its state? When unsure, prefer the platform default over a custom rebuild, and remove ARIA rather than add it.
+When reviewing, walk the interface as a keyboard-only user first (every flow must complete without a mouse), then as a screen-reader user: does each control announce a name, a role, and its state? When unsure, prefer the platform default over a custom rebuild, and remove ARIA rather than add it.
 
 Contrast math (APCA thresholds, fixing contrast in OKLCH) is covered by the `better-colors` skill; text sizes, iOS input zoom, and RTL are covered by the `better-typography` skill.
 
@@ -30,11 +30,11 @@ The first rule of ARIA: don't use ARIA when a native element exists. `<button>` 
 
 ### 2. Visible Focus Rings
 
-Style `:focus-visible`, not bare `:focus`, so keyboard users get a ring and mouse users don't. The browser's default ring (`outline-style: auto`) renders the focus color the user configured in their OS and browser — prefer keeping it and only adding `outline-offset: 2px`. If the design needs a custom ring, use `outline: 2px solid` with no color (it renders `currentColor`, never a hardcoded brand color) at `3:1` contrast against adjacent colors. Never `outline: none` without a visible replacement.
+Style `:focus-visible`, not bare `:focus`, so keyboard users get a ring and mouse users don't. The browser's default ring (`outline-style: auto`) renders the focus color the user configured in their OS and browser; prefer keeping it and only adding `outline-offset: 2px`. If the design needs a custom ring, use `outline: 2px solid` with no color (it renders `currentColor`, never a hardcoded brand color) at `3:1` contrast against adjacent colors. Never `outline: none` without a visible replacement.
 
 ### 3. Full Keyboard Support
 
-Every pointer interaction needs a keyboard path, following the ARIA APG patterns: Escape closes overlays, arrow keys move within composite widgets (tabs, menus, listboxes), Tab moves between widgets, Enter and Space activate. Only `tabindex="0"` (join the natural tab order) and `tabindex="-1"` (programmatic focus) — never positive values, which break the natural order. Composite widgets use roving tabindex: the active item is `0`, all others `-1`.
+Every pointer interaction needs a keyboard path, following the ARIA APG patterns: Escape closes overlays, arrow keys move within composite widgets (tabs, menus, listboxes), Tab moves between widgets, Enter and Space activate. Only `tabindex="0"` (join the natural tab order) and `tabindex="-1"` (programmatic focus), never positive values, which break the natural order. Composite widgets use roving tabindex: the active item is `0`, all others `-1`.
 
 ### 4. Trap and Restore Focus
 
@@ -46,7 +46,7 @@ Interactive elements need a 44×44px hit area for touch or mobile contexts, at l
 
 ### 6. Label and Type Every Control
 
-Every input gets a `<label for>` or wrapping `<label>`; a placeholder is never a label, and label and control share one hit target — no dead zones between a checkbox and its text. Add `autocomplete` with a meaningful `name`, and the correct `type` and `inputmode` for the keyboard. Never block paste; users paste passwords and one-time codes.
+Every input gets a `<label for>` or wrapping `<label>`; a placeholder is never a label, and label and control share one hit target: no dead zones between a checkbox and its text. Add `autocomplete` with a meaningful `name`, and the correct `type` and `inputmode` for the keyboard. Never block paste; users paste passwords and one-time codes.
 
 ### 7. Errors That Announce
 
@@ -54,11 +54,11 @@ Keep submit enabled until the request starts, then disable with a spinner while 
 
 ### 8. Accessible Names Everywhere
 
-Icon-only buttons need a descriptive `aria-label`. Visible label text must appear in the accessible name. Decorative elements get `aria-hidden="true"` — never on a focusable element.
+Icon-only buttons need a descriptive `aria-label`. Visible label text must appear in the accessible name. Decorative elements get `aria-hidden="true"`, never on a focusable element.
 
 ### 9. Don't Rely on Color Alone
 
-Status needs a redundant cue: icon, text, or underline alongside the color. Contrast floors: `4.5:1` for text, `3:1` for UI components and focus indicators (the WCAG 2 minimums; `better-colors` prefers APCA thresholds). When contrast fails, report the failing pair and the threshold it misses — don't change the project's colors unless asked; the `better-colors` skill covers measuring and, on request, fixing.
+Status needs a redundant cue: icon, text, or underline alongside the color. Contrast floors: `4.5:1` for text, `3:1` for UI components and focus indicators (the WCAG 2 minimums; `better-colors` prefers APCA thresholds). When contrast fails, report the failing pair and the threshold it misses; don't change the project's colors unless asked, as the `better-colors` skill covers measuring and, on request, fixing.
 
 ### 10. Honor prefers-reduced-motion
 

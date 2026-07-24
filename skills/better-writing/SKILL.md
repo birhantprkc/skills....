@@ -7,13 +7,13 @@ description: UX writing and interface copy, from voice and button labels to erro
 
 Clear and brief beats clever, consistency beats variety, and the best error message is the interaction redesigned so the error can't happen. Apply these principles when writing or reviewing any user-facing text.
 
-How copy renders — capitalization via `text-transform`, truncation, smart punctuation — is covered by the `better-typography` skill; error markup and announcements (`aria-invalid`, live regions) by the `better-accessibility` skill; room for translated strings by the `better-layout` skill.
+How copy renders (capitalization via `text-transform`, truncation, smart punctuation) is covered by the `better-typography` skill; error markup and announcements (`aria-invalid`, live regions) by the `better-accessibility` skill; room for translated strings by the `better-layout` skill.
 
 ## Core Principles
 
 ### 1. One Voice, Flexible Tone
 
-The product has one voice — plain, direct, consistent terms for the same things. Keep a shared term list so the same action never has two names: if it's "Archive" in the menu, it isn't "Move to storage" in the toast. Tone flexes with the stakes:
+The product has one voice: plain, direct, consistent terms for the same things. Keep a shared term list so the same action never has two names: if it's "Archive" in the menu, it isn't "Move to storage" in the toast. Tone flexes with the stakes:
 
 | Context | Tone |
 | --- | --- |
@@ -24,15 +24,15 @@ The product has one voice — plain, direct, consistent terms for the same thing
 
 ### 2. Say "You", Never "The User"
 
-Address the reader directly as "you". Avoid "we": it's ambiguous, and in errors it reads as deflection — "Unable to load content", not "We're having trouble loading this content". Use possessives sparingly ("Favorites" over "Your Favorites") and never switch perspective mid-app.
+Address the reader directly as "you". Avoid "we": it's ambiguous, and in errors it reads as deflection. "Unable to load content", not "We're having trouble loading this content". Use possessives sparingly ("Favorites" over "Your Favorites") and never switch perspective mid-app.
 
 ### 3. Plain Words Over Clever Ones
 
-Choose easily understood words and delete every word that isn't needed. No idioms, colloquialisms, or humor that won't translate. Skip unnecessary gender: "Subscribers can post recipes", not "each subscriber can post his or her recipes". Match the input device: "tap" on touch, "click" with a pointer, "select" when both are possible. Never build sentences by concatenating fragments around variables (`"You have " + n + " new messages"`) — word order changes per language; use full templated strings with proper pluralization.
+Choose easily understood words and delete every word that isn't needed. No idioms, colloquialisms, or humor that won't translate. Skip unnecessary gender: "Subscribers can post recipes", not "each subscriber can post his or her recipes". Match the input device: "tap" on touch, "click" with a pointer, "select" when both are possible. Never build sentences by concatenating fragments around variables (`"You have " + n + " new messages"`); word order changes per language, so use full templated strings with proper pluralization.
 
 ### 4. Verb-First Buttons
 
-Button labels start with a verb naming the specific action: "Send", "Save draft", "Delete project" — never "OK!", "Let's go!", or bare "Yes"/"No" on consequential actions. Confirmation buttons repeat the consequence so the dialog is answerable without reading the body: "Delete this project?" offers `Delete project` and `Cancel`, not `Yes` and `No`.
+Button labels start with a verb naming the specific action: "Send", "Save draft", "Delete project". Never "OK!", "Let's go!", or bare "Yes"/"No" on consequential actions. Confirmation buttons repeat the consequence so the dialog is answerable without reading the body: "Delete this project?" offers `Delete project` and `Cancel`, not `Yes` and `No`.
 
 ### 5. Consistent Flow Vocabulary
 
@@ -40,15 +40,15 @@ Multi-step flows use one vocabulary: "Get Started" to enter, "Continue" or "Next
 
 ### 6. Links Describe Their Destination
 
-Link text makes sense out of context — screen-reader users navigate by a list of the page's links. "Read the billing docs", never "Click here" (which also fails the device-verb rule on touch), and never a bare "Learn more" when several appear on one page — suffix each: "Learn more about exports".
+Link text makes sense out of context; screen-reader users navigate by a list of the page's links. "Read the billing docs", never "Click here" (which also fails the device-verb rule on touch), and never a bare "Learn more" when several appear on one page. Suffix each: "Learn more about exports".
 
 ### 7. One Capitalization Policy
 
-Pick title case or sentence case per element type (all buttons, all headings) and apply it consistently; sentence case is the safer default — calmer, no per-word case rules, localizes cleanly. "Save Changes" beside "Discard changes" reads as sloppiness.
+Pick title case or sentence case per element type (all buttons, all headings) and apply it consistently; sentence case is the safer default: calmer, no per-word case rules, localizes cleanly. "Save Changes" beside "Discard changes" reads as sloppiness.
 
 ### 8. Settings Describe the ON State
 
-Label a toggle for what happens when it's on: "Send read receipts" — users infer the off state. Never label the negative ("Don't send read receipts"), which turns the toggle into a double negative. Link directly to a referenced setting instead of describing the path to it: a "Notification settings" link, not "Go to Settings > Notifications > Email".
+Label a toggle for what happens when it's on: "Send read receipts", and users infer the off state. Never label the negative ("Don't send read receipts"), which turns the toggle into a double negative. Link directly to a referenced setting instead of describing the path to it: a "Notification settings" link, not "Go to Settings > Notifications > Email".
 
 ### 9. Errors Say How to Fix, Next to Where It Broke
 
@@ -76,11 +76,11 @@ An empty state says what this place is and how to fill it, with one clear next a
 <button class="mt-4">Create a project</button>
 ```
 
-Search and filter empty states name the query and offer an exit: "No results for 'quarterly'. Clear filters". Never park crucial persistent information in an empty state — it disappears the moment content exists.
+Search and filter empty states name the query and offer an exit: "No results for 'quarterly'. Clear filters". Never park crucial persistent information in an empty state; it disappears the moment content exists.
 
 ### 11. Placeholders Are Examples, Not Labels
 
-Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A placeholder is never the field's only label — it vanishes on input; every field keeps a visible label.
+Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A placeholder is never the field's only label: it vanishes on input, and every field keeps a visible label.
 
 ## Common Mistakes
 

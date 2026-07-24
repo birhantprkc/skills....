@@ -7,7 +7,7 @@ description: Design engineering principles for making interfaces feel polished. 
 
 Great interfaces rarely come from a single thing. It's usually a collection of small details that compound into a great experience. Apply these principles when building or reviewing UI code.
 
-When reviewing, slow the interface down: replay motion at 10% speed in the browser's Animations panel and walk every state — hover, focus, active, loading, empty. What feels off at 10% speed is what's subtly wrong at full speed.
+When reviewing, slow the interface down: replay motion at 10% speed in the browser's Animations panel and walk every state: hover, focus, active, loading, empty. What feels off at 10% speed is what's subtly wrong at full speed.
 
 Typography (text wrapping, font smoothing, tabular numbers, spacing) is covered by the `better-typography` skill; use that for anything text-related. Accessibility (hit areas, focus states, keyboard support, ARIA) is covered by the `better-accessibility` skill. Layout structure (grouping, spacing between sections, breakpoints) is covered by the `better-layout` skill.
 

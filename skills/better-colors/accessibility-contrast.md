@@ -2,7 +2,7 @@
 
 Contrast is always measured between a **foreground color** (text, icon, or UI element) and the **background color** it sits on. When checking contrast, identify the background the element will be rendered against, typically the nearest parent's background color.
 
-**Report, don't repaint.** When a check fails, report it — the failing foreground/background pair, its measured Lc or ratio, and the threshold it misses — and leave the colors unchanged. A project's colors are a design decision; only apply the fix below when the user asks for one.
+**Report, don't repaint.** When a check fails, report it (the failing foreground/background pair, its measured Lc or ratio, and the threshold it misses) and leave the colors unchanged. A project's colors are a design decision; only apply the fix below when the user asks for one.
 
 ## APCA thresholds (recommended)
 
@@ -62,7 +62,7 @@ The gap is asymmetric because APCA is polarity-aware: mirrored pairs don't score
 
 ## Light vs dark color detection
 
-A background counts as light when its oklch lightness exceeds 0.73 — the APCA crossover on neutral backgrounds:
+A background counts as light when its oklch lightness exceeds 0.73, the APCA crossover on neutral backgrounds:
 
 ```
 if L > 0.73 → use dark text on this background

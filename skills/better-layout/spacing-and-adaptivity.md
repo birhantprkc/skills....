@@ -12,7 +12,7 @@ Controls placed too close together get mis-tapped and read as one unit. Minimum 
 | Around borderless controls (text buttons, icon buttons) | `24px` |
 | Unrelated control groups | `24px`+ (2× the intra-group gap) |
 
-Borderless controls need more clearance because nothing marks where one target ends and the next begins — the space itself is the boundary.
+Borderless controls need more clearance because nothing marks where one target ends and the next begins; the space itself is the boundary.
 
 ```html
 <!-- Good: bordered buttons at 12px, icon buttons given room -->
@@ -60,9 +60,9 @@ Hiding complexity is good; hiding it without a cue is a trap. Every piece of off
 
 - **Peeking items.** In a horizontal scroller or carousel, size items so the next one peeks `16–32px` past the container edge. A row of cards that ends exactly at the edge looks complete, and nobody scrolls it.
 - **Disclosure controls.** Collapsed sections get a chevron or "Show more" control; the label states what's hidden ("Show 12 more results"), not just "More".
-- **Truncation cues.** Clamped text shows an ellipsis and a way to expand — see `better-typography` for truncation mechanics.
+- **Truncation cues.** Clamped text shows an ellipsis and a way to expand; see `better-typography` for truncation mechanics.
 
-The peeking-scroller recipe — the container's padding creates the peek, snap points stay on the content edge:
+The peeking-scroller recipe: the container's padding creates the peek, and snap points stay on the content edge.
 
 ```css
 .scroller {
@@ -91,8 +91,8 @@ The peeking-scroller recipe — the container's padding creates the peek, snap p
 
 The two layers behave differently at the edges:
 
-- **Content layer** — backgrounds, hero media, and scrollable lists extend to the viewport edges.
-- **Control layer** — text and controls stay inside the layout margins and safe areas, floating above the content.
+- **Content layer**: backgrounds, hero media, and scrollable lists extend to the viewport edges.
+- **Control layer**: text and controls stay inside the layout margins and safe areas, floating above the content.
 
 ```css
 /* Good: full-bleed media inside a constrained article */
@@ -118,7 +118,7 @@ Sticky headers and floating action buttons account for safe areas:
 
 Breakpoints belong to the content, not the device catalog:
 
-- Break where the layout actually stops fitting — when the sidebar squeezes the content below its minimum measure, when the card grid drops below a usable column width — not at `768px` because a preset says so.
+- Break where the layout actually stops fitting (when the sidebar squeezes the content below its minimum measure, when the card grid drops below a usable column width), not at `768px` because a preset says so.
 - Collapse late. A layout that keeps its expanded structure as long as it genuinely fits stays stable and familiar; premature collapsing throws away space users paid for.
 - Prefer **container queries** for components: a card should adapt to the column it's in, not to the viewport.
 
@@ -135,7 +135,7 @@ Breakpoints belong to the content, not the device catalog:
 }
 ```
 
-Test order: the smallest supported size and the largest first — those break first — then the sizes in between.
+Test order: the smallest supported size and the largest first (those break first), then the sizes in between.
 
 ## Plan for Growth and Clipping
 
@@ -156,4 +156,4 @@ Layouts fail in two directions: content grows, and viewports shrink.
 .button { width: 96px; overflow: hidden; }
 ```
 
-**Clipping:** never park critical actions where they can be cut off — the bottom edge of a resizable pane, below the fold of a fixed-height modal, behind an expanding keyboard. Keep primary actions in stable chrome: a sticky footer with safe-area padding, or the top of the view. If a modal's content scrolls, its action row doesn't.
+**Clipping:** never park critical actions where they can be cut off: the bottom edge of a resizable pane, below the fold of a fixed-height modal, behind an expanding keyboard. Keep primary actions in stable chrome: a sticky footer with safe-area padding, or the top of the view. If a modal's content scrolls, its action row doesn't.

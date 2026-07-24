@@ -40,7 +40,7 @@ For an existing codebase where opt-in isn't feasible, the global kill switch is 
 
 ### What to disable vs reduce
 
-Reduced motion means reduced, not eliminated — it targets vestibular triggers, not feedback.
+Reduced motion means reduced, not eliminated: it targets vestibular triggers, not feedback.
 
 | Disable entirely | Replace | Keep |
 | --- | --- | --- |
@@ -48,16 +48,7 @@ Reduced motion means reduced, not eliminated — it targets vestibular triggers,
 | Autoplaying video, GIFs, looping decoration | Smooth scrolling → instant jump | Instant state changes (hover color, focus ring) |
 | Spinning, large-scale movement across the screen | Auto-rotating carousels → start paused | Brief functional feedback (button press) |
 
-Animations must be interruptible and driven by user input — nothing should autoplay or refuse to stop. Under reduced motion, carousels start paused.
-
-### Reduction techniques
-
-When adapting an animation instead of removing it:
-
-- **Fade instead of move.** Replace positional movement (`translate`, slides) with an opacity crossfade — the state change stays visible without the motion.
-- **Springs lose their bounce.** Set spring `bounce`/overshoot to `0` under reduced motion; oscillation is a vestibular trigger even over small distances.
-- **Never animate blur.** Animated `filter: blur()` reads as a focus pull; snap between blur states or drop the blur entirely.
-- **Avoid animated depth changes.** Scaling an element up toward the viewer (zoom transitions) is among the strongest triggers; crossfade instead.
+Animations must be interruptible and driven by user input; nothing should autoplay or refuse to stop. Under reduced motion, carousels start paused.
 
 ## Autoplay and timed UI
 
@@ -70,13 +61,13 @@ Motion the user didn't ask for, and UI that acts on its own schedule:
 ## Zoom and reflow
 
 - **200% zoom** (WCAG 1.4.4): all content and functionality must survive text scaled to 200%. Never block zoom: no `user-scalable=no`, no `maximum-scale=1`. Safari ignores the cap but every other browser enforces it.
-- **Reflow at 320px** (WCAG 1.4.10): at 400% zoom on a 1280px viewport (equivalent to a 320px viewport) the page must work with vertical scrolling only — no two-dimensional scrolling except for genuinely 2D content (tables, maps, code blocks), which scroll inside their own container.
+- **Reflow at 320px** (WCAG 1.4.10): at 400% zoom on a 1280px viewport (equivalent to a 320px viewport) the page must work with vertical scrolling only: no two-dimensional scrolling except for genuinely 2D content (tables, maps, code blocks), which scroll inside their own container.
 
 Fixed heights are what break under zoom: use `min-height` on anything containing text and let containers grow.
 
 ### rem vs px
 
-Respect how the codebase is set up: if the project sizes in `px` (or an established Tailwind scale), stay consistent with it — don't introduce mixed units into someone else's system. Where you do have the choice (new code, or a codebase already on `rem`), `rem` respects the user's base font size and `px` ignores it:
+Respect how the codebase is set up: if the project sizes in `px` (or an established Tailwind scale), stay consistent with it; don't introduce mixed units into someone else's system. Where you do have the choice (new code, or a codebase already on `rem`), `rem` respects the user's base font size and `px` ignores it:
 
 | Use `rem` | Use `px` |
 | --- | --- |

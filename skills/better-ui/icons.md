@@ -1,10 +1,10 @@
 # Icons
 
-Icon weight, states, sizing, and direction — the details that make icons sit naturally in an interface.
+Icon weight, states, sizing, and direction: the details that make icons sit naturally in an interface.
 
 ## Match Icon Stroke to Text Weight
 
-An icon next to text should carry the same optical weight as the text, or the pair looks mismatched — a hairline icon beside semibold text reads as broken, a heavy icon beside regular text shouts.
+An icon next to text should carry the same optical weight as the text, or the pair looks mismatched: a hairline icon beside semibold text reads as broken, a heavy icon beside regular text shouts.
 
 | Adjacent text | Icon stroke width (24px grid) |
 | --- | --- |
@@ -54,7 +54,7 @@ Never ship separate icon assets for default/hover/selected/disabled states. Use 
 </button>
 ```
 
-Hardcoded fills inside the SVG (`fill="#666"`) break this — strip them to `currentColor` when importing icons.
+Hardcoded fills inside the SVG (`fill="#666"`) break this; strip them to `currentColor` when importing icons.
 
 ## Outline Default, Fill Active
 
@@ -62,8 +62,8 @@ When an icon set offers outline and filled variants, use them as a state pair, n
 
 | Variant | Use for |
 | --- | --- |
-| Outline | Default state — toolbars, list rows, inline with text |
-| Fill | Selected/active state — the active tab, a toggled bookmark, a liked heart |
+| Outline | Default state: toolbars, list rows, inline with text |
+| Fill | Selected/active state: the active tab, a toggled bookmark, a liked heart |
 
 ```tsx
 // Good: variant communicates state
@@ -73,11 +73,11 @@ When an icon set offers outline and filled variants, use them as a state pair, n
 <TabIcon variant="solid" />
 ```
 
-The swap between variants is a contextual icon animation — use the exact cross-fade values in [animations.md](animations.md).
+The swap between variants is a contextual icon animation; use the exact cross-fade values in [animations.md](animations.md).
 
 ## Design at Render Size
 
-An icon that looks great at 48px can collapse into mush at 16px. Details that read at large sizes — thin interior lines, tight counters, fine texture — blur or alias when small.
+An icon that looks great at 48px can collapse into mush at 16px. Details that read at large sizes (thin interior lines, tight counters, fine texture) blur or alias when small.
 
 - Test every icon at the smallest size it will render (often `16px`); it must stay recognizable there.
 - Prefer simplified glyphs for small contexts over scaling down detailed artwork.

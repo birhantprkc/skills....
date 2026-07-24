@@ -4,7 +4,7 @@ How to deploy color in an interface: semantic tokens, meaning, emphasis, and app
 
 ## One color, one meaning
 
-Use a color consistently for one purpose — interactive, destructive, featured — across the interface. If the brand color signals that text is interactive, that hue (anywhere within ±15°) on non-interactive text tells users to click something that isn't clickable.
+Use a color consistently for one purpose (interactive, destructive, featured) across the interface. If the brand color signals that text is interactive, that hue (anywhere within ±15°) on non-interactive text tells users to click something that isn't clickable.
 
 ```css
 /* Bad: brand blue means both "link" and "decorative heading" */
@@ -36,7 +36,7 @@ Name colors by role, not by appearance, and apply them only in that role: `--col
 .tag { background: var(--color-text-secondary); }
 ```
 
-If a role has no token yet, add the token; don't borrow one that happens to have the right value today. In Tailwind projects, this is the `@theme` block — see [gamut-and-tailwind.md](gamut-and-tailwind.md).
+If a role has no token yet, add the token; don't borrow one that happens to have the right value today. In Tailwind projects, this is the `@theme` block; see [gamut-and-tailwind.md](gamut-and-tailwind.md).
 
 ## One colored action per view
 
@@ -53,11 +53,11 @@ To emphasize the primary action, color the button's background, and leave every 
 <button class="bg-blue-600 text-white">Export</button>
 ```
 
-Put the color on the background, not the label: a filled `bg-blue-600 text-white` button reads as primary from across the room; blue label text on a neutral button reads as a link. Selected states (an active tab, a checked segment) may use the accent color on the glyph and label — that is state, not emphasis.
+Put the color on the background, not the label: a filled `bg-blue-600 text-white` button reads as primary from across the room; blue label text on a neutral button reads as a link. Selected states (an active tab, a checked segment) may use the accent color on the glyph and label: that is state, not emphasis.
 
 ## Color across cultures
 
-Color meaning is not universal. If a color is load-bearing — finance, status, alerts — verify the meaning holds in every locale you ship to.
+Color meaning is not universal. If a color is load-bearing (finance, status, alerts), verify the meaning holds in every locale you ship to.
 
 | Color | Common Western reading | Elsewhere |
 | --- | --- | --- |
@@ -70,7 +70,7 @@ The classic case: stock tickers show gains in green for English locales and in r
 
 ## Light, dark, and increased contrast
 
-Every custom color needs a light and a dark variant — dark mode derivation is covered in [palette-generation.md](palette-generation.md). Beyond that, users who enable increased contrast expect visibly stronger differentiation; supply it with `prefers-contrast`:
+Every custom color needs a light and a dark variant; dark mode derivation is covered in [palette-generation.md](palette-generation.md). Beyond that, users who enable increased contrast expect visibly stronger differentiation; supply it with `prefers-contrast`:
 
 ```css
 :root {
@@ -86,7 +86,7 @@ Every custom color needs a light and a dark variant — dark mode derivation is 
 }
 ```
 
-The increased-contrast variant widens the foreground/background lightness gap by at least `0.15` L over the default variant — then re-verify the pair against APCA's preferred thresholds (Lc 90 body, Lc 75 non-body).
+The increased-contrast variant widens the foreground/background lightness gap by at least `0.15` L over the default variant. Then re-verify the pair against APCA's preferred thresholds (Lc 90 body, Lc 75 non-body).
 
 Two testing rules:
 

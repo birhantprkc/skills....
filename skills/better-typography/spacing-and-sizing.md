@@ -86,7 +86,7 @@ Heading levels are also a navigation structure: screen readers jump through a pa
 
 Prefer unitless values: they scale with the font size, fixed values like `line-height: 24px` do not. Tailwind's `leading-snug`, `leading-normal` and `leading-relaxed` are sensible defaults that rarely need overriding.
 
-Tight line-height is for short text. Anything that wraps to three or more lines needs at least `1.4`, even in height-constrained places like list rows and cards — a tightly-leaded paragraph is harder to read than a taller row is to fit.
+Tight line-height is for short text. Anything that wraps to three or more lines needs at least `1.4`, even in height-constrained places like list rows and cards: a tightly-leaded paragraph is harder to read than a taller row is to fit.
 
 ```css
 /* Bad: card description at heading leading */
@@ -123,4 +123,4 @@ Fonts reserve space above and below the letters, which is why text sits slightly
 }
 ```
 
-Supported in Chromium (133+) and Safari (18.2+), not yet Firefox; treat it as progressive enhancement — unsupported browsers keep the default leading.
+Supported in Chromium (133+) and Safari (18.2+), not yet Firefox; treat it as progressive enhancement, where unsupported browsers keep the default leading.

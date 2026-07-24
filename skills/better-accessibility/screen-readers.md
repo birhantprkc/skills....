@@ -21,7 +21,7 @@ The canonical `.sr-only` pattern hides content visually while keeping it in the 
 }
 ```
 
-Use `1px` boxes, not `0` — some screen readers skip zero-sized elements. `white-space: nowrap` prevents words from being read as one run-together string. Never use `display: none` or `visibility: hidden` for this; both remove the content from assistive tech entirely.
+Use `1px` boxes, not `0`; some screen readers skip zero-sized elements. `white-space: nowrap` prevents words from being read as one run-together string. Never use `display: none` or `visibility: hidden` for this; both remove the content from assistive tech entirely.
 
 Tailwind ships this as `sr-only`. For skip links, add a focus variant that un-hides the element (`focus:not-sr-only`, or override the positioning on `:focus`).
 
@@ -31,10 +31,10 @@ Use it for context that sighted users get visually: `<span class="sr-only">Opens
 
 Work down this list and stop at the first match:
 
-1. **Focus moves there anyway** (opened modal, first invalid field on submit) — nothing extra needed; the focus move is the announcement.
-2. **Tied to a specific control** (field error, character count) — `aria-describedby` on the control; it's announced with the field.
-3. **Non-urgent, not tied to a control** (toast, "Saved", result count, loading state) — polite live region / `role="status"`.
-4. **Urgent and not tied to a control** (form-level failure, session expiring) — `role="alert"`.
+1. **Focus moves there anyway** (opened modal, first invalid field on submit): nothing extra needed; the focus move is the announcement.
+2. **Tied to a specific control** (field error, character count): `aria-describedby` on the control; it's announced with the field.
+3. **Non-urgent, not tied to a control** (toast, "Saved", result count, loading state): polite live region / `role="status"`.
+4. **Urgent and not tied to a control** (form-level failure, session expiring): `role="alert"`.
 
 ## Live regions
 
@@ -48,7 +48,7 @@ Live regions announce content that changes without a page load: toasts, validati
 The rules that make them actually work:
 
 - The region must exist **empty in the DOM on load**; inject the message text afterwards. Inserting the region together with its content usually isn't announced.
-- Default to polite. Overusing `assertive` is the most common live-region mistake — it interrupts whatever the user was reading.
+- Default to polite. Overusing `assertive` is the most common live-region mistake; it interrupts whatever the user was reading.
 - Keep messages short and self-contained; `aria-atomic="true"` re-reads the whole region on change.
 - Don't move focus to a toast; announce it and leave focus where the user is working. Give toasts a generous timeout or a dismiss button, and never put the only path to an action inside an auto-dismissing toast.
 
@@ -63,7 +63,7 @@ For loading states: set `aria-busy="true"` on the updating region, announce "Loa
 
 ## aria-hidden
 
-`aria-hidden="true"` removes an element and its whole subtree from assistive tech. Use it for decorative icons and content duplicated for visual effect. Never put it on (or above) a focusable element — that creates stops you can Tab to that don't exist for a screen reader. If you hide something interactive, also remove it from the tab order.
+`aria-hidden="true"` removes an element and its whole subtree from assistive tech. Use it for decorative icons and content duplicated for visual effect. Never put it on (or above) a focusable element; that creates stops you can Tab to that don't exist for a screen reader. If you hide something interactive, also remove it from the tab order.
 
 ## Alt text
 

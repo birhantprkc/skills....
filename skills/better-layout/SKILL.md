@@ -5,7 +5,7 @@ description: Layout structure for web interfaces, from grouping and alignment to
 
 # Layout that communicates structure
 
-Layout communicates before a single word is read: position, spacing, and alignment carry hierarchy on their own, and generous space beats decoration. A good layout also survives stress — resize it, translate it, mirror it for RTL, and it should still hold together. Apply these principles when building or reviewing UI code, and express every change in the project's existing styling system (Tailwind, plain CSS, CSS-in-JS); never introduce a second styling approach.
+Layout communicates before a single word is read: position, spacing, and alignment carry hierarchy on their own, and generous space beats decoration. A good layout also survives stress: resize it, translate it, mirror it for RTL, and it should still hold together. Apply these principles when building or reviewing UI code, and express every change in the project's existing styling system (Tailwind, plain CSS, CSS-in-JS); never introduce a second styling approach.
 
 Hit-area sizes and focus behavior are covered by the `better-accessibility` skill; visual polish (radius, shadows, animation) by the `better-ui` skill; line length and text spacing by the `better-typography` skill.
 
@@ -44,7 +44,7 @@ Keep at least `12px` between adjacent bordered or filled controls, and `24px` of
 
 ### 7. Inset Buttons from the Edges
 
-No edge-to-edge, full-width buttons pressed against the viewport. Keep buttons inside the layout margins — at least `16px` inline margin on mobile — with a visible radius.
+No edge-to-edge, full-width buttons pressed against the viewport. Keep buttons inside the layout margins (at least `16px` inline margin on mobile) with a visible radius.
 
 ### 8. Content Bleeds, Controls Float
 
