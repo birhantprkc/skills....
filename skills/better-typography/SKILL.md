@@ -104,23 +104,41 @@ To support right-to-left content, use direction-agnostic properties: `margin-inl
 
 ## Review Output Format
 
-Always present changes as a markdown table with **Before** and **After** columns. Include every change you made, not just a subset. Never list findings as separate "Before:" / "After:" lines outside of a table. Group changes by principle using a heading above each table, and keep each row focused on a single diff.
+Present every review in two parts.
+
+### Findings
+
+Group findings by principle. Use a markdown table with **Severity**, **Location**, **Before**, **After**, and **Why** columns. Include every change made or proposed, not a subset. Never use separate "Before:" / "After:" lines.
+
+- **Severity**: `HIGH` makes text unreadable, unavailable, or structurally misleading; `MEDIUM` harms hierarchy, wrapping, or scanning; `LOW` is isolated typographic polish.
+- **Location**: cite `path/to/file:line`. If the artifact has no source files, cite the exact screen and component instead.
+- **Before / After**: show the current typography and an actionable replacement.
+- **Why**: name the violated principle and its effect on readability or hierarchy.
+
+Consolidate a repeated systemic issue into one row and list every affected location. Omit principles with no findings.
 
 ### Example
 
 #### Tabular numbers
-| Before | After |
-| --- | --- |
-| `<span>{price}</span>` on live price | `<span className="tabular-nums">{price}</span>` |
-| `font-feature-settings: "tnum" 1` | `font-variant-numeric: tabular-nums` |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| MEDIUM | `src/Price.tsx:17` | `<span>{price}</span>` on a live price | `<span className="tabular-nums">{price}</span>` | Proportional digits cause changing values to shift |
+| LOW | `src/numbers.css:8` | `font-feature-settings: "tnum" 1` | `font-variant-numeric: tabular-nums` | The high-level property preserves fallback behavior |
 
 #### Line-height and measure
-| Before | After |
-| --- | --- |
-| `leading-none` on body paragraph | `leading-normal` (body needs `1.5`–`1.6`) |
-| Full-width article column | `max-w-2xl` (~65 characters per line at `16px`) |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| MEDIUM | `src/Article.tsx:33` | `leading-none` on a body paragraph | `leading-normal` (`1.5`–`1.6`) | Wrapped body text needs enough vertical separation |
+| MEDIUM | `src/article.css:12` | Full-width article column | `max-width` near 65 characters at `16px` | Long measures make lines hard to track |
 
-Rows should cite the specific file and property when it is not obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely.
+### Verification and Verdict
+
+After the findings:
+
+1. **Verification**: list the exact checks run and their observed results, including wrapping, hierarchy, text resizing, font loading, and dynamic-value stability when applicable. If a check was not run, state what still needs verification.
+2. **Verdict**: `Block` if any `HIGH` finding remains, `Needs changes` if only `MEDIUM` or `LOW` findings remain, and `Approve` only when no actionable findings remain.
+
+When there are no findings, omit the tables, state "No actionable typography findings", report verification, and end with `Approve`.
 
 ## Common Mistakes
 
@@ -148,4 +166,3 @@ Rows should cite the specific file and property when it is not obvious from the 
 | Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |
 | Thin/Light weight on `14px` UI text | Weight `400`+ below `18px`; thin weights are display-only |
 | `leading-none` on a three-line card description | At least `1.4` on any text that wraps to 3+ lines |
-

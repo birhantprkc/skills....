@@ -101,20 +101,38 @@ Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A plac
 
 ## Review Output Format
 
-Always present changes as a markdown table with **Before** and **After** columns. Include every change you made, not just a subset. Never list findings as separate "Before:" / "After:" lines outside of a table. Group changes by principle using a heading above each table, and keep each row focused on a single diff so the reader can scan the whole list quickly.
+Present every review in two parts.
+
+### Findings
+
+Group findings by principle. Use a markdown table with **Severity**, **Location**, **Before**, **After**, and **Why** columns. Include every change made or proposed, not a subset. Never use separate "Before:" / "After:" lines.
+
+- **Severity**: `HIGH` misleads users, obscures a consequence, or prevents recovery; `MEDIUM` makes a task harder to understand; `LOW` is isolated voice or consistency polish.
+- **Location**: cite `path/to/file:line`. If the artifact has no source files, cite the exact screen and component instead.
+- **Before / After**: quote the current copy and its complete replacement.
+- **Why**: name the violated principle and explain the comprehension or trust cost.
+
+Consolidate a repeated systemic issue into one row and list every affected location. Omit principles with no findings.
 
 ### Example
 
 #### Errors say how to fix
-| Before | After |
-| --- | --- |
-| "Invalid password" | "Choose a password with at least 8 characters" |
-| "We couldn't process your request" toast | Inline "Unable to save. Check your connection and try again." |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| MEDIUM | `src/PasswordField.tsx:36` | "Invalid password" | "Choose a password with at least 8 characters" | The error must say how to fix the problem |
+| HIGH | `src/Editor.tsx:81` | "We couldn't process your request" toast | Inline "Unable to save. Check your connection and try again." | The current message neither locates the failure nor offers recovery |
 
 #### Verb-first buttons
-| Before | After |
-| --- | --- |
-| "OK" on the delete confirmation | "Delete project" |
-| "Let's go!" | "Create account" |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| HIGH | `src/DeleteDialog.tsx:29` | "OK" on the delete confirmation | "Delete project" | A consequential action must repeat the consequence |
+| MEDIUM | `src/Signup.tsx:54` | "Let's go!" | "Create account" | The label must name the action |
 
-Rows should cite the specific file or component when it isn't obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely: empty tables add noise.
+### Verification and Verdict
+
+After the findings:
+
+1. **Verification**: list the exact checks run and their observed results, including the complete flow, variable interpolation, pluralization, and narrow-width wrapping when applicable. If a check was not run, state what still needs verification.
+2. **Verdict**: `Block` if any `HIGH` finding remains, `Needs changes` if only `MEDIUM` or `LOW` findings remain, and `Approve` only when no actionable findings remain.
+
+When there are no findings, omit the tables, state "No actionable writing findings", report verification, and end with `Approve`.

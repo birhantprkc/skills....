@@ -130,7 +130,7 @@ Exit animations should be softer and less attention-grabbing than enter animatio
     opacity: 0,
     y: -12,
     filter: "blur(4px)",
-    transition: { duration: 0.15, ease: "easeIn" },
+    transition: { duration: 0.15, ease: "easeOut" },
   }}
 >
   {content}
@@ -146,7 +146,7 @@ Exit animations should be softer and less attention-grabbing than enter animatio
   exit={{
     opacity: 0,
     x: "-100%",
-    transition: { duration: 0.2, ease: "easeIn" },
+    transition: { duration: 0.2, ease: "easeOut" },
   }}
 >
   {content}
@@ -160,14 +160,14 @@ Exit animations should be softer and less attention-grabbing than enter animatio
 .item-exit {
   opacity: 0;
   transform: translateY(-12px);
-  transition: opacity 150ms ease-in, transform 150ms ease-in;
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
 }
 
 /* Bad: dramatic exit that steals focus */
 .item-exit {
   opacity: 0;
   transform: translateY(-100%) scale(0.5);
-  transition: all 400ms ease-in;
+  transition: all 400ms ease-out;
 }
 
 /* Bad: no exit animation at all (element just vanishes) */

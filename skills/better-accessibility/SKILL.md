@@ -98,32 +98,49 @@ The page must work at 200% zoom and reflow at 320px width without horizontal scr
 
 ## Review Output Format
 
-Always present changes as a markdown table with **Before** and **After** columns. Include every change you made, not just a subset. Never list findings as separate "Before:" / "After:" lines outside of a table. Group changes by principle using a heading above each table, and keep each row focused on a single diff so the reader can scan the whole list quickly.
+Present every review in two parts.
+
+### Findings
+
+Group findings by principle. Use a markdown table with **Severity**, **Location**, **Before**, **After**, and **Why** columns. Include every change made or proposed, not a subset. Never use separate "Before:" / "After:" lines.
+
+- **Severity**: `HIGH` prevents a task, hides content from assistive technology, or creates a systemic accessibility failure; `MEDIUM` makes an interaction meaningfully harder; `LOW` is isolated polish.
+- **Location**: cite `path/to/file:line`. If the artifact has no source files, cite the exact screen and component instead.
+- **Before / After**: show the current implementation and an actionable replacement.
+- **Why**: name the violated principle and its user impact.
+
+Consolidate a repeated systemic issue into one row and list every affected location. Omit principles with no findings.
 
 ### Example
 
 #### Accessible names everywhere
-| Before | After |
-| --- | --- |
-| `<button><XIcon /></button>` | Added `aria-label="Close"`; marked the icon `aria-hidden="true"` |
-| `<a href="/settings"><GearIcon /></a>` | Added `aria-label="Settings"` |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| HIGH | `src/Dialog.tsx:42` | `<button><XIcon /></button>` | Add `aria-label="Close"`; mark the icon `aria-hidden="true"` | The icon-only control has no accessible name |
+| HIGH | `src/Nav.tsx:18` | `<a href="/settings"><GearIcon /></a>` | Add `aria-label="Settings"` | The link destination is unavailable to screen readers |
 
 #### Visible focus rings
-| Before | After |
-| --- | --- |
-| `button:focus { outline: none; }` | `button:focus-visible { outline: 2px solid; outline-offset: 2px; }` |
-| `focus:outline-none` on menu items | Replaced with `focus-visible:outline-2 focus-visible:outline-offset-2` |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| HIGH | `src/button.css:12` | `button:focus { outline: none; }` | `button:focus-visible { outline: 2px solid; outline-offset: 2px; }` | Keyboard users cannot see focus |
+| HIGH | `src/Menu.tsx:31` | `focus:outline-none` | `focus-visible:outline-2 focus-visible:outline-offset-2` | Menu navigation has no visible focus indicator |
 
 #### Errors that announce
-| Before | After |
-| --- | --- |
-| Error shown only as `border-red-500` | Added `aria-invalid="true"` + `aria-describedby="email-error"` with inline error text |
-| Submit disabled until the form is valid | Submit stays enabled; on failure, focus moves to the first invalid field |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| HIGH | `src/EmailField.tsx:27` | Error shown only as `border-red-500` | Add `aria-invalid="true"` + `aria-describedby="email-error"` with inline error text | Color alone neither explains nor announces the error |
+| MEDIUM | `src/SignupForm.tsx:64` | Submit disabled until the form is valid | Keep submit enabled; on failure, focus the first invalid field | A disabled action hides what must be fixed |
 
 #### Minimum hit area
-| Before | After |
-| --- | --- |
-| `size-4` icon-only button | Hit area extended to 44×44px with `after:absolute after:size-11` |
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| MEDIUM | `src/Toolbar.tsx:22` | `size-4` icon-only button | Extend the hit area to 44×44px with `after:absolute after:size-11` | The target is too small for reliable touch input |
 
-Rows should cite the specific file and the specific property that changed when it isn't obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely: empty tables add noise.
+### Verification and Verdict
 
+After the findings:
+
+1. **Verification**: list the exact checks run and their observed results, including keyboard traversal, accessible-name inspection, and screen-reader or automated checks when applicable. If a check was not run, state what still needs verification.
+2. **Verdict**: `Block` if any `HIGH` finding remains, `Needs changes` if only `MEDIUM` or `LOW` findings remain, and `Approve` only when no actionable findings remain.
+
+When there are no findings, omit the tables, state "No actionable accessibility findings", report verification, and end with `Approve`.
