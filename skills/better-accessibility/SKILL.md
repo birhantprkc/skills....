@@ -58,7 +58,7 @@ Icon-only buttons need a descriptive `aria-label`. Visible label text must appea
 
 ### 9. Don't Rely on Color Alone
 
-Status needs a redundant cue: icon, text, or underline alongside the color. Contrast floors: `4.5:1` for text, `3:1` for UI components and focus indicators (the WCAG 2 minimums; `better-colors` prefers APCA thresholds). For fixing contrast, use the `better-colors` skill.
+Status needs a redundant cue: icon, text, or underline alongside the color. Contrast floors: `4.5:1` for text, `3:1` for UI components and focus indicators (the WCAG 2 minimums; `better-colors` prefers APCA thresholds). When contrast fails, report the failing pair and the threshold it misses — don't change the project's colors unless asked; the `better-colors` skill covers measuring and, on request, fixing.
 
 ### 10. Honor prefers-reduced-motion
 

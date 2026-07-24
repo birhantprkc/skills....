@@ -96,6 +96,8 @@ WCAG AA contrast:
 
 Bigger, heavier letters stay legible at lower contrast.
 
+When text fails these floors, report the failing foreground/background pair and its measured ratio; changing the project's colors is a design decision that stays with the user (the `better-colors` skill covers measuring and, on request, fixing).
+
 ## Font smoothing
 
 On macOS text renders heavier than intended. Apply font smoothing once on the root layout so it covers all text. Tailwind's `antialiased` sets both properties:

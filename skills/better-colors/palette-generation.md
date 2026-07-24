@@ -10,7 +10,7 @@ Design system palettes use a numeric scale from 50 (lightest) to 950 (darkest). 
 | 9 | 50, 100, 200, 300, 500, 700, 800, 900, 950 |
 | 11 | 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
 
-9 steps is the standard default (matches Tailwind).
+11 steps matches Tailwind's default scales; use 9 as a leaner default when the `400`/`600` in-betweens aren't needed.
 
 ## Algorithm
 
