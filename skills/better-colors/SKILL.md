@@ -13,7 +13,7 @@ OKLCH is a perceptually uniform color space where the numbers actually mean what
 | --- | --- | --- |
 | Conversion | Hex/rgb/hsl to oklch | [color-conversion.md](color-conversion.md) |
 | Palettes | Generate scales, multi-hue, dark mode | [palette-generation.md](palette-generation.md) |
-| Contrast | APCA/WCAG checks, fixing failing contrast | [accessibility-contrast.md](accessibility-contrast.md) |
+| Contrast | APCA/WCAG checks, reporting failures, fixing on request | [accessibility-contrast.md](accessibility-contrast.md) |
 | Gamut & Tailwind | P3 fallbacks, `@theme` scales, gamut clamping | [gamut-and-tailwind.md](gamut-and-tailwind.md) |
 
 ## Why OKLCH
@@ -48,14 +48,14 @@ oklch(0.8 0.05 200 / 0.5)
 
 | Rule | Value |
 | --- | --- |
-| Light/dark boundary | L > 0.6 = light background → use dark text |
+| Light/dark boundary | L > 0.73 = light background → dark text; below it, light text still scores higher |
 | Lightness gap (light bg) | Foreground L < 0.35 when background L > 0.9 |
 | Lightness gap (dark bg) | Foreground L > 0.9 when background L < 0.25 |
 | Hue drift threshold | > 10° spread across palette steps = visible drift |
 | APCA body text | \|Lc\| >= 75 minimum, >= 90 preferred |
 | APCA non-body text | \|Lc\| >= 60 minimum |
 | WCAG 2 normal text | 4.5:1 AA, 7:1 AAA |
-| Contrast fix | Adjust L only; chroma has negligible effect |
+| Contrast fix (only when asked) | Adjust L only; chroma has negligible effect |
 
 ## Review Output Format
 
@@ -75,7 +75,7 @@ This keeps feedback scannable and diff-friendly. Each row is a self-contained ch
 | --- | --- |
 | Hex/rgb/hsl color in new code | Convert to `oklch()` |
 | HSL palette ramp with hue drift | Rebuild with constant oklch hue |
-| Failing contrast (check foreground vs its background using APCA) | Adjust oklch L channel, keep C and H |
+| Failing contrast (check foreground vs its background using APCA) | Report the pair, its measured Lc and the threshold it misses; change colors only when asked (then adjust L, keep C and H) |
 | High chroma without gamut check | Clamp to max chroma for the L/H in sRGB |
 | Same absolute C across different hues | Use same C% (percentage of max) for consistent vividness |
 | P3 color without sRGB fallback | Add `@media (color-gamut: p3)` pattern |
