@@ -16,9 +16,30 @@ Each skill lives in `skills/<skill-name>/`:
 
 Current skills: `better-interface` (user-invoked cross-discipline review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
 
+### Rule ownership
+
+| Skill | Owns |
+| --- | --- |
+| `better-interface` | Review orchestration, shared severity, consolidation, coverage, and final output |
+| `better-accessibility` | Semantic HTML, keyboard and focus behavior, accessible names, forms, assistive technology, and accessibility requirements |
+| `better-layout` | Spatial grouping, alignment, spacing, responsive structure, logical CSS properties, and spatial RTL behavior |
+| `better-writing` | Source wording, terminology, voice, tone, labels, errors, and empty-state copy |
+| `better-typography` | Visual text rendering, type systems, font behavior, wrapping mechanics, punctuation, and text-level bidi behavior |
+| `better-colors` | Color notation, palette construction, gamut, rendered-pair contrast measurement, and color remediation |
+| `better-ui` | Optional visual polish: surfaces, icons, and motion aesthetics after the underlying interaction is sound |
+
+When a concern crosses domains, keep the rule in the owner above and let other skills name only the handoff or secondary effect. In particular:
+
+- `better-accessibility` decides when contrast is required and the severity of a failure; `better-colors` owns measuring the rendered pair and changing its colors.
+- `better-accessibility` owns semantic heading structure; `better-typography` owns how heading levels render visually.
+- `better-layout` owns logical CSS properties and spatial mirroring; `better-typography` owns language metadata, punctuation, and mixed-direction text.
+- `better-typography` owns truncation mechanics; `better-layout` owns whether the surrounding layout has room or an expansion affordance; `better-writing` owns the source copy.
+- `better-accessibility` owns reduced-motion requirements; `better-ui` owns the optional animation recipe used when motion is appropriate.
+
 ## Authoring conventions
 
 - Principles are prescriptive and specific: exact CSS properties, exact values (e.g. scale `0.25` → `1`, blur `4px` → `0px`), not vague advice.
+- Match the degree of prescription to the decision: requirements may be unconditional, while design heuristics name the context and escape conditions before giving exact recipe values.
 - Skills instruct agents to match the target project's existing styling system (Tailwind vs. plain CSS vs. CSS-in-JS) rather than impose one.
 - Frontmatter `description` is the discovery surface; when adding or changing a skill's scope, update its trigger keywords accordingly.
 - Skill directory names use the `better-*` prefix; renaming a skill means renaming its directory and frontmatter `name` together.

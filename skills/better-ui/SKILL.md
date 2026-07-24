@@ -9,7 +9,9 @@ Great interfaces rarely come from a single thing. It's usually a collection of s
 
 When reviewing, slow the interface down: replay motion at 10% speed in the browser's Animations panel and walk every state: hover, focus, active, loading, empty. What feels off at 10% speed is what's subtly wrong at full speed.
 
-Typography (text wrapping, font smoothing, tabular numbers, spacing) is covered by the `better-typography` skill; use that for anything text-related. Accessibility (hit areas, focus states, keyboard support, ARIA) is covered by the `better-accessibility` skill. Layout structure (grouping, spacing between sections, breakpoints) is covered by the `better-layout` skill.
+Preserve the project's component library, tokens, density, and established motion language. These principles diagnose polish problems and provide recipes after a pattern is chosen; they do not authorize replacing an intentional product convention merely because another recipe is possible.
+
+Typography (text wrapping, font rendering, tabular numbers, spacing) is covered by the `better-typography` skill; use that for anything text-related. Accessibility (hit areas, focus states, keyboard support, ARIA, reduced motion) is covered by the `better-accessibility` skill. Layout structure (grouping, spacing between sections, breakpoints, spatial RTL) is covered by the `better-layout` skill.
 
 ## Quick Reference
 
@@ -48,15 +50,15 @@ Use a small fixed `translateY` instead of full height. Exits should be softer th
 
 ### 7. Contextual Icon Animations
 
-Animate icons with `opacity`, `scale`, and `blur` instead of toggling visibility. Use exactly these values: scale from `0.25` to `1`, opacity from `0` to `1`, blur from `4px` to `0px`. If the project has `motion` or `framer-motion` in `package.json`, match that package's import path (or the established nearby imports when both exist) and use `transition: { type: "spring", duration: 0.3, bounce: 0 }`; bounce must always be `0`. If no motion library is installed, keep both icons in the DOM (one absolute-positioned) and cross-fade with CSS transitions using `cubic-bezier(0.2, 0, 0, 1)`; this gives both enter and exit animations without any dependency.
+Use the project's existing icon-swap pattern first. When a contextual icon transition is appropriate and no canonical pattern exists, animate with opacity `0` → `1`, scale `0.25` → `1`, and blur `4px` → `0px`. If the project has `motion` or `framer-motion`, match its import path and use `{ type: "spring", duration: 0.3, bounce: 0 }`. If no motion library is installed, keep both icons in the DOM and cross-fade with CSS using `cubic-bezier(0.2, 0, 0, 1)`. Do not add this treatment to high-frequency interactions, and apply `better-accessibility` reduced-motion behavior.
 
 ### 8. Image Outlines
 
-Add a subtle `1px` outline with low opacity to images for consistent depth. The color must be pure black in light mode (`oklch(0 0 0 / 0.1)`) and pure white in dark mode (`oklch(1 0 0 / 0.1)`), never a near-black like slate, zinc, or any tinted neutral. A tinted outline picks up the surface color underneath it and reads as dirt on the image edge.
+When an image edge disappears into its surrounding surface and the project has no image-frame treatment, add an inset `1px` outline. Use the project's existing neutral separator token when it stays neutral across surfaces; otherwise use pure black at 10% in light mode and pure white at 10% in dark mode. Do not outline transparent artwork, logos, edge-to-edge media, or images whose established component already supplies separation.
 
 ### 9. Scale on Press
 
-A subtle `scale(0.96)` on click gives buttons tactile feedback. Always use `0.96`. Never use a value smaller than `0.95`: anything below feels exaggerated. Add a `static` prop to disable it when motion would be distracting.
+When the project's button language includes scale-based press feedback, use `scale(0.96)` and never go below `0.95`. Do not introduce scale feedback into an established button system that uses another active state. Add a disabling prop only when the reusable component genuinely needs both behaviors; otherwise keep the decision local and avoid expanding the API.
 
 ### 10. Skip Animation on Page Load
 
@@ -86,11 +88,11 @@ No custom animation on high-frequency interactions: the attention cost repeats o
 
 | Mistake | Fix |
 | --- | --- |
-| Same border radius on parent and child | Calculate `outerRadius = innerRadius + padding` |
+| Same border radius on closely nested parent and child | Calculate `outerRadius = innerRadius + padding` |
 | Icons look off-center | Adjust optically with padding or fix SVG directly |
 | Border used only to fake elevation | Use layered `box-shadow` with transparency; keep structural and state borders |
 | Jarring staged entrance or contextual exit | Stagger infrequent entrances and keep context-preserving exits subtle |
-| Animation plays on page load | Add `initial={false}` to `AnimatePresence` |
+| Stateful icon or toggle animates its default state on page load | Add `initial={false}` to that `AnimatePresence`; preserve intentional page entrances |
 | `transition: all` on elements | Specify exact properties |
 | First-frame animation stutter | Add `will-change: transform` (sparingly) |
 | Hairline icon beside bold text | Match the stroke width to the text weight |
@@ -100,11 +102,13 @@ No custom animation on high-frequency interactions: the attention cost repeats o
 
 ## Review Output Format
 
-Present every review in two parts.
+Use this format only when the user asks for a standalone UI-polish review. When `better-interface` orchestrates the review, provide domain evidence and findings to that skill and let its output format, severity scale, consolidation rules, cap, and verdict take precedence.
+
+Present the standalone review in two parts.
 
 ### Findings
 
-Group findings by principle. Use a markdown table with **Severity**, **Location**, **Before**, **After**, and **Why** columns. Include every change made or proposed, not a subset. Never use separate "Before:" / "After:" lines.
+Group all confirmed findings by principle. Use a markdown table with **Severity**, **Location**, **Before**, **After**, and **Why** columns. Never use separate "Before:" / "After:" lines.
 
 - **Severity**: `HIGH` makes an interaction misleading, unresponsive, or repeatedly disruptive; `MEDIUM` creates a noticeable craft or consistency problem; `LOW` is isolated polish.
 - **Location**: cite `path/to/file:line`. If the artifact has no source files, cite the exact screen and component instead.
@@ -124,8 +128,8 @@ Consolidate a repeated systemic issue into one row and list every affected locat
 #### Scale on press
 | Severity | Location | Before | After | Why |
 | --- | --- | --- | --- | --- |
-| LOW | `src/Button.tsx:19` | `<button className="...">` | Add `active:scale-[0.96] transition-transform` | Press feedback makes the control feel responsive |
-| MEDIUM | `src/button.css:24` | `scale(0.9)` on press | Raise to `scale(0.96)` | Anything below `0.95` feels exaggerated |
+| LOW | `src/Button.tsx:19` | Existing button system scales to `0.98` in one variant and `0.96` elsewhere | Standardize the scale-based variants on `0.96` | Once the project selects scale feedback, one value keeps the component family coherent |
+| MEDIUM | `src/button.css:24` | `scale(0.9)` in a scale-based button system | Raise to `scale(0.96)` | Anything below `0.95` feels exaggerated |
 
 ### Verification and Verdict
 

@@ -184,7 +184,7 @@ Exit animations should be softer and less attention-grabbing than enter animatio
 
 ## Contextual Icon Animations
 
-When icons appear or disappear contextually (on hover, on state change), animate them with `opacity`, `scale`, and `blur` rather than just toggling visibility.
+Use the project's existing icon-swap pattern first. When an icon appears or disappears contextually, motion adds useful continuity, the interaction is not high-frequency, and no canonical pattern exists, use the recipe below rather than abruptly toggling visibility. Skip it when the established system uses an instant swap or another transition.
 
 ### Motion Example
 
@@ -269,12 +269,12 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 
 | Animate | Don't animate |
 | --- | --- |
-| Icons that appear on hover (action buttons) | Static navigation icons |
+| Infrequent contextual action reveal | Icons revealed on every routine row hover |
 | State change icons (play → pause, like → liked) | Decorative icons |
 | Icons in contextual toolbars | Icons that are always visible |
 | Loading/success state indicators | Icon labels (text next to icon) |
 
-**Important:** Always use exactly these values for contextual icon animations; do not deviate:
+**Recipe values:** Once this pattern is selected, keep its values consistent:
 - `scale`: `0.25` → `1` (never use `0.5` or `0.6`)
 - `opacity`: `0` → `1`
 - `filter`: `"blur(4px)"` → `"blur(0px)"`
@@ -282,9 +282,9 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 
 ## Scale on Press
 
-A subtle scale-down on click gives buttons tactile feedback. Always use `scale(0.96)`. Never use a value smaller than `0.95`: anything below feels exaggerated. Use CSS transitions for interruptibility, so that if the user releases mid-press, it smoothly returns.
+A subtle scale-down on click can give buttons tactile feedback. Use this only when the project's button language includes scale-based press feedback; otherwise preserve the existing active-state treatment. Once selected, use `scale(0.96)` and never a value smaller than `0.95`. Use CSS transitions for interruptibility, so that if the user releases mid-press, it smoothly returns.
 
-Not every button needs this. Add a `static` prop to your button component that disables the scale effect when the motion would be distracting.
+Do not expand a shared component API by default. Add a `static` prop only when the reusable component genuinely needs both scaled and non-scaled variants; for a one-off exception, keep the decision local.
 
 ### CSS Example
 
@@ -318,7 +318,7 @@ Not every button needs this. Add a `static` prop to your button component that d
 
 ### Static Prop Pattern
 
-Extract the scale class into a variable and conditionally apply it based on a `static` prop:
+When the shared component genuinely needs both behaviors, extract the scale class into a variable and conditionally apply it based on a `static` prop:
 
 ```tsx
 const tapScale = "active:not-disabled:scale-[0.96]";

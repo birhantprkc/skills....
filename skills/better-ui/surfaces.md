@@ -52,7 +52,7 @@ This rule is most useful when nested surfaces are close together. If padding is 
 </div>
 ```
 
-Mismatched border radii on nested elements is one of the most common things that makes interfaces feel off. Always calculate concentrically.
+Mismatched border radii on closely nested surfaces is a common source of visual tension. Calculate concentrically when the layers share a visible, even inset; preserve an established component token when the layers are independent or the padding is intentionally asymmetric.
 
 ## Optical Alignment
 
@@ -60,25 +60,25 @@ When geometric centering looks off, align optically instead.
 
 ### Buttons with Text + Icon
 
-Use slightly less padding on the icon side to make the button feel balanced. A reliable rule of thumb is:
+When an icon makes otherwise symmetric padding look unbalanced, use slightly less padding on the icon side. A useful starting point is:
 `icon-side padding = text-side padding - 2px`.
 
 ```css
 /* Good: less padding on icon side */
 .button-with-icon {
-  padding-left: 16px;
-  padding-right: 14px; /* icon side = text side - 2px */
+  padding-inline-start: 16px;
+  padding-inline-end: 14px; /* trailing icon side = text side - 2px */
 }
 
 /* Bad: equal padding looks like icon is pushed too far right */
 .button-with-icon {
-  padding: 0 16px;
+  padding-inline: 16px;
 }
 ```
 
 ```tsx
 // Tailwind
-<button className="pl-4 pr-3.5 flex items-center gap-2">
+<button className="ps-4 pe-3.5 flex items-center gap-2">
   <span>Continue</span>
   <ArrowRightIcon />
 </button>
@@ -91,7 +91,7 @@ Play icons are triangular and their geometric center is not their visual center.
 ```css
 /* Good: optically centered */
 .play-button svg {
-  margin-left: 2px; /* shift right to account for triangle shape */
+  transform: translateX(2px); /* physical correction to the glyph itself */
 }
 
 /* Bad: geometrically centered but looks off */
@@ -109,14 +109,14 @@ Some icons have uneven visual weight. The best fix is adjusting the SVG directly
 // Adjust the viewBox or path to visually center the icon
 
 // Fallback: adjust with margin
-<span className="ml-px">
+<span className="translate-x-px">
   <StarIcon />
 </span>
 ```
 
 ## Shadows Instead of Borders
 
-For **buttons, cards, and containers** that use a border for depth or elevation, prefer replacing it with a subtle `box-shadow`. Shadows adapt to any background since they use transparency; solid borders don't. This also helps when using images or multiple colors as backgrounds: solid border colors don't work well on backgrounds other than the ones they were designed for.
+For **buttons, cards, and containers** whose border exists only for depth or elevation, consider the project's established shadow treatment. Transparent shadows can adapt across related surfaces, but they are not universally clearer than borders and still need verification on every supported background.
 
 **Do not apply this to dividers** (`border-b`, `border-t`, side borders) or any border whose purpose is layout separation rather than element depth. Those should stay as borders.
 
@@ -177,14 +177,13 @@ Apply the variable and add `transition-[box-shadow]` for a smooth hover:
 
 ## Image Outlines
 
-Add a subtle `1px` outline with low opacity to images. This creates consistent depth, especially in design systems where other elements use borders or shadows.
+Add an inset `1px` outline only when an image edge disappears into the surrounding surface and the project has no canonical image-frame treatment. Skip transparent artwork, logos, edge-to-edge media, and components that already provide separation.
 
-### Color rules (non-negotiable)
+### Color recipe
 
-- **Light mode**: pure black, `oklch(0 0 0 / 0.1)`.
-- **Dark mode**: pure white, `oklch(1 0 0 / 0.1)`.
-- Never use a near-black or near-white from the project palette (e.g. slate-900, zinc-900, `#0a0a0a`, `#111827`, `#f5f5f7`). Tinted outlines pick up the surrounding surface color and read as dirt on the image edge.
-- Never match the outline to the project's accent or ink color. The outline is a neutral separator, not a themed element.
+- Prefer the project's neutral separator token when it remains visually neutral across supported surfaces.
+- Without a suitable token, use pure black at 10% in light mode (`oklch(0 0 0 / 0.1)`) and pure white at 10% in dark mode (`oklch(1 0 0 / 0.1)`).
+- Do not use an accent color: the outline is a separator, not a themed state.
 
 ### Light Mode
 
@@ -214,6 +213,6 @@ img {
 />
 ```
 
-Use `outline-black/10` and `outline-white/10` specifically, not `outline-slate-*`, `outline-zinc-*`, `outline-neutral-*`, or any tinted scale.
+Use these black/white values when the project has no canonical neutral separator token.
 
 **Why outline instead of border?** `outline` never affects layout (no added width or height at any offset), and `outline-offset: -1px` draws the ring just inside the image edge so it hugs the corner radius instead of sitting outside it.
