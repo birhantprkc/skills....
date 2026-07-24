@@ -1,6 +1,6 @@
 # Grouping & Alignment
 
-How spacing, shapes, and shared edges communicate which things belong together.
+How spacing, shapes, shared edges, and ordering communicate what belongs together and what matters most.
 
 ## Group with Space, Not Lines
 
@@ -48,7 +48,7 @@ The inverse also holds: don't give static elements control styling. A non-clicka
 
 ## Align to Shared Edges
 
-Alignment is what makes a layout scannable: the eye tracks straight edges to move through content. Pick a small set of alignment edges and put everything on them.
+Pick a small set of alignment edges and put everything on them; the eye tracks straight edges to scan content.
 
 - Every stray edge — an icon 2px off the text edge, a card padded differently from its neighbor — reads as noise even when nobody can name the problem.
 - Use one consistent indentation step (`16px`) to express hierarchy; deeper nesting repeats the same step.
@@ -86,3 +86,38 @@ Always express horizontal position as leading/trailing, not left/right, so the l
 ```
 
 Reserve physical properties for things that genuinely refer to physical screen sides regardless of language — e.g. positioning relative to a device notch, or an element that must match a physical gesture direction.
+
+When the arrangement of elements encodes progression — star ratings, step indicators, progress bars — the sequence mirrors in RTL (stars fill from the trailing side). Flexbox and grid with logical properties mirror automatically; hand-positioned elements don't. Digit order inside numbers never reverses — that and other bidi text rules live in the `better-typography` skill.
+
+## Order by Importance
+
+Readers scan top-to-bottom and leading-to-trailing. Place content accordingly:
+
+- The most important information sits near the top and the leading edge; the further down and trailing something sits, the less attention it gets.
+- Give essential information room. Don't bury the one number the user came for under rows of secondary detail — push secondary content into collapsed sections, tabs, or detail views.
+- Within a row, the identifying content (name, title) leads; metadata and actions trail.
+
+```html
+<!-- Good: primary fact first, detail demoted -->
+<div>
+  <p class="text-2xl font-semibold">$4,320.00</p>
+  <p class="text-sm text-zinc-500">Available balance</p>
+</div>
+
+<!-- Bad: the key fact is buried below the fold of the card -->
+<div>
+  <p class="text-sm">Account 4402 · Opened 2019 · Standard tier</p>
+  <p class="text-sm">Last statement: June 30</p>
+  <p class="text-sm">Balance: $4,320.00</p>
+</div>
+```
+
+Think in **leading/trailing**, not left/right: combined with logical properties, the same hierarchy mirrors correctly in RTL locales.
+
+## Don't Overload the Entry Point
+
+The first screenful is a table of contents, not the whole book. If everything is prominent, nothing is:
+
+- One primary action per view (see `better-colors` for how color enforces this).
+- Group secondary actions behind a menu once they exceed two or three.
+- Prefer a short view that links deeper over a long view that shows everything at level one.

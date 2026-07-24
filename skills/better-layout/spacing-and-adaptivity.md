@@ -1,6 +1,6 @@
 # Spacing & Adaptivity
 
-Space between controls, margins against the viewport, and layouts that survive resizing and translation.
+Space between controls, margins against the viewport, hinting at off-screen content, and layouts that survive resizing and translation.
 
 ## Breathing Room Between Targets
 
@@ -54,11 +54,44 @@ Buttons pressed edge-to-edge against the viewport look like system chrome and cl
 
 Minimum `16px` inline margin on mobile; the button can still span the full content width inside those margins.
 
+## Progressive Disclosure Needs an Affordance
+
+Hiding complexity is good; hiding it without a cue is a trap. Every piece of off-screen or collapsed content needs a visible hint that it exists:
+
+- **Peeking items.** In a horizontal scroller or carousel, size items so the next one peeks `16–32px` past the container edge. A row of cards that ends exactly at the edge looks complete, and nobody scrolls it.
+- **Disclosure controls.** Collapsed sections get a chevron or "Show more" control; the label states what's hidden ("Show 12 more results"), not just "More".
+- **Truncation cues.** Clamped text shows an ellipsis and a way to expand — see `better-typography` for truncation mechanics.
+
+The peeking-scroller recipe — the container's padding creates the peek, snap points stay on the content edge:
+
+```css
+.scroller {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-inline: 24px;
+  scroll-padding-inline: 24px;
+  scroll-snap-type: x mandatory;
+}
+.scroller > * {
+  flex: 0 0 calc(100% - 48px - 24px); /* container minus margins minus peek */
+  scroll-snap-align: start;
+}
+```
+
+```html
+<!-- Tailwind: the 80% width keeps the next card's leading 16-32px visible -->
+<div class="flex gap-3 overflow-x-auto px-6 [scroll-padding-inline:1.5rem] snap-x snap-mandatory">
+  <div class="w-[80%] shrink-0 snap-start">…</div>
+  <div class="w-[80%] shrink-0 snap-start">…</div>
+</div>
+```
+
 ## Content Bleeds, Controls Float
 
 The two layers behave differently at the edges:
 
-- **Content layer** — backgrounds, hero media, and scrollable lists extend to the viewport edges. A page background that stops short of the edge looks like a rendering bug.
+- **Content layer** — backgrounds, hero media, and scrollable lists extend to the viewport edges.
 - **Control layer** — text and controls stay inside the layout margins and safe areas, floating above the content.
 
 ```css

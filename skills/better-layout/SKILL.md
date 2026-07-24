@@ -13,9 +13,8 @@ Hit-area sizes and focus behavior are covered by the `better-accessibility` skil
 
 | Category | When to Use |
 | --- | --- |
-| [Grouping & Alignment](grouping-and-alignment.md) | Space vs separators, control grouping, alignment edges, indentation |
-| [Hierarchy & Flow](hierarchy-and-flow.md) | Reading order, importance placement, progressive disclosure, RTL direction |
-| [Spacing & Adaptivity](spacing-and-adaptivity.md) | Spacing between targets, layout margins, full-bleed content, breakpoints, i18n growth |
+| [Grouping & Alignment](grouping-and-alignment.md) | Space vs separators, alignment edges, logical properties, importance ordering |
+| [Spacing & Adaptivity](spacing-and-adaptivity.md) | Spacing between targets, layout margins, progressive disclosure, full-bleed content, breakpoints, i18n growth |
 
 ## Core Principles
 
@@ -91,24 +90,3 @@ Always present changes as a markdown table with **Before** and **After** columns
 | `margin-left: 16px` on nested list | `margin-inline-start: 16px` |
 
 Rows should cite the specific file and the specific property that changed when it isn't obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely: empty tables add noise.
-
-## Review Checklist
-
-- [ ] Groups separated by space (≥2× the intra-group gap) before lines are added
-- [ ] Controls visually distinct from static content
-- [ ] Elements share alignment edges; indentation is a single consistent step
-- [ ] Logical properties used instead of physical left/right
-- [ ] Most important content at the top and leading edge
-- [ ] Scrollable collections show a peeking item or disclosure cue
-- [ ] ≥12px between adjacent bordered controls, ≥24px around borderless ones
-- [ ] Buttons inset from viewport edges with visible margins
-- [ ] Backgrounds bleed to the edges; controls respect margins and safe areas
-- [ ] Breakpoints are content-driven; layout holds structure as long as it fits
-- [ ] Text containers tolerate 30–40% longer strings
-- [ ] Primary actions can't be clipped by resizing or scrolling
-
-## Reference Files
-
-- [grouping-and-alignment.md](grouping-and-alignment.md): Space vs separators, control grouping, alignment edges, indentation, logical properties
-- [hierarchy-and-flow.md](hierarchy-and-flow.md): Reading order, importance placement, progressive disclosure, RTL direction
-- [spacing-and-adaptivity.md](spacing-and-adaptivity.md): Spacing between targets, layout margins, full-bleed content, breakpoints, i18n growth

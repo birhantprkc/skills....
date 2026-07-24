@@ -5,23 +5,22 @@ description: UX writing and interface copy, from voice and button labels to erro
 
 # Writing that disappears into the interface
 
-Good interface copy is invisible: it answers the question the user already had and gets out of the way. Clear and brief beats clever, consistency beats variety, and the best error message is the interaction redesigned so the error can't happen. Apply these principles when writing or reviewing any user-facing text.
+Clear and brief beats clever, consistency beats variety, and the best error message is the interaction redesigned so the error can't happen. Apply these principles when writing or reviewing any user-facing text.
 
-How copy renders — capitalization via `text-transform`, truncation, smart punctuation — is covered by the `better-typography` skill; error markup and announcements (`aria-invalid`, live regions) by the `better-accessibility` skill.
-
-## Quick Reference
-
-| Category | When to Use |
-| --- | --- |
-| [Voice & Language](voice-and-language.md) | Voice vs tone, addressing the reader, plain language, localizable phrasing |
-| [Labels & Links](labels-and-links.md) | Button labels, flow vocabulary, link text, settings labels, capitalization |
-| [Messages & States](messages-and-states.md) | Error messages, empty states, placeholders and hints |
+How copy renders — capitalization via `text-transform`, truncation, smart punctuation — is covered by the `better-typography` skill; error markup and announcements (`aria-invalid`, live regions) by the `better-accessibility` skill; room for translated strings by the `better-layout` skill.
 
 ## Core Principles
 
 ### 1. One Voice, Flexible Tone
 
-The product has one voice — plain, direct, consistent terms for the same things. Tone flexes with context: a success toast can be light, a data-loss warning never is. Keep a shared term list so the same action never has two names.
+The product has one voice — plain, direct, consistent terms for the same things. Keep a shared term list so the same action never has two names: if it's "Archive" in the menu, it isn't "Move to storage" in the toast. Tone flexes with the stakes:
+
+| Context | Tone |
+| --- | --- |
+| Success, onboarding, empty states | Warm, can be light |
+| Routine actions, settings | Neutral, minimal |
+| Errors, destructive confirmations | Calm, plain, zero playfulness |
+| Data loss, security | Serious, explicit |
 
 ### 2. Say "You", Never "The User"
 
@@ -29,35 +28,59 @@ Address the reader directly as "you". Avoid "we": it's ambiguous, and in errors 
 
 ### 3. Plain Words Over Clever Ones
 
-Choose easily understood words and delete every word that isn't needed. No idioms, colloquialisms, or humor that won't translate. Skip unnecessary gender: "Subscribers can post recipes", not "each subscriber can post his or her recipes". Match the input device: "tap" on touch, "click" with a pointer.
+Choose easily understood words and delete every word that isn't needed. No idioms, colloquialisms, or humor that won't translate. Skip unnecessary gender: "Subscribers can post recipes", not "each subscriber can post his or her recipes". Match the input device: "tap" on touch, "click" with a pointer, "select" when both are possible. Never build sentences by concatenating fragments around variables (`"You have " + n + " new messages"`) — word order changes per language; use full templated strings with proper pluralization.
 
 ### 4. Verb-First Buttons
 
-Button labels start with a verb naming the specific action: "Send", "Save draft", "Delete project" — never "OK!", "Let's go!", or bare "Yes"/"No" on consequential actions. Confirmation buttons repeat the consequence so the dialog is answerable without reading the body.
+Button labels start with a verb naming the specific action: "Send", "Save draft", "Delete project" — never "OK!", "Let's go!", or bare "Yes"/"No" on consequential actions. Confirmation buttons repeat the consequence so the dialog is answerable without reading the body: "Delete this project?" offers `Delete project` and `Cancel`, not `Yes` and `No`.
 
 ### 5. Consistent Flow Vocabulary
 
-Multi-step flows use one vocabulary: "Get Started" to enter, "Continue" or "Next" (pick one) to advance, "Done" to finish. Don't alternate between synonyms across steps.
+Multi-step flows use one vocabulary: "Get Started" to enter, "Continue" or "Next" (pick one) to advance, "Done" to finish. Alternating synonyms across steps makes users wonder if the buttons do different things.
 
 ### 6. Links Describe Their Destination
 
-Link text makes sense out of context — screen-reader users navigate by a list of the page's links. "Read the billing docs", never "Click here", and never a bare "Learn more" when several appear on one page.
+Link text makes sense out of context — screen-reader users navigate by a list of the page's links. "Read the billing docs", never "Click here" (which also fails the device-verb rule on touch), and never a bare "Learn more" when several appear on one page — suffix each: "Learn more about exports".
 
 ### 7. One Capitalization Policy
 
-Pick title case or sentence case per element type (all buttons, all headings) and apply it consistently; sentence case is the safer default. "Save Changes" beside "Discard changes" reads as sloppiness.
+Pick title case or sentence case per element type (all buttons, all headings) and apply it consistently; sentence case is the safer default — calmer, no per-word case rules, localizes cleanly. "Save Changes" beside "Discard changes" reads as sloppiness.
 
-### 8. Errors Say How to Fix, Next to Where It Broke
+### 8. Settings Describe the ON State
 
-An error is an instruction, adjacent to the failing field: "Choose a password with at least 8 characters", not "That password is too short". No blame, no "oops", no exclamation marks. If the same error keeps firing, redesign the interaction instead of rewording it.
+Label a toggle for what happens when it's on: "Send read receipts" — users infer the off state. Never label the negative ("Don't send read receipts"), which turns the toggle into a double negative. Link directly to a referenced setting instead of describing the path to it: a "Notification settings" link, not "Go to Settings > Notifications > Email".
 
-### 9. Empty States Point Forward
+### 9. Errors Say How to Fix, Next to Where It Broke
 
-An empty state says what this place is and how to fill it, with one clear next action ("Create your first project"). Never park crucial persistent information there — it disappears the moment content exists.
+An error is an instruction, adjacent to the failing field:
 
-### 10. Placeholders Are Examples, Not Labels
+| Bad | Good |
+| --- | --- |
+| That password is too short | Choose a password with at least 8 characters |
+| Invalid name | Use only letters for your name |
+| Oops! Something went wrong. | Unable to save. Check your connection and try again. |
 
-Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A placeholder is never the field's only label; hints are stated positively before the user gets it wrong ("Use only letters"), not as prohibitions after.
+No blame, no "oops", no exclamation marks. Phrase hints positively ("Use only letters", not "Don't use numbers or symbols") and show them before the mistake, not after. If the same error keeps firing for many users, redesign the interaction instead of rewording it.
+
+### 10. Empty States Point Forward
+
+An empty state says what this place is and how to fill it, with one clear next action:
+
+```html
+<!-- Bad: a shrug -->
+<p>No results.</p>
+
+<!-- Good: orientation plus a next step -->
+<p class="font-medium">No projects yet</p>
+<p class="text-sm text-zinc-500">Projects keep your tasks and files together.</p>
+<button class="mt-4">Create a project</button>
+```
+
+Search and filter empty states name the query and offer an exit: "No results for 'quarterly'. Clear filters". Never park crucial persistent information in an empty state — it disappears the moment content exists.
+
+### 11. Placeholders Are Examples, Not Labels
+
+Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A placeholder is never the field's only label — it vanishes on input; every field keeps a visible label.
 
 ## Common Mistakes
 
@@ -69,10 +92,11 @@ Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A plac
 | "Continue" on step 2, "Next" on step 3 | One flow vocabulary throughout |
 | "Click here" or bare "Learn more" link | Describe the destination: "Read the billing docs" |
 | "Save Changes" beside "Discard changes" | One capitalization policy per element type |
+| "Don't send read receipts" toggle | Label the ON state: "Send read receipts" |
 | "Oops! Something went wrong." | Say what to do, next to the failing field |
-| "Don't use numbers or symbols" hint | Phrase positively: "Use only letters" |
 | "No results." as the whole empty state | Orient and point forward with a next action |
 | Placeholder doing the label's job | Visible label; placeholder shows the format |
+| `"You have " + n + " messages"` | Full templated strings with pluralization |
 
 ## Review Output Format
 
@@ -93,22 +117,3 @@ Always present changes as a markdown table with **Before** and **After** columns
 | "Let's go!" | "Create account" |
 
 Rows should cite the specific file or component when it isn't obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely: empty tables add noise.
-
-## Review Checklist
-
-- [ ] Same action has the same name everywhere; tone fits each context
-- [ ] Reader addressed as "you"; no "the user", no "we" in errors
-- [ ] No idioms, jargon, or unnecessary gender; phrasing survives translation
-- [ ] Buttons start with a verb naming the action
-- [ ] One flow vocabulary: Get Started / Continue / Done
-- [ ] Links describe their destination and work out of context
-- [ ] One capitalization policy per element type
-- [ ] Errors are adjacent, actionable, and blame-free
-- [ ] Empty states orient and offer one next action
-- [ ] Every field has a visible label; placeholders only show format
-
-## Reference Files
-
-- [voice-and-language.md](voice-and-language.md): Voice vs tone, addressing the reader, plain language, localizable phrasing
-- [labels-and-links.md](labels-and-links.md): Button labels, flow vocabulary, link text, settings labels, capitalization
-- [messages-and-states.md](messages-and-states.md): Error messages, empty states, placeholders and hints

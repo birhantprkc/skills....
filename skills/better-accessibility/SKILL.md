@@ -127,29 +127,3 @@ Always present changes as a markdown table with **Before** and **After** columns
 
 Rows should cite the specific file and the specific property that changed when it isn't obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely: empty tables add noise.
 
-## Review Checklist
-
-- [ ] Native elements used before ARIA; no `<div onClick>`
-- [ ] `:focus-visible` rings on all interactive elements, never removed without replacement
-- [ ] Full keyboard path: Escape closes, arrows navigate composites; no positive `tabindex`
-- [ ] Modals trap focus with `inert` and restore it on close
-- [ ] Interactive elements have 44×44px hit areas for touch/mobile, or at least 40×40px in desktop UI
-- [ ] Every control has a label, `autocomplete`, correct `type`/`inputmode`; paste never blocked
-- [ ] Submit stays enabled; errors use `aria-invalid` + `aria-describedby`; first invalid field focused
-- [ ] Icon-only controls have `aria-label`; decorative elements `aria-hidden`
-- [ ] No color-only status cues; text and UI contrast meet `4.5:1` / `3:1`
-- [ ] Motion wrapped in `prefers-reduced-motion: no-preference`
-- [ ] Autoplaying media has a visible pause control; important toasts don't auto-dismiss
-- [ ] Dynamic updates announced via pre-rendered polite live regions
-- [ ] Alt text matches image purpose (decorative `""`, functional = action)
-- [ ] One `<h1>`, no skipped levels, one `<main>`, skip link present
-- [ ] Layout survives 200% zoom and 320px reflow; zoom never blocked
-
-## Reference Files
-
-- [focus-and-keyboard.md](focus-and-keyboard.md): Focus rings, skip links, tabindex, focus trapping, APG keyboard patterns
-- [semantics-and-aria.md](semantics-and-aria.md): Native elements first, button vs link, landmarks, accessible names, disabled states
-- [forms.md](forms.md): Labels, autocomplete, error messaging, input types
-- [screen-readers.md](screen-readers.md): Visually hidden content, live regions, toasts, alt text, SVG
-- [hit-areas.md](hit-areas.md): Target sizes, expanding hit areas, collision rules
-- [motion-and-zoom.md](motion-and-zoom.md): `prefers-reduced-motion`, autoplay and timed UI, 200% zoom, reflow, rem vs px

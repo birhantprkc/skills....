@@ -4,7 +4,7 @@ How to deploy color in an interface: semantic tokens, meaning, emphasis, and app
 
 ## One color, one meaning
 
-Use a color consistently for one purpose across the interface. If the brand color signals that text is interactive, that same color (or a near variant) on non-interactive text tells users to click something that isn't clickable.
+Use a color consistently for one purpose — interactive, destructive, featured — across the interface. If the brand color signals that text is interactive, that hue (anywhere within ±15°) on non-interactive text tells users to click something that isn't clickable.
 
 ```css
 /* Bad: brand blue means both "link" and "decorative heading" */
@@ -16,11 +16,9 @@ a { color: oklch(0.623 0.188 259.815); }
 .section-title { color: oklch(0.279 0.041 260.031); }
 ```
 
-The same rule applies to status colors: if red means destructive, don't also use red for "featured" badges or sale prices in the same interface.
-
 ## Semantic tokens over raw values
 
-Name colors by role, not by appearance, and apply them only in that role. A token's name is a contract: `--color-text-secondary` describes muted foreground text, and using it as a background breaks every future theme change that assumes the contract.
+Name colors by role, not by appearance, and apply them only in that role: `--color-text-secondary` is muted foreground text, and using it as a background breaks every future theme change that assumes the role.
 
 ```css
 /* Good: tokens named by role, used in that role */
@@ -88,7 +86,7 @@ Every custom color needs a light and a dark variant — dark mode derivation is 
 }
 ```
 
-The increased-contrast variant should be a significantly larger lightness gap against its background, not a token nudge — recheck the pair with APCA after defining it.
+The increased-contrast variant widens the foreground/background lightness gap by at least `0.15` L over the default variant — then re-verify the pair against APCA's preferred thresholds (Lc 90 body, Lc 75 non-body).
 
 Two testing rules:
 

@@ -104,7 +104,7 @@ To support right-to-left content, use direction-agnostic properties: `margin-inl
 
 ## Review Output Format
 
-Always present changes as a markdown table with **Before** and **After** columns. Include every change you made, not just a subset. Never list findings as separate "Before:" / "After:" lines outside of a table. Group changes by principle using a heading above each table, and keep each row focused on a single diff. Write every **After** snippet in the styling system the project already uses.
+Always present changes as a markdown table with **Before** and **After** columns. Include every change you made, not just a subset. Never list findings as separate "Before:" / "After:" lines outside of a table. Group changes by principle using a heading above each table, and keep each row focused on a single diff.
 
 ### Example
 
@@ -146,28 +146,6 @@ Rows should cite the specific file and property when it is not obvious from the 
 | `margin-left` in RTL-capable UI | `margin-inline-start` |
 | Selectable button labels in native-feel UI | `user-select: none`, keep selection on real content |
 | Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |
-| Tailwind classes dropped into a CSS-in-JS codebase (or the reverse) | Express the fix in the styling system the project already uses |
 | Thin/Light weight on `14px` UI text | Weight `400`+ below `18px`; thin weights are display-only |
 | `leading-none` on a three-line card description | At least `1.4` on any text that wraps to 3+ lines |
 
-## Review Checklist
-
-- [ ] Web fonts are `.woff2`
-- [ ] `font-weight` / `font-variant-*` used instead of raw axis and feature tags
-- [ ] `font-synthesis: none` set; no faked weights or styles
-- [ ] Sizes come from the type scale, no one-off values
-- [ ] Heading sizes descend with level (`h1` ≥ `h2` ≥ `h3`…), levels stay visually distinct, none skipped
-- [ ] Headings ~`1.1` line-height, body `1.5`–`1.6`, unitless
-- [ ] Large headings have slightly negative tracking, small uppercase labels positive
-- [ ] Long-form text capped around 60–75 characters per line
-- [ ] Headings use `text-wrap: balance`, body uses `text-wrap: pretty`
-- [ ] Changing numbers use `tabular-nums`
-- [ ] Truncated content is reachable in full somewhere
-- [ ] Copy stored in natural case, presentation via `text-transform`
-- [ ] Underlines use `from-font` or tuned thickness, offset and skip-ink
-- [ ] Inputs are `16px`+ on mobile viewports
-- [ ] Text sizes and contrast meet the floors (`16px` body, `4.5:1` / `3:1`)
-- [ ] `antialiased` applied once on the root layout
-- [ ] Directional properties are logical (`inline-start`, `start`)
-- [ ] Any styled `::selection` stays legible
-- [ ] No thin weights below `18px`; 3+ line text keeps line-height ≥ `1.4`

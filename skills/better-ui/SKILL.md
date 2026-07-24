@@ -117,26 +117,3 @@ Always present changes as a markdown table with **Before** and **After** columns
 | `scale(0.9)` on press | Raised to `scale(0.96)`; anything below `0.95` feels exaggerated |
 
 Rows should cite the specific file and the specific property that changed when it isn't obvious from the snippet. If a principle was reviewed but nothing needed to change, omit that table entirely: empty tables add noise.
-
-## Review Checklist
-
-- [ ] Nested rounded elements use concentric border radius
-- [ ] Icons are optically centered, not just geometrically
-- [ ] Shadows used instead of borders where appropriate
-- [ ] Enter animations are split and staggered
-- [ ] Exit animations are subtle
-- [ ] Images have subtle outlines
-- [ ] Buttons use scale on press where appropriate
-- [ ] AnimatePresence uses `initial={false}` for default-state elements
-- [ ] No `transition: all`, only specific properties
-- [ ] `will-change` only on transform/opacity/filter, never `all`
-- [ ] Icon stroke weight matches adjacent text weight; one weight per set
-- [ ] Icons use `currentColor` with CSS-driven states; outline default, fill active
-- [ ] No custom animation on high-frequency interactions; animated states have static cues
-
-## Reference Files
-
-- [surfaces.md](surfaces.md): Border radius, optical alignment, shadows, image outlines
-- [animations.md](animations.md): Interruptible animations, enter/exit transitions, icon animations, scale on press, motion restraint
-- [icons.md](icons.md): Icon stroke weight, states via `currentColor`, outline vs fill, sizing, RTL flipping
-- [performance.md](performance.md): Transition specificity, `will-change` usage

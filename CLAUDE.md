@@ -10,8 +10,9 @@ A collection of agent skills for building great product interfaces (typography, 
 
 Each skill lives in `skills/<skill-name>/`:
 
-- `SKILL.md` — the entry point. YAML frontmatter with `name` (matching the directory) and `description` (one-line summary, "Use when..." guidance, and a "Triggers on ..." keyword list that agents match against). The body opens with a short philosophy paragraph, then a **Quick Reference** table linking to the reference files, then numbered **Core Principles**.
-- Supporting `.md` reference files — deeper topic docs linked from the Quick Reference table via relative paths (e.g. `typography.md`, `palette-generation.md`).
+- `SKILL.md` — the entry point. YAML frontmatter with `name` (matching the directory) and `description` (one-line summary, "Use when..." guidance, and a "Triggers on ..." keyword list that agents match against). The body: a short philosophy paragraph (one or two lines, with hand-off lines naming sibling skills that own adjacent topics), a **Quick Reference** table linking to reference files (only when the skill has them), numbered **Core Principles**, a **Common Mistakes** table, and a **Review Output Format** section. No review checklists and no trailing reference-file index — the Quick Reference is the only file listing.
+- Supporting `.md` reference files are optional — single-file skills are fine. Add one only when it carries depth beyond the principle statements (recipes, code patterns, lookup tables), not to restate SKILL.md in longer form. Link via relative paths from the Quick Reference table.
+- Each rule lives in exactly one skill; other skills point to it by skill name in backticks (e.g. `better-layout`), never via cross-skill relative links.
 
 Current skills: `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
 
