@@ -21,3 +21,9 @@ A set of agent skills for reviewing and improving product interfaces, from full-
 ```bash
 npx skills add jakubkrehel/skills
 ```
+
+The command discovers the full collection and lets you choose which skills to install. `better-interface` coordinates the other six skills, so install the complete collection when you want holistic reviews:
+
+```bash
+npx skills add jakubkrehel/skills --skill '*'
+```

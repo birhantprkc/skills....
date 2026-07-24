@@ -17,14 +17,16 @@ OKLCH is a perceptually uniform color space where the numbers actually mean what
 | Gamut & Tailwind | P3 fallbacks, `@theme` scales, gamut clamping | [gamut-and-tailwind.md](gamut-and-tailwind.md) |
 | Usage | Semantic tokens, one meaning per color, primary-action emphasis, appearance variants | [color-usage.md](color-usage.md) |
 
-## Why OKLCH
+## Core Principles
+
+### 1. Use a Perceptual Color Space
 
 - **Perceptual uniformity.** Equal L steps = equal brightness. `oklch(0.5 ...)` is visually mid. HSL's `lightness: 50%` varies wildly by hue.
 - **Stable hue.** HSL blue shifts toward purple as lightness changes. OKLCH hue stays constant across the full lightness range.
 - **Independent chroma.** Chroma is an absolute measure of colorfulness that doesn't depend on lightness. HSL saturation does.
 - **Finite gamut.** Not every oklch value maps to a displayable sRGB color. High-chroma values at certain hues will clip; gamut awareness is required.
 
-## OKLCH Syntax
+### 2. Write and Format OKLCH Consistently
 
 ```
 oklch(L C H)
@@ -43,9 +45,9 @@ oklch(0.637 0.237 25.331)
 oklch(0.8 0.05 200 / 0.5)
 ```
 
-**Formatting:** L and C use 3 decimal places, H uses up to 3. Drop trailing zeros. Format `-0` as `0`. Browser support: Baseline 2023, 96%+ global coverage.
+Use three decimal places for L and C and up to three for H. Drop trailing zeros and format `-0` as `0`. OKLCH is Baseline 2023; when support requirements are unusually broad, check the target project's browser matrix instead of relying on a fixed global-coverage percentage.
 
-## Key Thresholds
+### 3. Measure Contrast, Gamut, and Palette Behavior
 
 | Rule | Value |
 | --- | --- |
@@ -56,7 +58,25 @@ oklch(0.8 0.05 200 / 0.5)
 | APCA body text | \|Lc\| >= 75 minimum, >= 90 preferred |
 | APCA non-body text | \|Lc\| >= 60 minimum |
 | WCAG 2 normal text | 4.5:1 AA, 7:1 AAA |
-| Contrast fix (only when asked) | Adjust L only; chroma has negligible effect |
+| Contrast fix (only when asked) | Adjust L first; preserve C and H when possible, then remeasure the rendered pair |
+
+## Common Mistakes
+
+| Issue | Fix |
+| --- | --- |
+| Hex/rgb/hsl color in new code | Convert to `oklch()` |
+| HSL palette ramp with hue drift | Rebuild with constant oklch hue |
+| Failing contrast (check foreground vs its background using APCA) | Report the pair, its measured Lc and the threshold it misses; change colors only when asked (then adjust L, keep C and H) |
+| High chroma without gamut check | Clamp to max chroma for the L/H in sRGB |
+| Same absolute C across different hues | Use same C% (percentage of max) for consistent vividness |
+| P3 color without sRGB fallback | Add `@media (color-gamut: p3)` pattern |
+| Dark mode created by mechanically reversing the light palette | Use the light palette as a starting point, then tune chroma and lightness and recheck every foreground/background pair |
+| Hex in Tailwind v4 `@theme` | Convert to oklch values |
+| Alpha with comma syntax | Use slash: `oklch(L C H / alpha)` |
+| Same hue means two different things (link color reused decoratively) | One color, one meaning; give the second use a neutral |
+| Semantic token used outside its role (separator as text) | Add a token for the missing role; never borrow by value |
+| Several colored control backgrounds in one view | Fill only the single primary action; secondaries stay neutral |
+| Palette verified only in light mode | Recheck every foreground/background pair in both appearances |
 
 ## Review Output Format
 
@@ -87,21 +107,3 @@ After the findings:
 2. **Verdict**: `Block` if any `HIGH` finding remains, `Needs changes` if only `MEDIUM` or `LOW` findings remain, and `Approve` only when no actionable findings remain.
 
 When there are no findings, omit the table, state "No actionable color findings", report verification, and end with `Approve`.
-
-## Common Mistakes
-
-| Issue | Fix |
-| --- | --- |
-| Hex/rgb/hsl color in new code | Convert to `oklch()` |
-| HSL palette ramp with hue drift | Rebuild with constant oklch hue |
-| Failing contrast (check foreground vs its background using APCA) | Report the pair, its measured Lc and the threshold it misses; change colors only when asked (then adjust L, keep C and H) |
-| High chroma without gamut check | Clamp to max chroma for the L/H in sRGB |
-| Same absolute C across different hues | Use same C% (percentage of max) for consistent vividness |
-| P3 color without sRGB fallback | Add `@media (color-gamut: p3)` pattern |
-| Dark mode with hand-picked colors | Derive from light palette by reversing L mapping |
-| Hex in Tailwind v4 `@theme` | Convert to oklch values |
-| Alpha with comma syntax | Use slash: `oklch(L C H / alpha)` |
-| Same hue means two different things (link color reused decoratively) | One color, one meaning; give the second use a neutral |
-| Semantic token used outside its role (separator as text) | Add a token for the missing role; never borrow by value |
-| Several colored control backgrounds in one view | Fill only the single primary action; secondaries stay neutral |
-| Palette verified only in light mode | Recheck every foreground/background pair in both appearances |

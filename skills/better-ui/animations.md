@@ -41,7 +41,7 @@ Users change intent mid-interaction. If animations aren't interruptible, the int
 
 ## Enter Animations: Split and Stagger
 
-Don't animate a single large container. Break content into semantic chunks and animate each individually.
+Use this pattern for infrequent staged entrances where sequence helps communicate hierarchy, such as the first load of a page hero, success state, or empty state. Break a large container into semantic chunks and animate each individually. Do not stagger routine interactions such as row hovers, keystrokes, or repeated tab changes.
 
 ### Step by Step
 
@@ -170,7 +170,7 @@ Exit animations should be softer and less attention-grabbing than enter animatio
   transition: all 400ms ease-out;
 }
 
-/* Bad: no exit animation at all (element just vanishes) */
+/* Sometimes correct: remove immediately when motion adds no context */
 .item-exit {
   display: none;
 }
@@ -180,13 +180,15 @@ Exit animations should be softer and less attention-grabbing than enter animatio
 - Use a small fixed `translateY` (e.g., `-12px`) instead of the full container height
 - Keep some directional movement to indicate where the element went
 - Exit duration should be shorter than enter duration (150ms vs 300ms)
-- Don't remove exit animations entirely; subtle motion preserves context
+- Use a subtle exit when it preserves spatial context. Remove immediately when motion adds no information, the interaction repeats frequently, or reduced motion is requested.
 
 ## Contextual Icon Animations
 
 When icons appear or disappear contextually (on hover, on state change), animate them with `opacity`, `scale`, and `blur` rather than just toggling visibility.
 
 ### Motion Example
+
+This example uses the `motion` package. If the project instead has `framer-motion`, import the same APIs from `"framer-motion"`; never mix an installed package with the other package's import path.
 
 ```tsx
 import { AnimatePresence, motion } from "motion/react";
@@ -259,9 +261,9 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 | **Enter animation** | Yes | Yes |
 | **Exit animation** | Yes (via `AnimatePresence`) | Yes (cross-fade, icon never unmounts) |
 | **Spring physics** | Yes | No, use `cubic-bezier(0.2, 0, 0, 1)` as approximation |
-| **When to use** | Project already uses `motion/react` | No motion dependency, or keeping bundle small |
+| **When to use** | Project already uses `motion` or `framer-motion` | No motion dependency, or keeping bundle small |
 
-**Rule:** Check the project's `package.json` for `motion` or `framer-motion`. If present, use the Motion approach. If not, use the CSS cross-fade pattern; don't add a dependency just for icon transitions.
+**Rule:** Check the project's `package.json`. Import from `"motion/react"` when `motion` is installed, or from `"framer-motion"` when `framer-motion` is installed. If both exist, follow the imports already used by the component or its nearest peers. If neither is present, use the CSS cross-fade pattern; don't add a dependency just for icon transitions.
 
 ### When to Animate Icons
 

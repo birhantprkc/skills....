@@ -50,7 +50,7 @@ Every input gets a `<label for>` or wrapping `<label>`; a placeholder is never a
 
 ### 7. Errors That Announce
 
-Keep submit enabled until the request starts, then disable with a spinner while keeping the original label. Validate on submit: mark failing fields with `aria-invalid="true"`, point `aria-describedby` at the inline error text, and focus the first invalid field. When a control must look unavailable, prefer `aria-disabled="true"` (stays focusable and discoverable) over `disabled`.
+Keep submit enabled until the request starts, then disable with a spinner while keeping the original label. Validate on submit: mark failing fields with `aria-invalid="true"`, point `aria-describedby` at the inline error text, and focus the first invalid field. Use native `disabled` when a native control is genuinely unavailable. Use `aria-disabled="true"` only when retaining focusability or discoverability is intentional; then block pointer, keyboard, and form behavior in code and style the state explicitly.
 
 ### 8. Accessible Names Everywhere
 

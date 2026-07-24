@@ -35,7 +35,7 @@ WCAG defines "large text" in points: 18pt ≈ `24px`, or 14pt bold ≈ `18.5px`.
 
 ## Fixing contrast with oklch (on request)
 
-In hex/rgb, fixing contrast means trial and error across three channels. In oklch, contrast is controlled by **lightness (L) alone**: adjust the L distance between the foreground and its background:
+In hex/rgb, fixing contrast means trial and error across three channels. In oklch, lightness (L) is the clearest first lever: adjust the L distance between the foreground and its background while preserving C and H when possible:
 
 ```css
 /* Failing: text too close in lightness to its background (Lc ≈ 50) */
@@ -49,7 +49,7 @@ background: oklch(0.95 0.02 250); /* background: unchanged */
 
 Note that mid-lightness backgrounds cap the achievable contrast: on a background of L 0.75, even pure black text only reaches about Lc 60; body text needs a background near the light or dark extreme.
 
-Chroma has negligible effect on contrast: always adjust L, never C.
+Adjust L first, then remeasure the rendered foreground/background pair. Chroma and hue can still affect the converted color, gamut mapping, and measured contrast; reduce C when needed to keep the adjusted color in gamut.
 
 ## Quick lightness gap guide
 

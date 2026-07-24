@@ -30,9 +30,9 @@ Outer radius = inner radius + padding. Mismatched radii on nested elements is th
 
 When geometric centering looks off, align optically. Buttons with icons, play triangles, and asymmetric icons all need manual adjustment.
 
-### 3. Shadows Over Borders
+### 3. Shadows for Elevation, Borders for Structure
 
-Layer multiple transparent `box-shadow` values for natural depth. Shadows adapt to any background; solid borders don't.
+For buttons, cards, and containers whose border exists only to create depth, prefer layered transparent `box-shadow` values. Keep borders that communicate structure or state: dividers, layout separators, and selected or focus states.
 
 ### 4. Interruptible Animations
 
@@ -40,7 +40,7 @@ Use CSS transitions for interactive state changes: they can be interrupted mid-a
 
 ### 5. Split and Stagger Enter Animations
 
-Don't animate a single container. Break content into semantic chunks and stagger each with ~100ms delay.
+For an infrequent staged entrance where sequence helps communicate hierarchy, break content into semantic chunks and stagger them by ~100ms instead of animating one container. Do not stagger routine, high-frequency interactions.
 
 ### 6. Subtle Exit Animations
 
@@ -48,7 +48,7 @@ Use a small fixed `translateY` instead of full height. Exits should be softer th
 
 ### 7. Contextual Icon Animations
 
-Animate icons with `opacity`, `scale`, and `blur` instead of toggling visibility. Use exactly these values: scale from `0.25` to `1`, opacity from `0` to `1`, blur from `4px` to `0px`. If the project has `motion` or `framer-motion` in `package.json`, use `transition: { type: "spring", duration: 0.3, bounce: 0 }`; bounce must always be `0`. If no motion library is installed, keep both icons in the DOM (one absolute-positioned) and cross-fade with CSS transitions using `cubic-bezier(0.2, 0, 0, 1)`; this gives both enter and exit animations without any dependency.
+Animate icons with `opacity`, `scale`, and `blur` instead of toggling visibility. Use exactly these values: scale from `0.25` to `1`, opacity from `0` to `1`, blur from `4px` to `0px`. If the project has `motion` or `framer-motion` in `package.json`, match that package's import path (or the established nearby imports when both exist) and use `transition: { type: "spring", duration: 0.3, bounce: 0 }`; bounce must always be `0`. If no motion library is installed, keep both icons in the DOM (one absolute-positioned) and cross-fade with CSS transitions using `cubic-bezier(0.2, 0, 0, 1)`; this gives both enter and exit animations without any dependency.
 
 ### 8. Image Outlines
 
@@ -88,8 +88,8 @@ No custom animation on high-frequency interactions: the attention cost repeats o
 | --- | --- |
 | Same border radius on parent and child | Calculate `outerRadius = innerRadius + padding` |
 | Icons look off-center | Adjust optically with padding or fix SVG directly |
-| Hard borders between sections | Use layered `box-shadow` with transparency |
-| Jarring enter/exit animations | Split, stagger, and keep exits subtle |
+| Border used only to fake elevation | Use layered `box-shadow` with transparency; keep structural and state borders |
+| Jarring staged entrance or contextual exit | Stagger infrequent entrances and keep context-preserving exits subtle |
 | Animation plays on page load | Add `initial={false}` to `AnimatePresence` |
 | `transition: all` on elements | Specify exact properties |
 | First-frame animation stutter | Add `will-change: transform` (sparingly) |

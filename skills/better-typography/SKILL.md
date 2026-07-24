@@ -102,6 +102,33 @@ To support right-to-left content, use direction-agnostic properties: `margin-inl
 
 `::selection` is a subtle way to embed brand in the reading experience; keep the combination legible. Use `user-select: none` on button labels where copying is unlikely and selection feels distracting, and make sure `cmd+A` only grabs text the user expects to copy. In cross-platform apps that feel closer to native, disable selection for the interface and keep it only on content worth copying.
 
+## Common Mistakes
+
+| Mistake | Fix |
+| --- | --- |
+| `.ttf`/`.otf` served on the web | Convert to `.woff2` |
+| `font-variation-settings: "wght"` for weight | `font-weight` (works with non-variable fallbacks) |
+| `font-feature-settings: "tnum" 1` | `font-variant-numeric: tabular-nums` |
+| Browser-faked bold or italic | Load the file, set `font-synthesis: none` |
+| Hard-coded one-off font sizes | Use the type scale |
+| `h3` rendered larger than `h2` on the same page | Map heading levels to descending scale steps |
+| Heading tag picked for its size, skipping levels | Level from the document outline, size via CSS |
+| `line-height: 24px` on scalable text | Unitless value (`1.5`) |
+| Full-width paragraphs | Cap around 60–75 characters per line |
+| Orphan on the last line of a paragraph | `text-wrap: pretty` |
+| Lopsided two-line heading | `text-wrap: balance` |
+| Numbers cause layout shift | `tabular-nums` |
+| Truncated text with no way to read it | Tooltip or expanded view for the full value |
+| `UPPERCASE` typed into copy | Natural case + `text-transform` |
+| Justified text in an interface | `text-align: start`; reserve justify for specific editorial layouts |
+| Underline cuts through descenders | `text-decoration-skip-ink: auto`, `from-font` metrics |
+| Inputs below `16px` zoom on iOS | `text-base sm:text-sm` |
+| `margin-left` in RTL-capable UI | `margin-inline-start` |
+| Selectable button labels in native-feel UI | `user-select: none`, keep selection on real content |
+| Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |
+| Thin/Light weight on `14px` UI text | Weight `400`+ below `18px`; thin weights are display-only |
+| `leading-none` on a three-line card description | At least `1.4` on any text that wraps to 3+ lines |
+
 ## Review Output Format
 
 Present every review in two parts.
@@ -139,30 +166,3 @@ After the findings:
 2. **Verdict**: `Block` if any `HIGH` finding remains, `Needs changes` if only `MEDIUM` or `LOW` findings remain, and `Approve` only when no actionable findings remain.
 
 When there are no findings, omit the tables, state "No actionable typography findings", report verification, and end with `Approve`.
-
-## Common Mistakes
-
-| Mistake | Fix |
-| --- | --- |
-| `.ttf`/`.otf` served on the web | Convert to `.woff2` |
-| `font-variation-settings: "wght"` for weight | `font-weight` (works with non-variable fallbacks) |
-| `font-feature-settings: "tnum" 1` | `font-variant-numeric: tabular-nums` |
-| Browser-faked bold or italic | Load the file, set `font-synthesis: none` |
-| Hard-coded one-off font sizes | Use the type scale |
-| `h3` rendered larger than `h2` on the same page | Map heading levels to descending scale steps |
-| Heading tag picked for its size, skipping levels | Level from the document outline, size via CSS |
-| `line-height: 24px` on scalable text | Unitless value (`1.5`) |
-| Full-width paragraphs | Cap around 60–75 characters per line |
-| Orphan on the last line of a paragraph | `text-wrap: pretty` |
-| Lopsided two-line heading | `text-wrap: balance` |
-| Numbers cause layout shift | `tabular-nums` |
-| Truncated text with no way to read it | Tooltip or expanded view for the full value |
-| `UPPERCASE` typed into copy | Natural case + `text-transform` |
-| Justified text in an interface | `text-align: start`; reserve justify for specific editorial layouts |
-| Underline cuts through descenders | `text-decoration-skip-ink: auto`, `from-font` metrics |
-| Inputs below `16px` zoom on iOS | `text-base sm:text-sm` |
-| `margin-left` in RTL-capable UI | `margin-inline-start` |
-| Selectable button labels in native-feel UI | `user-select: none`, keep selection on real content |
-| Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |
-| Thin/Light weight on `14px` UI text | Weight `400`+ below `18px`; thin weights are display-only |
-| `leading-none` on a three-line card description | At least `1.4` on any text that wraps to 3+ lines |
