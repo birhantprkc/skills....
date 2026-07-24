@@ -90,9 +90,9 @@ iOS Safari zooms the whole page when an input's text is smaller than `16px`. Kee
 
 Start long-form body text near the browser default of `16px`, then judge it in the actual typeface, measure, platform, and product density. UI text can go smaller: `14px` is a useful starting point for inputs and menus (inputs still need `16px` on mobile, see principle 15), `13px` for captions, rarely below `12px`. When text appears low-contrast, use `better-colors` to measure the rendered pair and `better-accessibility` to classify the requirement; do not change colors unless asked.
 
-### 17. Preserve the Project's Font Rendering
+### 17. Font Smoothing on the Root
 
-Do not add vendor font-smoothing properties as a routine typography fix. They alter rasterization rather than correcting the type system and can make text look lighter on some macOS configurations. Preserve the browser or project's established rendering unless the user explicitly asks for a rendering change and the result is verified on target devices.
+On macOS text renders heavier than intended. Apply `-webkit-font-smoothing: antialiased` and `-moz-osx-font-smoothing: grayscale` (both covered by Tailwind's `antialiased`) once on the root layout so they cover all text.
 
 ### 18. Language and Bidi Behavior
 
@@ -123,6 +123,7 @@ Set `lang` so browsers and assistive technology choose the right pronunciation, 
 | Justified text in an interface | `text-align: start`; reserve justify for specific editorial layouts |
 | Underline cuts through descenders | `text-decoration-skip-ink: auto`, `from-font` metrics |
 | Inputs below `16px` zoom on iOS | `text-base sm:text-sm` |
+| Root layout omits font smoothing | Apply `antialiased` once at the root |
 | Mixed-direction value renders in the wrong order | Set the correct `lang`/`dir`; isolate the value with `<bdi>` when needed |
 | Selection disabled across application chrome | Restore selection; suppress it only on a specific interaction that conflicts with dragging or gestures |
 | Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |

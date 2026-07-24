@@ -12,7 +12,7 @@ One-line lookup for every typography CSS declaration covered by this skill, with
 | `font-size` | Size from the type scale | `text-*` |
 | `font-weight` | Any value from 1 to 1000 | `font-*` |
 | `font-style: italic` | Switch to italic style | `italic` |
-| `-webkit-font-smoothing` + `-moz-osx-font-smoothing` | Existing project-specific macOS rasterization choice; do not add by default | `antialiased` |
+| `-webkit-font-smoothing` + `-moz-osx-font-smoothing` | Smooth macOS font rendering; apply once at the root | `antialiased` |
 | `font-synthesis: none` | Disable all synthesized forms after verifying fallbacks and emphasis | `[font-synthesis:none]` |
 | `font-feature-settings` | Toggle OpenType features | `[font-feature-settings:"ss01"]` |
 | `font-variation-settings` | Tune variable font axes | `[font-variation-settings:"GRAD"_80]` |

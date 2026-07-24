@@ -37,7 +37,7 @@ If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area
   content: "";
   position: absolute;
   top: 50%;
-  inset-inline-start: 50%;
+  left: 50%; /* physical centering: direction-independent */
   transform: translate(-50%, -50%);
   width: 44px;
   height: 44px;
@@ -47,7 +47,7 @@ If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area
 ### Tailwind Example
 
 ```tsx
-<button className="relative size-5 after:absolute after:top-1/2 after:start-1/2 after:size-11 after:-translate-1/2">
+<button className="relative size-5 after:absolute after:top-1/2 after:left-1/2 after:size-11 after:-translate-1/2">
   <CheckIcon />
 </button>
 ```

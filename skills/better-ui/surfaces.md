@@ -177,13 +177,14 @@ Apply the variable and add `transition-[box-shadow]` for a smooth hover:
 
 ## Image Outlines
 
-Add an inset `1px` outline only when an image edge disappears into the surrounding surface and the project has no canonical image-frame treatment. Skip transparent artwork, logos, edge-to-edge media, and components that already provide separation.
+Add a subtle `1px` outline with low opacity to images. This creates consistent depth, especially in design systems where other elements use borders or shadows.
 
-### Color recipe
+### Color rules (non-negotiable)
 
-- Prefer the project's neutral separator token when it remains visually neutral across supported surfaces.
-- Without a suitable token, use pure black at 10% in light mode (`oklch(0 0 0 / 0.1)`) and pure white at 10% in dark mode (`oklch(1 0 0 / 0.1)`).
-- Do not use an accent color: the outline is a separator, not a themed state.
+- **Light mode**: pure black, `oklch(0 0 0 / 0.1)`.
+- **Dark mode**: pure white, `oklch(1 0 0 / 0.1)`.
+- Never use a near-black or near-white from the project palette (e.g. slate-900, zinc-900, `#0a0a0a`, `#111827`, `#f5f5f7`). Tinted outlines pick up the surrounding surface color and read as dirt on the image edge.
+- Never match the outline to the project's accent or ink color. The outline is a neutral separator, not a themed element.
 
 ### Light Mode
 
@@ -213,6 +214,6 @@ img {
 />
 ```
 
-Use these black/white values when the project has no canonical neutral separator token.
+Use `outline-black/10` and `outline-white/10` specifically, not `outline-slate-*`, `outline-zinc-*`, `outline-neutral-*`, or any tinted scale.
 
 **Why outline instead of border?** `outline` never affects layout (no added width or height at any offset), and `outline-offset: -1px` draws the ring just inside the image edge so it hugs the corner radius instead of sitting outside it.

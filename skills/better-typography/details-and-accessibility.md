@@ -91,10 +91,9 @@ When text appears low-contrast, use `better-colors` to measure the rendered fore
 
 ## Font smoothing
 
-Vendor font-smoothing properties alter rasterization and can make text look lighter on some macOS configurations. Do not add them as a routine fix. Preserve the project's existing choice unless the user explicitly asks to compare rendering and the result is verified on target devices.
+On macOS text renders heavier than intended. Apply font smoothing once on the root layout so it covers all text. Tailwind's `antialiased` sets both properties:
 
 ```css
-/* Existing project convention: preserve it, but do not add it automatically. */
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
