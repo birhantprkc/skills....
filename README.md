@@ -4,7 +4,7 @@
 
 [![skills.sh](https://skills.sh/b/jakubkrehel/skills)](https://skills.sh/jakubkrehel/skills)
 
-A set of agent skills for reviewing and improving product interfaces, from full-interface audits to typography, layout, accessibility, color, polish, and writing.
+A collection of agent skills that help with various parts of building a great interface. From animation and UI polish to accessibility and product writing.
 
 ## Skills
 
