@@ -9,12 +9,12 @@ A collection of agent skills that help with various parts of building a great in
 ## Skills
 
 - [**better-interface**](skills/better-interface/SKILL.md): A user-invoked, cross-discipline interface review that coordinates every skill below.
-- [**better-ui**](skills/better-ui/SKILL.md): Design engineering details that make interfaces feel polished: border radius, shadows, animations, and micro-interactions.
-- [**better-typography**](skills/better-typography/SKILL.md): Web typography from choosing fonts to spacing, wrapping, and accessibility.
-- [**better-colors**](skills/better-colors/SKILL.md): OKLCH color space: palette generation, contrast, gamut handling, and theming.
-- [**better-accessibility**](skills/better-accessibility/SKILL.md): Focus states, keyboard support, ARIA, forms, screen readers, hit areas, and motion.
-- [**better-layout**](skills/better-layout/SKILL.md): Layout structure, grouping, alignment, reading order, progressive disclosure, and adaptive breakpoints.
-- [**better-writing**](skills/better-writing/SKILL.md): UX writing and interface copy, from button labels to errors, settings, and empty states.
+- [**better-ui**](skills/better-ui/SKILL.md): Design engineering details that make interfaces feel polished: border radius, shadows, animations and micro-interactions.
+- [**better-typography**](skills/better-typography/SKILL.md): Web typography from choosing fonts to spacing, wrapping and accessibility.
+- [**better-colors**](skills/better-colors/SKILL.md): OKLCH color space: palette generation, contrast, gamut handling and theming.
+- [**better-accessibility**](skills/better-accessibility/SKILL.md): Focus states, keyboard support, ARIA, forms, screen readers, hit areas and motion.
+- [**better-layout**](skills/better-layout/SKILL.md): Layout structure, grouping, alignment, reading order, progressive disclosure and adaptive breakpoints.
+- [**better-writing**](skills/better-writing/SKILL.md): UX writing and interface copy, from button labels to errors, settings and empty states.
 
 ## Install
 
@@ -22,7 +22,7 @@ A collection of agent skills that help with various parts of building a great in
 npx skills add jakubkrehel/skills
 ```
 
-The command discovers the full collection and lets you choose which skills to install. `better-interface` coordinates the other six skills, so install the complete collection when you want holistic reviews:
+You can choose which skills to install or install all of them. `better-interface` coordinates the other six skills, so install the complete collection when you want holistic reviews.
 
 ```bash
 npx skills add jakubkrehel/skills --skill '*'
@@ -30,7 +30,7 @@ npx skills add jakubkrehel/skills --skill '*'
 
 ## Use
 
-The default review mode is `full`. Pass `quick` for a shorter review, and add the screen, flow, or feature after the mode.
+The default review mode is `full`. Pass `quick` for a shorter revie, and add the screen, flow, or feature after the mode.
 
 In Claude Code:
 
