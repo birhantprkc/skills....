@@ -6,6 +6,8 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 A collection of agent skills for building great product interfaces (typography, colors, UI polish), published for installation via `npx skills add jakubkrehel/skills`. It is documentation-only; there is no build, lint, or test tooling.
 
+The `.claude-plugin/` directory packages the same `skills/` directory as a Claude Code plugin named `interfaces`. It is Claude Code-specific and needs no change when adding a skill, but leave it in place.
+
 ## Structure
 
 Each skill lives in `skills/<skill-name>/`:
