@@ -33,7 +33,7 @@ Current skills: `better-interface` (user-invoked cross-discipline review), `inte
 
 When a concern crosses domains, keep the rule in the owner above and let other skills name only the handoff or secondary effect. In particular:
 
-- `better-accessibility` decides when contrast is required and whether the pair fails; `better-colors` owns measuring the rendered pair and changing its colors. Severity is `better-interface`'s in an orchestrated review — each domain skill defines severity only for its own standalone output.
+- `better-accessibility` decides when contrast is required and whether the pair fails; `better-colors` owns measuring the rendered pair and changing its colors. Severity is `better-interface`'s in an orchestrated review; each domain skill defines severity only for its own standalone output.
 - `better-accessibility` owns semantic heading structure; `better-typography` owns how heading levels render visually.
 - `better-layout` owns logical CSS properties and spatial mirroring; `better-typography` owns language metadata, punctuation, and mixed-direction text.
 - `better-typography` owns truncation mechanics; `better-layout` owns whether the surrounding layout has room or an expansion affordance; `better-writing` owns the source copy.

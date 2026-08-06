@@ -1,6 +1,6 @@
 # Scope Resolution
 
-Exact commands for turning a review target into a file list. Every command here is read-only against the working tree: `git fetch` writes to `.git`, everything else only reads. Never run `gh pr checkout`, `git checkout`, `git switch`, or `git stash` — resolving a scope never requires moving the author's files. An isolated `git worktree add` at a throwaway path is the one exception, and only for opt-in rendered verification as described in the skill.
+Exact commands for turning a review target into a file list. Every command here is read-only against the working tree: `git fetch` writes to `.git`, everything else only reads. Never run `gh pr checkout`, `git checkout`, `git switch`, or `git stash`; resolving a scope never requires moving the author's files. An isolated `git worktree add` at a throwaway path is the one exception, and only for opt-in rendered verification as described in the skill.
 
 ## Default branch
 
@@ -12,13 +12,7 @@ gh repo view --json defaultBranchRef -q .defaultBranchRef.name
 git config --get init.defaultBranch
 ```
 
-If `refs/remotes/origin/HEAD` is missing, ask the remote rather than guessing. This needs the network and writes the ref under `.git`, which leaves the working tree untouched and is permitted; note it in the Verification section:
-
-```bash
-git remote set-head origin --auto
-```
-
-If there is no remote at all, fall back to a local `main` or `master`, and state in the scope block which base you assumed.
+If `refs/remotes/origin/HEAD` is missing, ask the remote rather than guessing with `git remote set-head origin --auto`. It needs the network and writes a ref under `.git`, leaving the working tree untouched, so it is permitted; note it in Verification. With no remote at all, fall back to a local `main` or `master` and state which base you assumed.
 
 ## Merge base
 
@@ -46,14 +40,14 @@ These are the accepted targets. Anything else in the invocation after the mode i
 | `staged` | `git diff --name-status --cached` |
 | `branch` | `git diff --name-status "$BASE"...HEAD`, where `BASE` is the merge base above |
 | `branch` with uncommitted work | The `branch` diff, plus `git diff --name-status HEAD` **and** `git ls-files --others --exclude-standard`; report the two counts separately |
-| `pr <n>` | Fetch, then diff — see below |
+| `pr <n>` | Fetch, then diff (see below) |
 | `<ref>` | `git diff --name-status "$(git merge-base <ref> HEAD)"...HEAD` |
-| `<a>..<b>` | `git diff --name-status <a>..<b>` — two dots as entered |
-| `<a>...<b>` | `git diff --name-status <a>...<b>` — three dots as entered |
+| `<a>..<b>` | `git diff --name-status <a>..<b>` (two dots as entered) |
+| `<a>...<b>` | `git diff --name-status <a>...<b>` (three dots as entered) |
 
-`git diff --name-status HEAD` reports tracked changes only. Any target that includes uncommitted work must pair it with `git ls-files --others --exclude-standard`, or a newly added component or stylesheet is silently dropped from a scope the report claims to cover in full.
+`git diff --name-status HEAD` reports tracked changes only, so any target including uncommitted work must pair it with `git ls-files --others --exclude-standard`. Otherwise a newly added component or stylesheet is silently dropped from a scope the report claims to cover in full.
 
-When the user supplies an explicit range, use the dots they wrote. `<a>..<b>` compares the two endpoints; `<a>...<b>` compares `merge-base(<a>, <b>)` with `<b>`. Rewriting `release..feature` to three dots drops everything between `release` and the merge base, which is often exactly what the user asked to see. State the resolved range in the scope block so the choice is visible.
+Use the dots the user wrote. `<a>..<b>` compares the endpoints; `<a>...<b>` compares `merge-base(<a>, <b>)` with `<b>`. Rewriting `release..feature` to three dots drops everything between `release` and the merge base, which is often exactly what was asked for. State the resolved range in the scope block.
 
 ## Pull requests
 
@@ -80,17 +74,13 @@ git log --format='%s%n%b' "$BASE".."refs/remotes/pr/<n>"
 
 ## Awkward repository states
 
-| State | Detection | Handling |
-| --- | --- | --- |
-| Detached HEAD | `git symbolic-ref --quiet HEAD` fails | Use the merge base against the default branch; name the SHA, not a branch, in the scope block |
-| Shallow clone | `git rev-parse --is-shallow-repository` is `true`, or `merge-base` returns nothing | `git fetch --deepen=50 origin` and retry; repeat once at `--deepen=200`, then report the scope as unresolvable |
-| No remote | `git remote` is empty | Fall back to local `main`/`master`, or to `HEAD~1..HEAD`; state the assumption |
-| No merge base | Unrelated histories | Review `HEAD~1..HEAD` and say the branch has no common ancestor with the base |
-| Newly initialized repo | `git rev-parse HEAD` fails | Review the working tree and untracked files only |
-| Mid-rebase or mid-merge | Any of `rebase-merge`, `rebase-apply`, `MERGE_HEAD` exists — see below | Stop and say the tree is mid-operation; a diff taken now is not the change |
-| Submodule pointer moved | Diff shows a `-Subproject commit` line | Report the pointer move; do not descend into the submodule |
+Three worth handling explicitly. Everything else (no remote, unrelated histories, a repo with no commits, a moved submodule pointer) fails loudly at `merge-base`: say the base is unresolvable and stop rather than reviewing a range you cannot name.
 
-Resolve those in-progress paths through git rather than assuming `.git/` is a directory. Inside a linked worktree — the one this skill recommends for rendered verification — `.git` is a file and the real per-worktree state lives elsewhere, so a literal `.git/MERGE_HEAD` test silently reports a clean tree:
+**Detached HEAD.** `git symbolic-ref --quiet HEAD` fails. Use the merge base against the default branch and name the SHA, not a branch, in the scope block.
+
+**Shallow clone**, the CI default. `git rev-parse --is-shallow-repository` is `true`, or `merge-base` returns nothing. Run `git fetch --deepen=50 origin` and retry, once more at `--deepen=200`, then report the scope as unresolvable. Deepening writes to `.git` and not to the working tree, so it is permitted; note it in Verification.
+
+**Mid-rebase or mid-merge**, the one that does not fail loudly. `git diff` succeeds and returns something that is not the change, so the review looks fine and is wrong. Detect it through git rather than testing `.git/` paths, which are not directories inside the linked worktree this skill recommends:
 
 ```bash
 for state in rebase-merge rebase-apply MERGE_HEAD CHERRY_PICK_HEAD; do
@@ -98,7 +88,7 @@ for state in rebase-merge rebase-apply MERGE_HEAD CHERRY_PICK_HEAD; do
 done
 ```
 
-Deepening a shallow clone writes to `.git` but not to the working tree. It is permitted; note it in the Verification section.
+Stop and say the tree is mid-operation.
 
 ## Renames
 
@@ -135,18 +125,15 @@ git diff --name-only "$BASE"...HEAD -- . \
   ':(exclude,glob)**/__snapshots__/**'
 ```
 
-Two traps make this silently under-exclude, and both leave the scope block claiming a count it did not deliver:
+Two traps silently under-exclude and leave the scope block claiming a count it did not deliver. `*.lock` catches `yarn.lock` and `Cargo.lock` but not `package-lock.json` or `pnpm-lock.yaml`, so cover every suffix the table lists. And `**` needs `glob` magic: without it `*` crosses `/`, so `**/dist/**` excludes `packages/a/dist/` but misses a root-level `dist/`.
 
-- **Match the real filenames, not the category.** `*.lock` catches `yarn.lock` and `Cargo.lock` but not `package-lock.json` or `pnpm-lock.yaml` — the two most common lockfiles in a JavaScript repo. Cover each suffix the table above actually lists.
-- **Use `glob` magic for `**`.** Without it, `*` crosses `/` and `**/dist/**` requires a leading directory, so it excludes `packages/a/dist/` and misses a root-level `dist/`. With `:(exclude,glob)`, `**/` matches zero or more directories and both are caught, while `mydist/` is correctly kept.
-
-Verify rather than assume: run the diff with and without the pathspecs and confirm the count dropped by exactly the files you named as excluded.
+Run the diff with and without the pathspecs and confirm the count dropped by exactly the files you named.
 
 ## Expanding to consumers
 
-Principle 2 expands one hop, two for tokens and primitives. Find the hop with the project's own resolver where one exists, otherwise by import path.
+Principle 2 expands one hop, two for tokens and primitives. Use the project's own resolver where one exists, otherwise import paths.
 
-`git grep` searches the working tree by default. Search the reviewed ref instead by passing it after the pattern, so the consumer set matches the change under review — on a pull request, the working tree is a different revision and will miss importers the change itself added:
+`git grep` searches the working tree by default. Pass the reviewed ref after the pattern instead, or on a pull request you search a different revision and miss importers the change itself added:
 
 ```bash
 REV=refs/remotes/pr/482          # or HEAD for a local branch
@@ -154,25 +141,23 @@ git grep -l "from ['\"].*<module-name>" "$REV" -- '*.ts' '*.tsx' '*.js' '*.jsx' 
 git grep -ln "<ComponentName>" "$REV" -- '*.tsx' '*.vue' '*.svelte'
 ```
 
-Results come back as `<rev>:path/to/file`. Read those files with `git show "$REV":path/to/file`, never the working-tree copy.
+Results come back as `<rev>:path/to/file`. Read them with `git show "$REV":path/to/file`, never the working-tree copy.
 
-For a changed design token or theme value, search the token name rather than the file, since consumers reference the name and never import the file:
+For a changed token or theme value, search the token name rather than the file, since consumers reference the name and never import it. Use `-e` when the pattern starts with a dash, or git parses it as an option:
 
 ```bash
 git grep -n -e '--color-accent' "$REV" -- '*.css' '*.tsx' 'tailwind.config.*'
 ```
 
-Use `-e` whenever the pattern starts with a dash, or git parses the token name as an option.
+Order the consumers by a rule you can evaluate, so the cutoff is reproducible instead of a guess:
 
-Order the consumers by a rule you can actually evaluate, so the cutoff is reproducible instead of a guess:
-
-1. **Route and layout entry points first.** The files a framework treats as a rendered surface, by its own convention — `app/**/page.*`, `app/**/layout.*`, `pages/**`, `routes/**`, `src/views/**`, `*.astro` pages. These are surfaces on their own; everything else only appears inside one.
-2. **Then the remainder by importer count.** A component pulled in by twenty files carries more of the change than one pulled in by two. Count it:
+1. **Route and layout entry points first**, whatever the framework treats as a rendered surface: `app/**/page.*`, `app/**/layout.*`, `pages/**`, `routes/**`, `src/views/**`, `*.astro` pages. Everything else only appears inside one.
+2. **Then by importer count**, since a component pulled in by twenty files carries more of the change than one pulled in by two:
 
    ```bash
    git grep -l "<ComponentName>" "$REV" -- '*.tsx' '*.vue' '*.svelte' | wc -l
    ```
 
-3. **Break ties by proximity to the change** — the consumer in the same package or feature directory first, since it is likeliest to depend on what actually moved.
+3. **Break ties by proximity**: same package or feature directory first.
 
-Review the first five, then state the count you did not expand and how they ranked. Do not claim a surface matters more than another on grounds you cannot show; if the ordering was arbitrary past a point, say that instead.
+Review the first five, state how many you did not expand, and say so plainly if the ordering was arbitrary past a point.

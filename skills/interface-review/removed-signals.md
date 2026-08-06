@@ -20,7 +20,7 @@ What to look for on the `-` side of a hunk, and which skill owns the judgement. 
 These clear the signal. Check for them before routing anything, or the report fills with regressions that are really refactors:
 
 - `aria-label` giving way to `aria-labelledby` pointing at visible text.
-- An explicit `role` dropped because the element became the native equivalent — `role="button"` disappearing as a `div` becomes a `<button>`.
+- An explicit `role` dropped because the element became the native equivalent, such as `role="button"` disappearing as a `div` becomes a `<button>`.
 - `outline` replaced by a `box-shadow` focus ring that still meets the focus-indicator rule.
 - `tabindex="0"` dropped from an element that is now natively focusable.
 - A color literal replaced by a token that measures the same rendered pair.
