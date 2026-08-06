@@ -16,13 +16,14 @@ Each skill lives in `skills/<skill-name>/`:
 - Supporting `.md` reference files are optional; single-file skills are fine. Add one only when it carries depth beyond the principle statements (recipes, code patterns, lookup tables), not to restate SKILL.md in longer form. Link via relative paths from the Quick Reference table.
 - Each rule lives in exactly one skill; other skills point to it by skill name in backticks (e.g. `better-layout`), never via cross-skill relative links.
 
-Current skills: `better-interface` (user-invoked cross-discipline review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
+Current skills: `better-interface` (user-invoked cross-discipline review), `better-review` (user-invoked change-scoped review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
 
 ### Rule ownership
 
 | Skill | Owns |
 | --- | --- |
 | `better-interface` | Review orchestration, shared severity, consolidation, coverage, and final output |
+| `better-review` | Change scope resolution, blast radius from changed files to affected surfaces, and finding classification (`Introduced` / `Regression` / `Pre-existing`) |
 | `better-accessibility` | Semantic HTML, keyboard and focus behavior, accessible names, forms, assistive technology, and accessibility requirements |
 | `better-layout` | Spatial grouping, alignment, spacing, responsive structure, logical CSS properties, and spatial RTL behavior |
 | `better-writing` | Source wording, terminology, voice, tone, labels, errors, and empty-state copy |
@@ -37,6 +38,7 @@ When a concern crosses domains, keep the rule in the owner above and let other s
 - `better-layout` owns logical CSS properties and spatial mirroring; `better-typography` owns language metadata, punctuation, and mixed-direction text.
 - `better-typography` owns truncation mechanics; `better-layout` owns whether the surrounding layout has room or an expansion affordance; `better-writing` owns the source copy.
 - `better-accessibility` owns reduced-motion requirements; `better-ui` owns the optional animation recipe used when motion is appropriate.
+- `better-review` owns what to review when the scope is a diff; `better-interface` owns how that review is routed, ranked, consolidated, and reported.
 
 ## Authoring conventions
 

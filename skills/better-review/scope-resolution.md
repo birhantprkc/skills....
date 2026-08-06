@@ -1,0 +1,134 @@
+# Scope Resolution
+
+Exact commands for turning a review target into a file list. Every command here is read-only against the working tree: `git fetch` writes to `.git`, everything else only reads. Never run `gh pr checkout`, `git checkout`, `git switch`, `git stash`, or `git worktree add` to resolve a scope.
+
+## Default branch
+
+Try in order, and stop at the first that answers:
+
+```bash
+git symbolic-ref --quiet --short refs/remotes/origin/HEAD   # -> origin/main
+gh repo view --json defaultBranchRef -q .defaultBranchRef.name
+git config --get init.defaultBranch
+```
+
+If `refs/remotes/origin/HEAD` is missing, set it read-only from the remote rather than guessing:
+
+```bash
+git remote set-head origin --auto
+```
+
+If there is no remote at all, fall back to a local `main` or `master`, and state in the scope block which base you assumed.
+
+## Merge base
+
+```bash
+BASE=$(git merge-base origin/main HEAD)
+git rev-list --count "$BASE"..HEAD          # commits in the change
+git diff --name-status "$BASE"...HEAD       # files, with rename detection
+```
+
+Use three dots (`"$BASE"...HEAD`) so the diff is against the merge base and not against whatever has landed on the base branch since. Two dots reports every upstream commit as part of the change.
+
+If the base branch is stale, refresh the remote ref before computing the merge base:
+
+```bash
+git fetch origin main --no-tags
+```
+
+## Targets
+
+| Target | Commands |
+| --- | --- |
+| `working` | `git diff --name-status HEAD` plus `git ls-files --others --exclude-standard` for untracked files |
+| `staged` | `git diff --name-status --cached` |
+| `branch` | `git diff --name-status "$BASE"...HEAD`, where `BASE` is the merge base above |
+| `branch` with uncommitted work | The `branch` diff plus `git diff --name-status HEAD`; report the two counts separately |
+| `pr <n>` | Fetch, then diff — see below |
+| `<ref>` | `git diff --name-status "$(git merge-base <ref> HEAD)"...HEAD` |
+| `<ref>..<ref>` | `git diff --name-status <ref>...<ref>` |
+
+## Pull requests
+
+Fetch the head into a remote-tracking ref and review it in place. This works for forks, which `origin/<branch>` does not:
+
+```bash
+gh pr view <n> --json title,body,headRefName,headRefOid,baseRefName
+git fetch origin "pull/<n>/head:refs/remotes/pr/<n>" --no-tags
+BASE=$(git merge-base origin/<baseRefName> "refs/remotes/pr/<n>")
+git diff --name-status "$BASE"..."refs/remotes/pr/<n>"
+```
+
+Read files at that ref with `git show refs/remotes/pr/<n>:path/to/file`. Do not open the working-tree copy; on a fork PR it is a different file.
+
+`gh pr diff <n>` is a fine shortcut for the patch text, but it gives no way to read unchanged context or expand to consumers, so fetch the ref as well.
+
+**Citations.** `better-interface` requires `path/to/file:line`. Line numbers from a fetched ref do not necessarily match the working tree. Cite against the head ref, and declare that ref and its SHA in the scope block so the numbers are resolvable.
+
+**Intent.** The `title` and `body` from `gh pr view` are the stated intent for principle 5. Add the commit subjects when the body is empty:
+
+```bash
+git log --format='%s%n%b' "$BASE".."refs/remotes/pr/<n>"
+```
+
+## Awkward repository states
+
+| State | Detection | Handling |
+| --- | --- | --- |
+| Detached HEAD | `git symbolic-ref --quiet HEAD` fails | Use the merge base against the default branch; name the SHA, not a branch, in the scope block |
+| Shallow clone | `git rev-parse --is-shallow-repository` is `true`, or `merge-base` returns nothing | `git fetch --deepen=50 origin` and retry; repeat once at `--deepen=200`, then report the scope as unresolvable |
+| No remote | `git remote` is empty | Fall back to local `main`/`master`, or to `HEAD~1..HEAD`; state the assumption |
+| No merge base | Unrelated histories | Review `HEAD~1..HEAD` and say the branch has no common ancestor with the base |
+| Newly initialized repo | `git rev-parse HEAD` fails | Review the working tree and untracked files only |
+| Mid-rebase or mid-merge | `.git/rebase-merge` or `.git/MERGE_HEAD` exists | Stop and say the tree is mid-operation; a diff taken now is not the change |
+| Submodule pointer moved | Diff shows a `-Subproject commit` line | Report the pointer move; do not descend into the submodule |
+
+Deepening a shallow clone writes to `.git` but not to the working tree. It is permitted; note it in the Verification section.
+
+## Renames
+
+Rename detection is on by default for `--name-status`, which reports `R100 old/path new/path`. Raise the similarity window when a file was moved and edited in the same change:
+
+```bash
+git diff --find-renames=40% --find-copies-harder --name-status "$BASE"...HEAD
+```
+
+Review a rename as a move, not as a delete plus an add. Everything that survived the move is unchanged code, and only the genuine edits are in scope.
+
+## Excluded paths
+
+Exclude these from the change scope and name what you excluded in the scope block. They are machine-authored and carry no interface rules.
+
+| Category | Patterns |
+| --- | --- |
+| Lockfiles | `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `bun.lock`, `bun.lockb`, `Cargo.lock`, `composer.lock`, `Gemfile.lock`, `poetry.lock`, `uv.lock` |
+| Snapshots and fixtures | `__snapshots__/`, `*.snap`, `*.approved.*`, `test-results/`, `playwright-report/` |
+| Generated output | `dist/`, `build/`, `out/`, `.next/`, `.turbo/`, `.svelte-kit/`, `coverage/`, `storybook-static/`, `*.min.js`, `*.min.css`, `*.map` |
+| Generated sources | `*.gen.ts`, `*.generated.*`, `*.d.ts` emitted by a build, GraphQL and Prisma client output |
+| Vendored code | `vendor/`, `third_party/`, `node_modules/` |
+| Binaries and media | `*.png`, `*.jpg`, `*.webp`, `*.avif`, `*.woff2`, `*.mp4`, `*.pdf` |
+
+Two exceptions worth keeping in scope: a **font file** added or swapped is a `better-typography` change, and an **image** added to a component is a `better-ui` and `better-accessibility` change through its `alt` text and outline. Review the code that references them, not the bytes.
+
+Apply the exclusions as pathspecs so the file count in the scope block is the reviewed count:
+
+```bash
+git diff --name-only "$BASE"...HEAD -- . ':(exclude)*.lock' ':(exclude)dist/**' ':(exclude)**/__snapshots__/**'
+```
+
+## Expanding to consumers
+
+Principle 2 expands one hop, two for tokens and primitives. Find the hop with the project's own resolver where one exists, otherwise by import path:
+
+```bash
+git grep -l "from ['\"].*<module-name>" -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.vue' '*.svelte'
+git grep -ln "<ComponentName>" -- '*.tsx' '*.vue' '*.svelte'
+```
+
+For a changed design token or theme value, search the token name rather than the file, since consumers reference the name and never import the file:
+
+```bash
+git grep -n -- '--color-accent' -- '*.css' '*.tsx' 'tailwind.config.*'
+```
+
+Rank consumers by how much traffic they carry — route-level surfaces above leaf components — review the top five, and name the rest as not expanded.

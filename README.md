@@ -9,6 +9,7 @@ A collection of agent skills that help with various parts of building a great in
 ## Skills
 
 - [**better-interface**](skills/better-interface/SKILL.md): A user-invoked, cross-discipline interface review that coordinates every skill below.
+- [**better-review**](skills/better-review/SKILL.md): A user-invoked review of your uncommitted changes, current branch or a pull request against every skill below.
 - [**better-ui**](skills/better-ui/SKILL.md): Design engineering details that make interfaces feel polished: border radius, shadows, animations and micro-interactions.
 - [**better-typography**](skills/better-typography/SKILL.md): Web typography from choosing fonts to spacing, wrapping and accessibility.
 - [**better-colors**](skills/better-colors/SKILL.md): OKLCH color space: palette generation, contrast, gamut handling and theming.
@@ -20,7 +21,7 @@ A collection of agent skills that help with various parts of building a great in
 
 ### As a Claude Code plugin
 
-Installs all seven skills together and updates in place. Run these inside Claude Code:
+Installs all eight skills together and updates in place. Run these inside Claude Code:
 
 ```text
 /plugin marketplace add jakubkrehel/skills
@@ -29,7 +30,7 @@ Installs all seven skills together and updates in place. Run these inside Claude
 
 ### With the skills CLI
 
-Works in Claude Code, Codex and other agents. You can choose which skills to install or install all of them. `better-interface` coordinates the other six skills, so install the complete collection when you want holistic reviews.
+Works in Claude Code, Codex and other agents. You can choose which skills to install or install all of them. `better-interface` coordinates the six domain skills and `better-review` builds on `better-interface`, so install the complete collection when you want holistic or change-scoped reviews.
 
 ```bash
 npx skills add jakubkrehel/skills
@@ -41,7 +42,9 @@ npx skills add jakubkrehel/skills --skill '*'
 
 ## Use
 
-The default review mode is `full`. Pass `quick` for a shorter review, and add the screen, flow, or feature after the mode.
+Two skills are invoked by name. Use `better-interface` to review a screen, flow or feature, and `better-review` to review what you changed: your uncommitted work, the current branch or a pull request.
+
+The default review mode is `full`. Pass `quick` for a shorter review. For `better-interface`, add the screen, flow or feature after the mode. For `better-review`, add the target after the mode; leave it off and it detects the branch or your uncommitted changes.
 
 In Claude Code, as a plugin. Plugin skills are namespaced, so every skill is prefixed with `interfaces:`.
 
@@ -49,6 +52,8 @@ In Claude Code, as a plugin. Plugin skills are namespaced, so every skill is pre
 /interfaces:better-interface
 /interfaces:better-interface quick
 /interfaces:better-interface full checkout flow
+/interfaces:better-review
+/interfaces:better-review quick pr 482
 ```
 
 In Claude Code, installed with the skills CLI:
@@ -57,6 +62,8 @@ In Claude Code, installed with the skills CLI:
 /better-interface
 /better-interface quick
 /better-interface full checkout flow
+/better-review
+/better-review quick pr 482
 ```
 
 In Codex:
@@ -65,6 +72,8 @@ In Codex:
 $better-interface
 $better-interface quick
 $better-interface full checkout flow
+$better-review
+$better-review quick pr 482
 ```
 
-The prefix only affects skills you invoke by name. The other six skills are picked up automatically from context either way.
+The prefix only affects skills you invoke by name. The six domain skills are picked up automatically from context either way.
