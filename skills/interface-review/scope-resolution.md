@@ -164,4 +164,15 @@ git grep -n -e '--color-accent' "$REV" -- '*.css' '*.tsx' 'tailwind.config.*'
 
 Use `-e` whenever the pattern starts with a dash, or git parses the token name as an option.
 
-Rank consumers by how much traffic they carry — route-level surfaces above leaf components — review the top five, and name the rest as not expanded.
+Order the consumers by a rule you can actually evaluate, so the cutoff is reproducible instead of a guess:
+
+1. **Route and layout entry points first.** The files a framework treats as a rendered surface, by its own convention — `app/**/page.*`, `app/**/layout.*`, `pages/**`, `routes/**`, `src/views/**`, `*.astro` pages. These are surfaces on their own; everything else only appears inside one.
+2. **Then the remainder by importer count.** A component pulled in by twenty files carries more of the change than one pulled in by two. Count it:
+
+   ```bash
+   git grep -l "<ComponentName>" "$REV" -- '*.tsx' '*.vue' '*.svelte' | wc -l
+   ```
+
+3. **Break ties by proximity to the change** — the consumer in the same package or feature directory first, since it is likeliest to depend on what actually moved.
+
+Review the first five, then state the count you did not expand and how they ranked. Do not claim a surface matters more than another on grounds you cannot show; if the ordering was arbitrary past a point, say that instead.

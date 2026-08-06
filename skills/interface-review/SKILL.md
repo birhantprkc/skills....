@@ -39,7 +39,9 @@ Exclude lockfiles, snapshots, generated output, vendored code, and binaries from
 
 A changed file is evidence, not the review subject. Expand each changed file to the surfaces it renders in, and review the resulting interface rather than the hunk in isolation.
 
-Expand one hop by default: the direct importers and callers of every changed module. Expand a second hop only for design tokens, theme values, and shared primitives, where a single line reaches the whole product. Review at most the five highest-traffic consumers and name the consumers you did not expand. An unbounded sweep produces coverage claims you cannot support.
+Expand one hop by default: the direct importers and callers of every changed module. Expand a second hop only for design tokens, theme values, and shared primitives, where a single line reaches the whole product.
+
+Review at most five consumers, ordered by [the rule in Scope Resolution](scope-resolution.md#expanding-to-consumers): route and layout entry points first, then the remainder by how many files import them. Name every consumer you did not expand, and give the count. An unbounded sweep produces coverage claims you cannot support; an unstated cutoff produces a report that looks complete and is not.
 
 ### 3. Read the Removed Lines
 
