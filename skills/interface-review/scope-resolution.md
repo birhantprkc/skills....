@@ -12,7 +12,7 @@ gh repo view --json defaultBranchRef -q .defaultBranchRef.name
 git config --get init.defaultBranch
 ```
 
-If `refs/remotes/origin/HEAD` is missing, set it read-only from the remote rather than guessing:
+If `refs/remotes/origin/HEAD` is missing, ask the remote rather than guessing. This needs the network and writes the ref under `.git`, which leaves the working tree untouched and is permitted; note it in the Verification section:
 
 ```bash
 git remote set-head origin --auto
@@ -37,6 +37,8 @@ git fetch origin main --no-tags
 ```
 
 ## Targets
+
+These are the accepted targets. Anything else in the invocation after the mode is treated as a `<ref>`.
 
 | Target | Commands |
 | --- | --- |
@@ -85,8 +87,16 @@ git log --format='%s%n%b' "$BASE".."refs/remotes/pr/<n>"
 | No remote | `git remote` is empty | Fall back to local `main`/`master`, or to `HEAD~1..HEAD`; state the assumption |
 | No merge base | Unrelated histories | Review `HEAD~1..HEAD` and say the branch has no common ancestor with the base |
 | Newly initialized repo | `git rev-parse HEAD` fails | Review the working tree and untracked files only |
-| Mid-rebase or mid-merge | `.git/rebase-merge` or `.git/MERGE_HEAD` exists | Stop and say the tree is mid-operation; a diff taken now is not the change |
+| Mid-rebase or mid-merge | Any of `rebase-merge`, `rebase-apply`, `MERGE_HEAD` exists — see below | Stop and say the tree is mid-operation; a diff taken now is not the change |
 | Submodule pointer moved | Diff shows a `-Subproject commit` line | Report the pointer move; do not descend into the submodule |
+
+Resolve those in-progress paths through git rather than assuming `.git/` is a directory. Inside a linked worktree — the one this skill recommends for rendered verification — `.git` is a file and the real per-worktree state lives elsewhere, so a literal `.git/MERGE_HEAD` test silently reports a clean tree:
+
+```bash
+for state in rebase-merge rebase-apply MERGE_HEAD CHERRY_PICK_HEAD; do
+  test -e "$(git rev-parse --git-path $state)" && echo "in progress: $state"
+done
+```
 
 Deepening a shallow clone writes to `.git` but not to the working tree. It is permitted; note it in the Verification section.
 
@@ -118,8 +128,19 @@ Two exceptions worth keeping in scope: a **font file** added or swapped is a `be
 Apply the exclusions as pathspecs so the file count in the scope block is the reviewed count:
 
 ```bash
-git diff --name-only "$BASE"...HEAD -- . ':(exclude)*.lock' ':(exclude)dist/**' ':(exclude)**/__snapshots__/**'
+git diff --name-only "$BASE"...HEAD -- . \
+  ':(exclude,glob)**/*.lock' ':(exclude,glob)**/*-lock.json' \
+  ':(exclude,glob)**/*lock.yaml' ':(exclude,glob)**/*.lockb' \
+  ':(exclude,glob)**/dist/**' ':(exclude,glob)**/build/**' \
+  ':(exclude,glob)**/__snapshots__/**'
 ```
+
+Two traps make this silently under-exclude, and both leave the scope block claiming a count it did not deliver:
+
+- **Match the real filenames, not the category.** `*.lock` catches `yarn.lock` and `Cargo.lock` but not `package-lock.json` or `pnpm-lock.yaml` — the two most common lockfiles in a JavaScript repo. Cover each suffix the table above actually lists.
+- **Use `glob` magic for `**`.** Without it, `*` crosses `/` and `**/dist/**` requires a leading directory, so it excludes `packages/a/dist/` and misses a root-level `dist/`. With `:(exclude,glob)`, `**/` matches zero or more directories and both are caught, while `mydist/` is correctly kept.
+
+Verify rather than assume: run the diff with and without the pathspecs and confirm the count dropped by exactly the files you named as excluded.
 
 ## Expanding to consumers
 

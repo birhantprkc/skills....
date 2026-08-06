@@ -21,7 +21,7 @@ A collection of agent skills that help with various parts of building a great in
 
 ### As a Claude Code plugin
 
-Installs all eight skills together and updates in place. Run these inside Claude Code:
+Installs every skill in this repository together and updates in place. Run these inside Claude Code:
 
 ```text
 /plugin marketplace add jakubkrehel/skills

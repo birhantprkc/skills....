@@ -8,7 +8,7 @@ description: >-
 
 A diff is not a surface. The lines a change deletes matter as much as the lines it adds, and the file it touches is rarely the whole of what it affects. Resolve what actually changed, expand it to the surfaces users will meet, then review that.
 
-This skill owns change scope only: resolving the target from version control, expanding changed files to affected surfaces, reading both sides of the diff, and classifying each finding as introduced, a regression, or pre-existing. Domain rules belong to the six `better-*` skills. Routing, severity, consolidation, coverage, and the verdict belong to `better-interface`, which this skill hands the review to. Never duplicate or override their rules here.
+This skill owns change scope only: resolving the target from version control, expanding changed files to affected surfaces, reading both sides of the diff, and classifying each finding as introduced, a regression, or pre-existing. Domain rules belong to the six `better-*` skills. Mode, routing, severity, consolidation, coverage, the finding cap, the output format, and the verdict belong to `better-interface`, which this skill hands the review to. Never duplicate or override their rules here.
 
 This is an interface review. Correctness, tests, security, and performance belong to the project's general code review; say so and move on rather than reporting them here.
 
@@ -16,22 +16,14 @@ This is an interface review. Correctness, tests, security, and performance belon
 
 | Category | When to Use |
 | --- | --- |
-| [Scope Resolution](scope-resolution.md) | Default branch, merge-base, PR and fork targets, detached HEAD, shallow clones, renames, excluded paths |
+| [Scope Resolution](scope-resolution.md) | Target vocabulary and commands, default branch, merge-base, PR and fork targets, awkward repository states, renames, excluded paths, consumer expansion |
+| [Removed Signals](removed-signals.md) | What to look for on the `-` side of a hunk and which skill owns each removal |
 
 ## Core Principles
 
 ### 1. Resolve the Change Scope First
 
-Parse the invocation as `[quick|full] [target]`. The first token is a mode only when it is exactly `quick` or `full`; anything else is the target. Mode defaults to `full`.
-
-| Invocation | Resolves to |
-| --- | --- |
-| `/interface-review` | `full`, auto-detected |
-| `/interface-review quick` | `quick`, auto-detected |
-| `/interface-review working` | `full`, uncommitted changes only |
-| `/interface-review pr 482` | `full`, pull request 482 |
-| `/interface-review quick pr 482` | `quick`, pull request 482 |
-| `/interface-review v2.1.0..HEAD` | `full`, explicit range |
+`better-interface` owns mode parsing: the leading token is a mode only when it is exactly `quick` or `full`, and mode defaults to `full`. Everything after it is the target, so `/interface-review quick pr 482` is a `quick` review of pull request 482 and `/interface-review` resolves its target automatically. [Scope Resolution](scope-resolution.md) holds the accepted targets and the exact command for each.
 
 When no target is supplied, resolve it in this order and stop at the first match:
 
@@ -51,20 +43,9 @@ Expand one hop by default: the direct importers and callers of every changed mod
 
 ### 3. Read the Removed Lines
 
-Regressions are invisible in the post-change state. Read the `-` side of every hunk and search it for the signals below.
+Regressions are invisible in the post-change state. Read the `-` side of every hunk and search it for the signals in [Removed Signals](removed-signals.md).
 
-A signal is a lead, not a finding. Removing one of these is only a regression when nothing in the change replaces it, and this skill does not own that judgement — the domain skill does. Route each unmatched removal to its owner and report it only once that skill confirms the interface actually got worse. Equivalent replacements are common and clear the signal: `aria-label` giving way to `aria-labelledby`, an explicit `role` dropped because the element became a native `<button>`, `outline` replaced by a `box-shadow` focus ring that still meets the focus-indicator rule, a color literal replaced by a token that measures the same.
-
-| Removed from the `-` side | What to check with the owning skill |
-| --- | --- |
-| `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-live`, `role=` | The control or region lost its accessible name, description, or announcement |
-| `alt=`, `<label`, `for=`, `scope=` | Image, field, or table cell lost its programmatic association |
-| `<button>`, `<a>`, `<nav>`, `<main>`, `<ul>` replaced by `div` or `span` | Keyboard and assistive-technology behavior was traded for styling |
-| `:focus-visible`, `:focus`, `outline`, `tabindex` | Keyboard users lost the focus indicator or the element left the tab order |
-| `prefers-reduced-motion`, `prefers-contrast` | Motion or contrast now ignores the user's system preference |
-| `lang=`, `dir=`, logical properties swapped for `left` / `right` | Language metadata or direction-aware layout was dropped |
-| `text-wrap`, `line-clamp`, `overflow-wrap`, `tabular-nums`, `font-feature-settings` | Text rendering, wrapping, or numeral alignment silently changed |
-| A color token swapped for a literal, or a token swapped for a lighter one | The rendered contrast pair may now fail; measure it |
+A signal is a lead, not a finding. Removing one of these is only a regression when nothing in the change replaces it, and this skill does not own that judgement — the domain skill does. Route each unmatched removal to its owner and report it only once that skill confirms the interface actually got worse.
 
 Once the owner confirms one, report it as a `Regression`, not as `Introduced`. The distinction tells the author they broke something that worked, which is different information from a new mistake.
 
@@ -76,9 +57,13 @@ Give every finding one status:
 - `Regression` — the change weakened something that was previously correct.
 - `Pre-existing` — present in the touched code but not caused by this change.
 
-`Introduced` and `Regression` findings are the review. `Pre-existing` findings are context: report them in their own section, cap them at three ordered by severity, and exclude them from the mode's finding cap. Without that cap, any change touching a legacy file turns into a full-file audit and the author cannot tell what their change is responsible for.
+`Introduced` and `Regression` findings are the review; `Pre-existing` findings are context. Decide the status from the diff, not from the file: a line the change never touched is `Pre-existing` even when it sits three lines from a hunk. Confirm it against the base ref rather than by eye when it matters:
 
-If a domain has no evidence anywhere in the change scope, mark it `Not reviewed — no evidence in the change scope`. That is a coverage statement, not a gap.
+```bash
+git blame -L <line>,<line> "$BASE" -- path/to/file
+```
+
+Hand every finding to `better-interface` with its status attached and let it apply its own cap and verdict rules to each.
 
 ### 5. Hold the Change to Its Stated Intent
 
@@ -95,7 +80,7 @@ Do not report scope creep. Whether a change does too much is a process question,
 
 ### 6. Hand the Review to `better-interface`
 
-Once the scope, the affected surfaces, and both sides of the diff are in hand, hand the review to `better-interface`. It routes to the six domain skills, applies the shared severity scale, consolidates systemic findings, enforces the mode's finding cap, and issues the verdict. Use its rules unchanged; this file adds only the `Status` column and the separate pre-existing section.
+Once the scope, the affected surfaces, and both sides of the diff are in hand, hand the review to `better-interface` with the resolved scope block and a status on every finding. It routes to the six domain skills, applies the shared severity scale, consolidates systemic findings, enforces the cap, and issues the verdict — including how statuses affect the cap and the verdict, under its **Change-Scoped Reviews** section. Use its rules unchanged.
 
 If `better-interface` is unavailable, report the resolved change scope and the file inventory, name `better-interface` as the missing skill, and stop. Do not invent a severity scale, a finding cap, or a verdict.
 
@@ -114,25 +99,21 @@ Rendered verification is opt-in. Mark visual and runtime claims **Not verified**
 | Only the `+` side of the diff read | Search the `-` side for removed accessibility, focus, motion, and text signals |
 | An equivalent replacement reported as a regression | Route the removal to the owning skill and report only what it confirms |
 | A removal reported as a new mistake | Status it `Regression` so the author knows it used to work |
-| Every legacy issue in a touched file reported | Cap pre-existing findings at three in their own section |
-| A pre-existing issue blocking the change | Keep pre-existing findings out of the finding cap and out of the change's verdict |
-| Domain marked `Clear` when the diff never touched it | Mark it `Not reviewed — no evidence in the change scope` |
+| A line near a hunk statused `Introduced` | Status by what the diff touched, confirmed with `git blame` against the base ref |
 | A pull request checked out to review it | Fetch the ref and review it in place |
 | Line numbers cited that do not exist on the reviewed ref | Cite against the head ref named in the scope block |
-| Severity, caps, or the verdict restated here | Defer to `better-interface` |
+| Mode, severity, caps, the output format, or the verdict restated here | Defer to `better-interface` |
 | Correctness, test, or security findings in the report | Name the concern once, point at the project's code review, and drop it |
 
 ## Review Output Format
 
-Use `better-interface`'s output format with the two additions below. Its severity scale, finding cap, consolidation rule, evidence rule, considered-but-rejected table, verification section, and verdict apply unchanged.
+`better-interface` owns the output format, including the four change-scoped additions under its **Change-Scoped Reviews** section: the scope block, the `Status` column, the `Pre-existing` section, and how statuses affect the cap and the verdict. Follow it as written and add nothing here.
 
-### Scope and Coverage
-
-Open with the resolved change scope before the coverage table:
+This skill supplies two inputs to that format. Fill the scope block:
 
 | Field | Value |
 | --- | --- |
-| Target | `branch`, `working`, `pr 482`, or the explicit range |
+| Target | `branch`, `working`, `staged`, `pr 482`, or the explicit range as entered |
 | Base ref | `origin/main` at `a1b2c3d` |
 | Head ref | `refs/remotes/pr/482` at `e4f5g6h` |
 | Commits | 7 committed, 2 files uncommitted |
@@ -140,29 +121,6 @@ Open with the resolved change scope before the coverage table:
 | Excluded | `pnpm-lock.yaml`, `src/__snapshots__/` — lockfile and snapshots |
 | Surfaces expanded | `CheckoutPage`, `SettingsPanel`; not expanded: 3 further `Button` consumers |
 
-Then the coverage table from `better-interface`, unchanged, covering all six domains.
+And attach a status to every finding, per principle 4.
 
-### Findings
-
-One table, ordered by severity then reach, covering `Introduced` and `Regression` findings only:
-
-| # | Severity | Domain | Status | Location | Before | After | Why |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | HIGH | Accessibility | Regression | `src/Dialog.tsx:42` | `aria-label="Close"` removed in this change | Restore `aria-label="Close"` on the icon-only control | The close control had an accessible name before this change and no longer does |
-| 2 | MEDIUM | Layout | Introduced | `src/Toolbar.tsx:18` | `margin-left: 16px` on the new action | `margin-inline-start: 16px` | The new physical property breaks the direction-aware layout the rest of the toolbar uses |
-
-Respect the mode's finding cap. If there are no `Introduced` or `Regression` findings, omit the table and state "No actionable interface findings in this change."
-
-### Pre-existing
-
-Place after Considered but Rejected. At most three, highest severity first, excluded from the finding cap and from the verdict:
-
-| Severity | Domain | Location | Issue |
-| --- | --- | --- | --- |
-| MEDIUM | Typography | `src/Toolbar.tsx:7` | Numeric badges use proportional figures; predates this change |
-
-State plainly that these are not this change's responsibility. Omit the section when there are none.
-
-### Verification and Verdict
-
-Follow `better-interface`. List the exact git and `gh` commands run and their observed results, and mark every visual or runtime claim **Not verified** unless the interface was actually rendered. The verdict covers `Introduced` and `Regression` findings only; a change with nothing but pre-existing findings is an `Approve`.
+Under `better-interface`'s **Verification**, list the exact `git` and `gh` commands run and their observed results, including any write to `.git` — a fetch, a deepen, a `set-head`, a worktree — so the read-only claim in principle 7 is auditable.
