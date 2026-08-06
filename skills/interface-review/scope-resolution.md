@@ -1,6 +1,6 @@
 # Scope Resolution
 
-Exact commands for turning a review target into a file list. Every command here is read-only against the working tree: `git fetch` writes to `.git`, everything else only reads. Never run `gh pr checkout`, `git checkout`, `git switch`, `git stash`, or `git worktree add` to resolve a scope.
+Exact commands for turning a review target into a file list. Every command here is read-only against the working tree: `git fetch` writes to `.git`, everything else only reads. Never run `gh pr checkout`, `git checkout`, `git switch`, or `git stash` — resolving a scope never requires moving the author's files. An isolated `git worktree add` at a throwaway path is the one exception, and only for opt-in rendered verification as described in the skill.
 
 ## Default branch
 
@@ -43,10 +43,15 @@ git fetch origin main --no-tags
 | `working` | `git diff --name-status HEAD` plus `git ls-files --others --exclude-standard` for untracked files |
 | `staged` | `git diff --name-status --cached` |
 | `branch` | `git diff --name-status "$BASE"...HEAD`, where `BASE` is the merge base above |
-| `branch` with uncommitted work | The `branch` diff plus `git diff --name-status HEAD`; report the two counts separately |
+| `branch` with uncommitted work | The `branch` diff, plus `git diff --name-status HEAD` **and** `git ls-files --others --exclude-standard`; report the two counts separately |
 | `pr <n>` | Fetch, then diff — see below |
 | `<ref>` | `git diff --name-status "$(git merge-base <ref> HEAD)"...HEAD` |
-| `<ref>..<ref>` | `git diff --name-status <ref>...<ref>` |
+| `<a>..<b>` | `git diff --name-status <a>..<b>` — two dots as entered |
+| `<a>...<b>` | `git diff --name-status <a>...<b>` — three dots as entered |
+
+`git diff --name-status HEAD` reports tracked changes only. Any target that includes uncommitted work must pair it with `git ls-files --others --exclude-standard`, or a newly added component or stylesheet is silently dropped from a scope the report claims to cover in full.
+
+When the user supplies an explicit range, use the dots they wrote. `<a>..<b>` compares the two endpoints; `<a>...<b>` compares `merge-base(<a>, <b>)` with `<b>`. Rewriting `release..feature` to three dots drops everything between `release` and the merge base, which is often exactly what the user asked to see. State the resolved range in the scope block so the choice is visible.
 
 ## Pull requests
 
@@ -118,17 +123,24 @@ git diff --name-only "$BASE"...HEAD -- . ':(exclude)*.lock' ':(exclude)dist/**' 
 
 ## Expanding to consumers
 
-Principle 2 expands one hop, two for tokens and primitives. Find the hop with the project's own resolver where one exists, otherwise by import path:
+Principle 2 expands one hop, two for tokens and primitives. Find the hop with the project's own resolver where one exists, otherwise by import path.
+
+`git grep` searches the working tree by default. Search the reviewed ref instead by passing it after the pattern, so the consumer set matches the change under review — on a pull request, the working tree is a different revision and will miss importers the change itself added:
 
 ```bash
-git grep -l "from ['\"].*<module-name>" -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.vue' '*.svelte'
-git grep -ln "<ComponentName>" -- '*.tsx' '*.vue' '*.svelte'
+REV=refs/remotes/pr/482          # or HEAD for a local branch
+git grep -l "from ['\"].*<module-name>" "$REV" -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.vue' '*.svelte'
+git grep -ln "<ComponentName>" "$REV" -- '*.tsx' '*.vue' '*.svelte'
 ```
+
+Results come back as `<rev>:path/to/file`. Read those files with `git show "$REV":path/to/file`, never the working-tree copy.
 
 For a changed design token or theme value, search the token name rather than the file, since consumers reference the name and never import the file:
 
 ```bash
-git grep -n -- '--color-accent' -- '*.css' '*.tsx' 'tailwind.config.*'
+git grep -n -e '--color-accent' "$REV" -- '*.css' '*.tsx' 'tailwind.config.*'
 ```
+
+Use `-e` whenever the pattern starts with a dash, or git parses the token name as an option.
 
 Rank consumers by how much traffic they carry — route-level surfaces above leaf components — review the top five, and name the rest as not expanded.

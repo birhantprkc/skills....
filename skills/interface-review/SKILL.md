@@ -1,7 +1,7 @@
 ---
-name: better-review
+name: interface-review
 description: >-
-  User-invoked interface review of a change rather than a screen: uncommitted work, the current branch, or a pull request. Resolves the change scope, expands it to the surfaces it affects, reads both sides of the diff, and classifies every finding as introduced, a regression, or pre-existing, then hands the review to better-interface for domain routing, severity, and the verdict. Covers interface quality, not correctness, tests, or security. Supports quick and full review modes. Triggers on better-review, review my branch, review my PR, review the diff, review my changes, review before pushing, design regression check, changed files interface review.
+  User-invoked interface review of a change rather than a screen: uncommitted work, the current branch, or a pull request. Resolves the change scope, expands it to the surfaces it affects, reads both sides of the diff, and classifies every finding as introduced, a regression, or pre-existing, then hands the review to better-interface for domain routing, severity, and the verdict. Covers interface quality, not correctness, tests, or security. Supports quick and full review modes. Triggers on interface-review, review my branch, review my PR, review the diff, review my changes, review before pushing, design regression check, changed files interface review.
 ---
 
 # Review the change, not just the code it left behind
@@ -26,12 +26,12 @@ Parse the invocation as `[quick|full] [target]`. The first token is a mode only 
 
 | Invocation | Resolves to |
 | --- | --- |
-| `/better-review` | `full`, auto-detected |
-| `/better-review quick` | `quick`, auto-detected |
-| `/better-review working` | `full`, uncommitted changes only |
-| `/better-review pr 482` | `full`, pull request 482 |
-| `/better-review quick pr 482` | `quick`, pull request 482 |
-| `/better-review v2.1.0..HEAD` | `full`, explicit range |
+| `/interface-review` | `full`, auto-detected |
+| `/interface-review quick` | `quick`, auto-detected |
+| `/interface-review working` | `full`, uncommitted changes only |
+| `/interface-review pr 482` | `full`, pull request 482 |
+| `/interface-review quick pr 482` | `quick`, pull request 482 |
+| `/interface-review v2.1.0..HEAD` | `full`, explicit range |
 
 When no target is supplied, resolve it in this order and stop at the first match:
 
@@ -51,9 +51,11 @@ Expand one hop by default: the direct importers and callers of every changed mod
 
 ### 3. Read the Removed Lines
 
-Regressions are invisible in the post-change state. Read the `-` side of every hunk and search it for these signals, each of which is a finding when the `+` side does not restore it:
+Regressions are invisible in the post-change state. Read the `-` side of every hunk and search it for the signals below.
 
-| Removed from the `-` side | Why it matters |
+A signal is a lead, not a finding. Removing one of these is only a regression when nothing in the change replaces it, and this skill does not own that judgement — the domain skill does. Route each unmatched removal to its owner and report it only once that skill confirms the interface actually got worse. Equivalent replacements are common and clear the signal: `aria-label` giving way to `aria-labelledby`, an explicit `role` dropped because the element became a native `<button>`, `outline` replaced by a `box-shadow` focus ring that still meets the focus-indicator rule, a color literal replaced by a token that measures the same.
+
+| Removed from the `-` side | What to check with the owning skill |
 | --- | --- |
 | `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-live`, `role=` | The control or region lost its accessible name, description, or announcement |
 | `alt=`, `<label`, `for=`, `scope=` | Image, field, or table cell lost its programmatic association |
@@ -64,7 +66,7 @@ Regressions are invisible in the post-change state. Read the `-` side of every h
 | `text-wrap`, `line-clamp`, `overflow-wrap`, `tabular-nums`, `font-feature-settings` | Text rendering, wrapping, or numeral alignment silently changed |
 | A color token swapped for a literal, or a token swapped for a lighter one | The rendered contrast pair may now fail; measure it |
 
-Report a removal as a `Regression`, not as `Introduced`. The distinction tells the author they broke something that worked, which is different information from a new mistake.
+Once the owner confirms one, report it as a `Regression`, not as `Introduced`. The distinction tells the author they broke something that worked, which is different information from a new mistake.
 
 ### 4. Classify Every Finding
 
@@ -99,9 +101,9 @@ If `better-interface` is unavailable, report the resolved change scope and the f
 
 ### 7. Never Mutate the Working Tree
 
-A change review is read-only, including the checkout. Fetch pull request refs; do not check them out. `git fetch` writes to `.git` and is permitted; `gh pr checkout`, `git stash`, `git checkout`, and `git worktree add` change what the author is working on and are not.
+A change review is read-only, including the checkout. Fetch pull request refs; do not check them out. `git fetch` writes to `.git` and is permitted. `gh pr checkout`, `git checkout`, `git switch`, and `git stash` rewrite the files the author has open — possibly failing against local edits, possibly discarding them — and are never permitted, in any mode.
 
-Rendered verification is opt-in. Mark visual and runtime claims **Not verified** unless the project already exposes a cheap preview or the user asks for a rendered review. When the user does ask, use a worktree or checkout, say plainly that the working tree changed, and restore it afterward.
+Rendered verification is opt-in. Mark visual and runtime claims **Not verified** unless the project already exposes a cheap preview or the user asks for a rendered review. When the user does ask, add an isolated worktree at a throwaway path — `git worktree add /tmp/review-<n> refs/remotes/pr/<n>` — render from there, and remove it with `git worktree remove` when done. That leaves the author's working tree untouched, which is the point of the rule; a checkout does not, so it is not an alternative here.
 
 ## Common Mistakes
 
@@ -110,6 +112,7 @@ Rendered verification is opt-in. Mark visual and runtime claims **Not verified**
 | One stray edit reviewed instead of the branch | Check `merge-base` before the working tree, and report both counts |
 | Hunks reviewed without their consumers | Expand one hop, two for tokens and primitives, and name what you skipped |
 | Only the `+` side of the diff read | Search the `-` side for removed accessibility, focus, motion, and text signals |
+| An equivalent replacement reported as a regression | Route the removal to the owning skill and report only what it confirms |
 | A removal reported as a new mistake | Status it `Regression` so the author knows it used to work |
 | Every legacy issue in a touched file reported | Cap pre-existing findings at three in their own section |
 | A pre-existing issue blocking the change | Keep pre-existing findings out of the finding cap and out of the change's verdict |
