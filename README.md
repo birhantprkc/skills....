@@ -4,7 +4,7 @@
 
 [![skills.sh](https://skills.sh/b/jakubkrehel/skills)](https://skills.sh/jakubkrehel/skills)
 
-A collection of agent skills that help with various parts of building a great interface. From animation and UI polish to accessibility and product writing.
+A collection of agent skills that help with building a great interface. They cover UI, typography, colors, accessibility, layout and product writing.
 
 ## Skills
 
@@ -19,7 +19,15 @@ A collection of agent skills that help with various parts of building a great in
 
 ## Install
 
-### As a Claude Code plugin
+### CLI
+
+Works in Claude Code, Codex, Opencode and other agents. You can choose which skills to install or install all of them. `better-interface` coordinates the six domain skills and `interface-review` builds on `better-interface`, so install the complete collection when you want holistic or change-scoped reviews.
+
+```bash
+npx skills add jakubkrehel/skills
+```
+
+### Claude Code plugin
 
 Installs every skill in this repository together and updates in place. Run these inside Claude Code:
 
@@ -27,53 +35,3 @@ Installs every skill in this repository together and updates in place. Run these
 /plugin marketplace add jakubkrehel/skills
 /plugin install interfaces@interfaces
 ```
-
-### With the skills CLI
-
-Works in Claude Code, Codex and other agents. You can choose which skills to install or install all of them. `better-interface` coordinates the six domain skills and `interface-review` builds on `better-interface`, so install the complete collection when you want holistic or change-scoped reviews.
-
-```bash
-npx skills add jakubkrehel/skills
-```
-
-```bash
-npx skills add jakubkrehel/skills --skill '*'
-```
-
-## Use
-
-Two skills are invoked by name. Use `better-interface` to review a screen, flow or feature, and `interface-review` to review what you changed: your uncommitted work, the current branch or a pull request.
-
-The default review mode is `full`. Pass `quick` for a shorter review. For `better-interface`, add the screen, flow or feature after the mode. For `interface-review`, add the target after the mode; leave it off and it detects the branch or your uncommitted changes.
-
-In Claude Code, as a plugin. Plugin skills are namespaced, so every skill is prefixed with `interfaces:`.
-
-```text
-/interfaces:better-interface
-/interfaces:better-interface quick
-/interfaces:better-interface full checkout flow
-/interfaces:interface-review
-/interfaces:interface-review quick pr 482
-```
-
-In Claude Code, installed with the skills CLI:
-
-```text
-/better-interface
-/better-interface quick
-/better-interface full checkout flow
-/interface-review
-/interface-review quick pr 482
-```
-
-In Codex:
-
-```text
-$better-interface
-$better-interface quick
-$better-interface full checkout flow
-$interface-review
-$interface-review quick pr 482
-```
-
-The prefix only affects skills you invoke by name. The six domain skills are picked up automatically from context either way.
