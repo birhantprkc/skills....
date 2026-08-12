@@ -18,7 +18,9 @@ Typography (text wrapping, font rendering, tabular numbers, spacing) is covered 
 | Category | When to Use |
 | --- | --- |
 | [Surfaces](surfaces.md) | Border radius, optical alignment, shadows, image outlines |
-| [Animations](animations.md) | Interruptible animations, enter/exit transitions, icon animations, scale on press, motion restraint |
+| [Animations](animations.md) | Interruptible transitions, scale on press, skipping animation on page load, motion restraint |
+| [Enter & Exit](enter-exit.md) | Staged entrances, stagger timing, exit transitions |
+| [Icon Transitions](icon-transitions.md) | Cross-fading an icon on state change, with and without a motion library |
 | [Icons](icons.md) | Icon stroke weight, states via `currentColor`, outline vs fill, sizing, RTL flipping |
 | [Performance](performance.md) | Transition specificity, `will-change` usage |
 | [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
@@ -43,7 +45,7 @@ Use CSS transitions for interactive state changes: they can be interrupted mid-a
 
 ### 5. Split and Stagger Enter Animations
 
-For an infrequent staged entrance where sequence helps communicate hierarchy, break content into semantic chunks and stagger them by ~100ms instead of animating one container. Do not stagger routine, high-frequency interactions.
+For an infrequent staged entrance where sequence helps communicate hierarchy, break content into semantic chunks and stagger them by ~100ms instead of animating one container. Do not stagger routine, high-frequency interactions. [Stagger and exit recipes](enter-exit.md).
 
 ### 6. Subtle Exit Animations
 
@@ -51,7 +53,7 @@ Use a small fixed `translateY` instead of full height. Exits should be softer th
 
 ### 7. Contextual Icon Animations
 
-Animate icons with `opacity`, `scale`, and `blur` instead of toggling visibility. Use exactly these values: scale from `0.25` to `1`, opacity from `0` to `1`, blur from `4px` to `0px`. If the project has `motion` or `framer-motion` in `package.json`, match that package's import path (or the established nearby imports when both exist) and use `transition: { type: "spring", duration: 0.3, bounce: 0 }`; bounce must always be `0`. If no motion library is installed, keep both icons in the DOM (one absolute-positioned) and cross-fade with CSS transitions using `cubic-bezier(0.2, 0, 0, 1)`; this gives both enter and exit animations without any dependency.
+Animate icons with `opacity`, `scale`, and `blur` instead of toggling visibility. Use exactly these values: scale from `0.25` to `1`, opacity from `0` to `1`, blur from `4px` to `0px`. If the project has `motion` or `framer-motion` in `package.json`, match that package's import path (or the established nearby imports when both exist) and use `transition: { type: "spring", duration: 0.3, bounce: 0 }`; bounce must always be `0`. If no motion library is installed, keep both icons in the DOM (one absolute-positioned) and cross-fade with CSS transitions using `cubic-bezier(0.2, 0, 0, 1)`; this gives both enter and exit animations without any dependency. [Both recipes](icon-transitions.md).
 
 ### 8. Image Outlines
 

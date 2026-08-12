@@ -19,7 +19,15 @@ Each skill lives in `skills/<skill-name>/`:
 - Every domain skill keeps its standalone review format in `review-output.md`, never in `SKILL.md`. These skills fire mostly on build tasks, where the format is dead weight in context. Two things reach it: a Quick Reference row, and a closing **Reporting** section — two lines stating that a standalone review is finished only once the findings are reported in that format. The Reporting section is what makes the pointer fire, because it sits where the agent lands before writing output; the Quick Reference row alone is read while orienting and misses that moment. `better-interface` owns the format whenever it orchestrates, and states that once, in its own principle 3 — the Reporting section names the precedence in a clause and defines nothing.
 - Each rule lives in exactly one skill; other skills point to it by skill name in backticks (e.g. `better-layout`), never via cross-skill relative links.
 
-Current skills: `better-interface` (user-invoked cross-discipline review), `interface-review` (user-invoked change-scoped review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
+Current skills: `better-interface` (cross-discipline review), `interface-review` (user-invoked change-scoped review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
+
+### Invocation
+
+A user-invoked skill may invoke model-invoked skills, but it can never reach another user-invoked skill. That rule decides the setting; it is not a preference:
+
+- `interface-review` is the only user-invoked skill. It carries `disable-model-invocation: true` in its frontmatter **and** `policy.allow_implicit_invocation: false` in its `agents/openai.yaml` — the Claude Code and Codex halves of the same switch, which must be set together or the skill behaves differently per harness. Its `description` is human-facing: a one-line summary with no trigger list, since nothing but a person can match against it.
+- Every other skill is model-invoked and keeps a trigger list, because something must reach it: `better-interface` routes to every domain skill, and `interface-review` hands its review up to `better-interface`.
+- `better-interface` therefore cannot start `interface-review`. Where it would want to, it asks the user to run it. Making `better-interface` user-invoked too would sever the upward handoff and force `interface-review` to restate severity, the cap, the format, and the verdict.
 
 ### Rule ownership
 

@@ -1,7 +1,8 @@
 ---
 name: interface-review
+disable-model-invocation: true
 description: >-
-  User-invoked interface review of a change rather than a screen: uncommitted work, the current branch, or a pull request. Covers interface quality, not correctness, tests, or security. Triggers on interface-review, review my branch, review my PR, review the diff, review before pushing, design regression check.
+  Interface review of a change rather than a screen: uncommitted work, the current branch, or a pull request. Covers interface quality, not correctness, tests, or security.
 ---
 
 # Review the change, not just the code it left behind
