@@ -17,7 +17,7 @@ Treat the numeric values below as starting points for interfaces without an esta
 | --- | --- |
 | [Grouping & Alignment](grouping-and-alignment.md) | Space vs separators, alignment edges, logical properties, importance ordering |
 | [Spacing & Adaptivity](spacing-and-adaptivity.md) | Spacing between targets, layout margins, progressive disclosure, full-bleed content, breakpoints, i18n growth |
-| [Review Output Format](review-output.md) | Reporting a standalone layout review: severity, findings table, verification, verdict |
+| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core Principles
 
@@ -73,3 +73,7 @@ Plan for substantial and language-dependent string growth rather than relying on
 | Breakpoints at 768/1024 because they're the defaults | Break where the content actually stops fitting |
 | Fixed-width text container sized to one language | `max-width` + wrapping; test pseudo-localization and representative locales |
 | Primary action at the clip-prone bottom of a pane | Sticky positioning or stable chrome with safe-area padding |
+
+## Reporting
+
+A standalone layout review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.

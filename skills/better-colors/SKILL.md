@@ -16,7 +16,7 @@ OKLCH is a perceptually uniform color space where lightness, chroma, and hue are
 | Contrast | APCA/WCAG checks, reporting failures, fixing on request | [accessibility-contrast.md](accessibility-contrast.md) |
 | Gamut & Tailwind | P3 fallbacks, `@theme` scales, gamut clamping | [gamut-and-tailwind.md](gamut-and-tailwind.md) |
 | Usage | Semantic tokens, one meaning per color, primary-action emphasis, appearance variants | [color-usage.md](color-usage.md) |
-| Review output format | Reporting a standalone color review: severity, findings table, verification, verdict | [review-output.md](review-output.md) |
+| Review output format | Severity scale, findings table, verification, verdict | [review-output.md](review-output.md) |
 
 ## Core Principles
 
@@ -80,3 +80,7 @@ Use three decimal places for L and C and up to three for H. Drop trailing zeros 
 | Semantic token used outside its role (separator as text) | Add a token for the missing role; never borrow by value |
 | Several colored control backgrounds in one view | Fill only the single primary action; secondaries stay neutral |
 | Palette verified only in light mode | Recheck every foreground/background pair in both appearances |
+
+## Reporting
+
+A standalone color review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.

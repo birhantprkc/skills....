@@ -21,7 +21,7 @@ Rendered-pair contrast measurement and color remediation are covered by the `bet
 | [Screen Readers](screen-readers.md) | Visually hidden content, live regions, toasts, alt text, SVG |
 | [Hit Areas](hit-areas.md) | Target sizes, expanding hit areas, collision rules |
 | [Motion & Zoom](motion-and-zoom.md) | `prefers-reduced-motion`, autoplay and timed UI, 200% zoom, reflow, rem vs px |
-| [Review Output Format](review-output.md) | Reporting a standalone accessibility review: severity, findings table, verification, verdict |
+| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core Principles
 
@@ -95,3 +95,7 @@ The page must work at 200% zoom and reflow at 320px width without horizontal scr
 | `aria-hidden="true"` on a focusable element | Remove it or make the element non-focusable |
 | Functional icon alt describes the picture | Describe the action: `alt="Search"`, not `alt="magnifying glass"` |
 | Submit disabled until the form is valid | Keep it enabled; validate on submit and focus the first error |
+
+## Reporting
+
+A standalone accessibility review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.

@@ -14,7 +14,7 @@ How copy renders (capitalization via `text-transform`, truncation, smart punctua
 
 | Category | When to Use |
 | --- | --- |
-| [Review Output Format](review-output.md) | Reporting a standalone writing review: severity, findings table, verification, verdict |
+| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core Principles
 
@@ -109,3 +109,7 @@ Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A plac
 | "No results." as the whole empty state | Orient and point forward with a next action |
 | Placeholder doing the label's job | Visible label; placeholder shows the format |
 | `"You have " + n + " messages"` | Full templated strings with pluralization |
+
+## Reporting
+
+A standalone writing review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.

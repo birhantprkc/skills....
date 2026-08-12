@@ -21,7 +21,7 @@ Typography (text wrapping, font rendering, tabular numbers, spacing) is covered 
 | [Animations](animations.md) | Interruptible animations, enter/exit transitions, icon animations, scale on press, motion restraint |
 | [Icons](icons.md) | Icon stroke weight, states via `currentColor`, outline vs fill, sizing, RTL flipping |
 | [Performance](performance.md) | Transition specificity, `will-change` usage |
-| [Review Output Format](review-output.md) | Reporting a standalone UI-polish review: severity, findings table, verification, verdict |
+| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core Principles
 
@@ -100,3 +100,7 @@ No custom animation on high-frequency interactions: the attention cost repeats o
 | Separate icon assets per state | One `currentColor` SVG, states via CSS |
 | Filled icons everywhere | Outline as default, fill only for the active state |
 | Entrance animation on every hover or keystroke | Instant feedback or ≤150ms opacity/color transition |
+
+## Reporting
+
+A standalone UI-polish review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.
