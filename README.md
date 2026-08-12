@@ -21,7 +21,7 @@ A collection of agent skills that help you build a great interface. They cover U
 
 ### CLI
 
-Works in Claude Code, Codex, Opencode and other agents. You can choose which skills to install or install all of them. `better-interface` coordinates the six domain skills and `interface-review` builds on `better-interface`, so install the complete collection when you want holistic or change-scoped reviews.
+Works in Claude Code, Codex, Opencode and other agents. You can choose which skills to install or install all of them.
 
 ```bash
 npx skills add jakubkrehel/skills
