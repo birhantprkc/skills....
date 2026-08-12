@@ -66,7 +66,7 @@ Read files at that ref with `git show refs/remotes/pr/<n>:path/to/file`. Do not 
 
 **Citations.** `better-interface` requires `path/to/file:line`. Line numbers from a fetched ref do not necessarily match the working tree. Cite against the head ref, and declare that ref and its SHA in the scope block so the numbers are resolvable.
 
-**Intent.** The `title` and `body` from `gh pr view` are the stated intent for principle 5. Add the commit subjects when the body is empty:
+**Intent.** The `title` and `body` from `gh pr view` are the stated intent for principle 6. Add the commit subjects when the body is empty:
 
 ```bash
 git log --format='%s%n%b' "$BASE".."refs/remotes/pr/<n>"
@@ -89,6 +89,24 @@ done
 ```
 
 Stop and say the tree is mid-operation.
+
+## Nothing to review
+
+The tree is clean and `HEAD` is not ahead of the merge base. Gather the facts before asking, so the offer is accurate rather than a guess about why the scope came back empty:
+
+```bash
+git rev-parse --abbrev-ref HEAD                 # current branch, or HEAD when detached
+git status --porcelain                          # empty: nothing uncommitted, tracked or untracked
+git rev-list --count "$BASE"..HEAD              # 0: nothing ahead of the base
+git log -1 --format='%h %s'                     # the last commit, to name in the offer
+gh pr status --json number,title,headRefName    # `currentBranch`: this branch's open PR, if any
+```
+
+`gh pr status` succeeds with no pull request open — it simply omits `currentBranch` — so an empty result is an answer, not an error. It fails outright without `gh`, without authentication, and on a repository with no GitHub remote. Treat any failure as "no pull request found", say so, and offer the remaining routes rather than stopping.
+
+Report the current branch, whether it is the default branch, that the tree is clean, and whether a pull request is open, then offer the three routes in principle 2. State the last commit's SHA and subject inside the offer: the user recognises "a1b2c3d Merge pull request #482" as not what they wanted, and cannot recognise "the last commit".
+
+A whole-repository audit is a different review, not this one with a wider net. Hand the repository to `better-interface` directly, without a scope block, statuses, or a pre-existing section.
 
 ## Renames
 
@@ -131,7 +149,7 @@ Run the diff with and without the pathspecs and confirm the count dropped by exa
 
 ## Expanding to consumers
 
-Principle 2 expands one hop, two for tokens and primitives. Use the project's own resolver where one exists, otherwise import paths.
+Principle 3 expands one hop, two for tokens and primitives. Use the project's own resolver where one exists, otherwise import paths.
 
 `git grep` searches the working tree by default. Pass the reviewed ref after the pattern instead, or on a pull request you search a different revision and miss importers the change itself added:
 

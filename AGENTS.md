@@ -23,7 +23,7 @@ Current skills: `better-interface` (user-invoked cross-discipline review), `inte
 | Skill | Owns |
 | --- | --- |
 | `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, consolidation, coverage, the finding cap, the output format including its change-scoped additions, and the verdict |
-| `interface-review` | Change scope resolution, blast radius from changed files to affected surfaces, and finding classification (`Introduced` / `Regression` / `Pre-existing`) |
+| `interface-review` | Change scope resolution including the empty-scope offer, blast radius from changed files to affected surfaces, and finding classification (`Introduced` / `Regression` / `Pre-existing`) |
 | `better-accessibility` | Semantic HTML, keyboard and focus behavior, accessible names, forms, assistive technology, and accessibility requirements |
 | `better-layout` | Spatial grouping, alignment, spacing, responsive structure, logical CSS properties, and spatial RTL behavior |
 | `better-writing` | Source wording, terminology, voice, tone, labels, errors, and empty-state copy |
