@@ -4,7 +4,7 @@
 
 [![skills.sh](https://skills.sh/b/jakubkrehel/skills)](https://skills.sh/jakubkrehel/skills)
 
-A collection of agent skills that help with building a great interface. They cover UI, typography, colors, accessibility, layout and product writing.
+A collection of agent skills that help you build a great interface. They cover UI, typography, colors, accessibility, layout, product writing and more.
 
 ## Skills
 
