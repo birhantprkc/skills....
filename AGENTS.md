@@ -19,7 +19,7 @@ Each skill lives in `skills/<skill-name>/`:
 - Every domain skill keeps its standalone review format in `review-output.md`, never in `SKILL.md`. These skills fire mostly on build tasks, where the format is dead weight in context. Two things reach it: a Quick Reference row, and a closing **Reporting** section — two lines stating that a standalone review is finished only once the findings are reported in that format. The Reporting section is what makes the pointer fire, because it sits where the agent lands before writing output; the Quick Reference row alone is read while orienting and misses that moment. `better-interface` owns the format whenever it orchestrates, and states that once, in its own principle 3 — the Reporting section names the precedence in a clause and defines nothing.
 - Each rule lives in exactly one skill; other skills point to it by skill name in backticks (e.g. `better-layout`), never via cross-skill relative links.
 
-Current skills: `better-interface` (cross-discipline review), `interface-review` (user-invoked change-scoped review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (OKLCH color space and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
+Current skills: `better-interface` (cross-discipline review), `interface-review` (user-invoked change-scoped review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (color systems and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
 
 ### Invocation
 
@@ -39,7 +39,7 @@ A user-invoked skill may invoke model-invoked skills, but it can never reach ano
 | `better-layout` | Spatial grouping, alignment, spacing, responsive structure, logical CSS properties, and spatial RTL behavior |
 | `better-writing` | Source wording, terminology, voice, tone, labels, errors, and empty-state copy |
 | `better-typography` | Visual text rendering, type systems, font behavior, wrapping mechanics, punctuation, and text-level bidi behavior |
-| `better-colors` | Color notation, palette construction, gamut, rendered-pair contrast measurement, and color remediation |
+| `better-colors` | Palette structure and step roles, palette construction, color token naming, color notation, gamut, rendered-pair contrast measurement, and color remediation |
 | `better-ui` | Optional visual polish: surfaces, icons, and motion aesthetics after the underlying interaction is sound |
 
 When a concern crosses domains, keep the rule in the owner above and let other skills name only the handoff or secondary effect. In particular:
