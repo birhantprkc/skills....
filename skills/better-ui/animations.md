@@ -139,6 +139,49 @@ Don't use `initial={false}` when the component relies on its `initial` prop to s
 
 Verify the component still looks right on a full page refresh before applying this.
 
+## Suppress Transitions on Theme Switch
+
+Flipping the theme changes `color`, `background-color`, `border-color`, and `box-shadow` on nearly every element at once. Everything carrying a transition on those properties animates simultaneously, so the switch reads as a slow smear across the page instead of an instant change. Disable transitions for the duration of the swap and restore them right after.
+
+Inject a stylesheet that turns off every transition, force a reflow so the new colors commit while it still applies, then drop it on the next frame:
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+
+export function DisableThemeTransitions() {
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleChange = () => {
+      const style = document.createElement("style");
+      style.append(
+        document.createTextNode(
+          "*,*::before,*::after{transition:none !important}"
+        )
+      );
+      document.head.append(style);
+
+      const _flushReflow = document.body.offsetHeight;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => style.remove());
+      });
+    };
+
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
+
+  return null;
+}
+```
+
+`document.body.offsetHeight` is read for its side effect: it forces a synchronous style flush, so the new theme resolves while the override is still in the document and no transition ever starts. The nested `requestAnimationFrame` removes the override only after that paint, putting transitions back before the next interaction.
+
+This component covers the OS-level change. An in-app theme toggle needs the same treatment around its own flip: apply the override, change the theme, flush, remove. `next-themes` ships this as its `disableTransitionOnChange` prop.
+
 ## Motion Restraint
 
 Motion is a budget, not a garnish. Three rules decide whether an animation belongs at all:
