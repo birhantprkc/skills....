@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 This skill takes one described piece of UI and builds three versions that differ on purpose. They go behind a picker in the real page, so you can flip between them and choose.
 
-Every other skill here judges. This one produces candidates and hands the decision back. It does not review existing UI, which is `interface-review` and `better-interface`, and it does not pick the winner.
+Every other skill here judges. This one produces candidates and hands the decision back. Reviewing existing UI is `interface-review` and `better-interface`, and it does not pick the winner.
 
 ## Different answers, not different tints
 
@@ -24,17 +24,17 @@ So each variant is a different answer to the same brief, on an axis this collect
 | Type | `better-typography` | Scale steps, weight contrast, measure |
 | Voice | `better-writing` | Labels, tone, how much copy |
 
-Pick **one primary axis** and give each variant a different position on it. Secondary choices follow from the primary rather than varying on their own. A dense variant may need a smaller type step, and that is coherence rather than a second axis.
+Pick **one primary axis** and give each variant a different position on it. Secondary choices follow from it rather than varying on their own. A dense variant may need a smaller type step, and that is coherence, not a second axis.
 
-Varying every axis at once produces three unattributable results. You learn which one you liked, not what made it work, so the next piece starts from nothing.
+Varying every axis at once produces three unattributable results. You learn which you liked, not what made it work, so the next piece starts from nothing.
 
 ## The floor every variant clears
 
 A variant that wins on looks and fails an escalation trigger is not a candidate. It is a bug with a nice surface.
 
-Before a variant enters the picker it clears the escalation triggers in `better-interface`. Every control has an accessible name. Keyboard reaches everything a pointer does. Focus is visible, nothing clips at 320px, and no meaning rides on color alone.
+Before a variant enters the picker it clears `better-interface`'s escalation triggers. Every control has an accessible name, keyboard reaches everything a pointer does, focus is visible, nothing clips at 320px, and no meaning rides on color alone.
 
-That floor is identical across variants. It is not one of the axes and it never trades against them. Where a direction can only work by breaking it, say so and drop the direction.
+That floor is identical across variants. It is not an axis and never trades against one. Where a direction can only work by breaking it, say so and drop the direction.
 
 ## 1. Scope one piece
 
@@ -44,7 +44,7 @@ Restate the brief in one sentence: what the thing is, where it renders, what it 
 
 ## 2. Learn the ground
 
-Variants have to look like they could ship tomorrow, so read what they will stand on:
+Variants have to look like they could ship tomorrow, so read what they stand on:
 
 - The styling system, the component library, and any motion library.
 - The tokens: color, spacing, radius, type scale, easing.

@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Interface explanation
 
-This skill answers how something was built. `/explain-interface how the gradient on example.com was built` finds the layers that produce that gradient and explains the mechanism, in enough detail to rebuild it.
+This skill answers how something was built. `/explain-interface how the gradient on example.com was built` finds the layers producing that gradient and explains the mechanism, in enough detail to rebuild it.
 
-It explains rather than judges: there is no verdict here, because how someone else built their interface is not a finding. Reviewing an interface against a standard is `interface-review` and `better-interface`. Exploring alternatives for your own is `variant`.
+It explains rather than judges. There is no verdict, because how someone else built their interface is not a finding. Reviewing against a standard is `interface-review` and `better-interface`; exploring alternatives for your own is `variant`.
 
 ## Scope to the question
 
@@ -19,7 +19,7 @@ Two questions, both first-class, sharing nothing but the evidence rules:
 | How was this **site** built? | The frontend: framework and rendering strategy, styling system, component library, tokens, the type, spacing and color systems, motion, breakpoints, how fonts and images are served | [read-the-system.md](read-the-system.md) |
 | How was **this** built? | The layer stack behind one effect, and the smallest code that reproduces it | [find-the-effect.md](find-the-effect.md) |
 
-Given a named thing, scope to it. A type scale and a token dump are not a longer answer to "how is the gradient built", they are an answer to a question nobody asked. Pull in a neighbour only where the effect cannot be explained without it, and say why.
+Given a named thing, scope to it. A type scale and a token dump are not a longer answer to "how is the gradient built", they answer a question nobody asked. Pull in a neighbour only where the effect cannot be explained without it, and say why.
 
 Either question can be asked of a screenshot instead of a URL, which changes the answer in kind. See **From a screenshot, it is a reconstruction**.
 
@@ -32,7 +32,7 @@ How you reach the page decides what you may claim. Say which route you used.
 | Gives you | What actually paints: computed values, paint order, pseudo-elements, live animations | The source: authored declarations, responsive variants, generated utilities, every `:root` token |
 | Blind to | Any width or state you did not visit | Which rule wins, and anything injected at runtime |
 
-Neither is a downgrade. A browser at one viewport misses the `md:` variants raw HTML hands over, and raw CSS cannot say which of nine matching rules applied. Reach for both where the question is worth it.
+Neither is a downgrade. A browser at one viewport misses the `md:` variants raw HTML hands over, and raw CSS cannot say which of nine matching rules won. Use both where the question is worth it.
 
 The Chrome DevTools MCP is the easiest browser to get:
 

@@ -10,7 +10,7 @@ When nesting rounded elements, the outer radius must equal the inner radius plus
 outerRadius = innerRadius + padding
 ```
 
-This rule is most useful when nested surfaces are close together. If padding is larger than `24px`, treat the layers as separate surfaces and choose each radius independently instead of forcing strict concentric math.
+The rule matters most when nested surfaces sit close together. Past `24px` of padding, treat the layers as separate surfaces and choose each radius independently rather than forcing concentric math.
 
 ### Example
 
@@ -52,7 +52,7 @@ This rule is most useful when nested surfaces are close together. If padding is 
 </div>
 ```
 
-Mismatched border radii on closely nested surfaces is a common source of visual tension. Calculate concentrically when the layers share a visible, even inset; preserve an established component token when the layers are independent or the padding is intentionally asymmetric.
+Mismatched radii on closely nested surfaces are a common source of visual tension. Calculate concentrically where the layers share a visible, even inset. Keep an established component token where they are independent or the padding is deliberately asymmetric.
 
 ## Optical alignment
 
@@ -60,7 +60,7 @@ When geometric centering looks off, align optically instead.
 
 ### Buttons with text + icon
 
-When an icon makes otherwise symmetric padding look unbalanced, use slightly less padding on the icon side. A useful starting point is:
+Where an icon makes symmetric padding look unbalanced, use slightly less on the icon side. A starting point:
 `icon-side padding = text-side padding - 2px`.
 
 ```css
@@ -102,7 +102,7 @@ Play icons are triangular and their geometric center is not their visual center.
 
 ### Asymmetric icons (stars, arrows, carets)
 
-Some icons have uneven visual weight. The best fix is adjusting the SVG directly so no extra margin/padding is needed in the component code.
+Some icons carry uneven visual weight. The best fix is adjusting the SVG directly, so the component needs no extra margin or padding.
 
 ```tsx
 // Best: fix in the SVG itself
@@ -116,13 +116,13 @@ Some icons have uneven visual weight. The best fix is adjusting the SVG directly
 
 ## Shadows instead of borders
 
-For **buttons, cards, and containers** that use a border for depth or elevation, prefer replacing it with a subtle `box-shadow`. Shadows adapt to any background since they use transparency; solid borders don't. This also helps when using images or multiple colors as backgrounds: solid border colors don't work well on backgrounds other than the ones they were designed for.
+Where **buttons, cards, and containers** use a border for depth or elevation, replace it with a subtle `box-shadow`. Shadows use transparency, so they adapt to any background where solid borders do not. That matters most over images or multiple background colors, which a fixed border color was never designed for.
 
-**Do not apply this to dividers** (`border-b`, `border-t`, side borders) or any border whose purpose is layout separation rather than element depth. Those should stay as borders.
+**Never apply this to dividers**, meaning `border-b`, `border-t`, and side borders, or any border whose purpose is layout separation rather than depth. Those stay borders.
 
 ### Shadow as border (light mode)
 
-The shadow is comprised of three layers. The first acts as a 1px border ring, the second adds subtle lift, and the third provides ambient depth:
+Three layers. The first acts as a 1px border ring, the second adds subtle lift, the third ambient depth:
 
 ```css
 :root {
@@ -139,7 +139,7 @@ The shadow is comprised of three layers. The first acts as a 1px border ring, th
 
 ### Shadow as border (dark mode)
 
-In dark mode, simplify to a single white ring, since layered depth shadows aren't visible on dark backgrounds:
+In dark mode, simplify to one white ring, since layered depth shadows are invisible on dark backgrounds:
 
 ```css
 /* Dark mode: adapt to whatever setup the project uses
@@ -177,13 +177,13 @@ Apply the variable and add `transition-[box-shadow]` for a smooth hover:
 
 ## Image outlines
 
-Add a subtle `1px` outline with low opacity to images. This creates consistent depth, especially in design systems where other elements use borders or shadows.
+Add a `1px` outline at low opacity to images for consistent depth, especially where other elements use borders or shadows.
 
 ### Color rules (non-negotiable)
 
 - **Light mode**: pure black, `oklch(0 0 0 / 0.1)`.
 - **Dark mode**: pure white, `oklch(1 0 0 / 0.1)`.
-- Never use a near-black or near-white from the project palette (e.g. slate-900, zinc-900, `#0a0a0a`, `#111827`, `#f5f5f7`). Tinted outlines pick up the surrounding surface color and read as dirt on the image edge.
+- Never a near-black or near-white from the project palette, such as slate-900, zinc-900, `#0a0a0a`, `#111827`, or `#f5f5f7`. Tinted outlines pick up the surrounding surface color and read as dirt on the image edge.
 - Never match the outline to the project's accent or ink color. The outline is a neutral separator, not a themed element.
 
 ### Light mode
@@ -216,4 +216,4 @@ img {
 
 Use `outline-black/10` and `outline-white/10` specifically, not `outline-slate-*`, `outline-zinc-*`, `outline-neutral-*`, or any tinted scale.
 
-**Why outline instead of border?** `outline` never affects layout, adding no width or height at any offset. And `outline-offset: -1px` draws the ring just inside the image edge, so it hugs the corner radius rather than sitting outside it.
+**Why outline instead of border?** `outline` never affects layout, adding no width or height at any offset, and `outline-offset: -1px` draws the ring just inside the image edge so it hugs the corner radius.

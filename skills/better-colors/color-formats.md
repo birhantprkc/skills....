@@ -1,6 +1,6 @@
 # Color formats
 
-Which notation to write colors in, how to convert between them, and what happens at the edges of a display's gamut. Every other rule in this skill is stated in perceptual terms and holds whatever notation you write the values in.
+Which notation to write colors in, how to convert between them, and what happens at the edges of a display's gamut. Every other rule in this skill is stated perceptually and holds whatever notation you write.
 
 ## Choosing a notation
 
@@ -22,7 +22,7 @@ oklch(L C H / alpha)  /* alpha uses a slash, never a comma */
 
 ## Converting
 
-Convert when the user asks, when an agreed migration is in scope, or when the project is already standardizing on a notation and this value is the straggler. Do not convert an isolated value in a project that deliberately uses something else, and do not convert because this skill happened to load.
+Convert when the user asks, when an agreed migration is in scope, or when the project is standardizing on a notation and this value is the straggler. Never convert an isolated value in a project that deliberately uses something else, and never because this skill happened to load.
 
 When conversion is in scope, change the values and nothing else:
 
@@ -41,15 +41,15 @@ color: oklch(0.623 0.188 259.815);
 border: 1px solid oklch(0 0 0 / 0.1);
 ```
 
-Bulk conversion is a migration, not cleanup. It changes every rendered color by a rounding margin and touches files nobody asked about, so it needs to be the task rather than a side effect of one.
+Bulk conversion is a migration, not cleanup. It shifts every rendered color by a rounding margin and touches files nobody asked about, so it has to be the task rather than a side effect.
 
 ## Gamut
 
-Every sRGB color exists in Display P3; the reverse is not true. P3 covers roughly 50% more colors, which matters only for the most saturated values. A color at 60% of maximum vividness looks the same on both.
+Every sRGB color exists in Display P3, but not the reverse. P3 covers roughly 50% more colors, which matters only for the most saturated values. A color at 60% of maximum vividness looks the same on both.
 
-A color more vivid than its display can render gets clipped, and clipping is not graceful. It flattens neighbouring steps into one rendered color, so the top of a ramp can lose its distinctions entirely on an sRGB screen. Maximum achievable vividness varies by both hue and lightness. Cyans top out far lower than reds and purples, so a ramp that clips does so at some steps and not others.
+A color more vivid than its display can render gets clipped, and clipping is not graceful. It flattens neighbouring steps into one rendered color, so the top of a ramp can lose its distinctions on an sRGB screen. Maximum vividness varies by hue and lightness. Cyans top out far lower than reds and purples, so a clipping ramp clips at some steps and not others.
 
-The fix is to reduce vividness while holding hue and lightness. Generate ramps against sRGB unless the product is display-restricted, then add P3 as an enhancement:
+The fix is to reduce vividness while holding hue and lightness. Generate ramps against sRGB unless the product is display-restricted, and add P3 as an enhancement:
 
 ```css
 .accent {
@@ -63,7 +63,7 @@ The fix is to reduce vividness while holding hue and lightness. Generate ramps a
 }
 ```
 
-Order matters: the sRGB value comes first so every display gets something, and the P3 rule only overrides where it will actually render. A P3 color with no fallback is a `HIGH` finding. It does not degrade, it fails.
+Order matters. The sRGB value comes first so every display gets something, and the P3 rule overrides only where it will render. A P3 color with no fallback is a `HIGH` finding; it does not degrade, it fails.
 
 For browser matrices predating `oklch()` support, the same layering works with `@supports`:
 
@@ -83,8 +83,8 @@ Check the project's actual browser matrix before adding this. On a modern baseli
 
 ## Modern CSS worth knowing
 
-- **`color-mix()`** derives one color from another, as in `color-mix(in oklab, var(--color-accent-solid) 15%, white)` for a tinted background. Useful for states; keep generated values out of the token layer, since a mixed color cannot be inspected in a design tool.
-- **Relative color syntax** adjusts one channel of an existing color. `oklch(from var(--color-accent-solid) calc(l - 0.1) c h)` darkens the accent by hand. Powerful and easy to overuse: a token defined by three chained derivations is unreadable.
+- **`color-mix()`** derives one color from another, as in `color-mix(in oklab, var(--color-accent-solid) 15%, white)` for a tinted background. Useful for states, but keep generated values out of the token layer, since a mixed color cannot be inspected in a design tool.
+- **Relative color syntax** adjusts one channel of an existing color. `oklch(from var(--color-accent-solid) calc(l - 0.1) c h)` darkens the accent by hand. Powerful and easy to overuse, since a token defined by three chained derivations is unreadable.
 - **`light-dark()`** puts both appearances in one declaration. See [palette-generation.md](palette-generation.md).
 
 All three compute at render time, so their output cannot be contrast-checked statically. Measure the rendered result.

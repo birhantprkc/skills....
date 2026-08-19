@@ -4,11 +4,11 @@ Cross-fading an icon when it changes contextually or by state, with and without 
 
 ## Contextual icon animations
 
-When icons appear or disappear contextually (on hover, on state change), animate them with `opacity`, `scale`, and `blur` rather than just toggling visibility.
+When icons appear or disappear contextually, on hover or a state change, animate them with `opacity`, `scale`, and `blur` rather than toggling visibility.
 
 ### Motion example
 
-This example uses the `motion` package. If the project instead has `framer-motion`, import the same APIs from `"framer-motion"`; never mix an installed package with the other package's import path.
+This uses the `motion` package. Where the project has `framer-motion`, import the same APIs from `"framer-motion"`. Never mix an installed package with the other's import path.
 
 ```tsx
 import { AnimatePresence, motion } from "motion/react";
@@ -34,9 +34,9 @@ function IconButton({ isActive, icon: Icon }) {
 
 ### CSS transition approach (no Motion)
 
-If the project doesn't use Motion (Framer Motion), keep both icons in the DOM and cross-fade them with CSS transitions. Because neither icon unmounts, both enter and exit animate smoothly.
+Without Motion or Framer Motion, keep both icons in the DOM and cross-fade with CSS transitions. Neither unmounts, so enter and exit both animate smoothly.
 
-The trick: one icon is absolutely positioned on top of the other. Toggling state cross-fades them: the entering icon scales up from `0.25` while the exiting icon scales down to `0.25`, both with opacity and blur.
+One icon is absolutely positioned on top of the other. Toggling state cross-fades them, the entering icon scaling up from `0.25` while the exiting one scales down to `0.25`, both with opacity and blur.
 
 ```tsx
 function IconButton({ isActive, ActiveIcon, InactiveIcon }) {
@@ -72,7 +72,7 @@ function IconButton({ isActive, ActiveIcon, InactiveIcon }) {
 }
 ```
 
-The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon (ActiveIcon) overlays it without affecting flow.
+The non-absolute icon, `InactiveIcon`, defines the layout size. The absolute one, `ActiveIcon`, overlays it without affecting flow.
 
 ### Choosing between Motion and CSS
 
@@ -83,7 +83,7 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 | **Spring physics** | Yes | No, use `cubic-bezier(0.2, 0, 0, 1)` as approximation |
 | **When to use** | Project already uses `motion` or `framer-motion` | No motion dependency, or keeping bundle small |
 
-Check the project's `package.json`. Import from `"motion/react"` when `motion` is installed, or from `"framer-motion"` when `framer-motion` is installed. If both exist, follow the imports already used by the component or its nearest peers. If neither is present, use the CSS cross-fade pattern; don't add a dependency just for icon transitions.
+Check the project's `package.json`. Import from `"motion/react"` when `motion` is installed, or `"framer-motion"` when that is. Where both exist, follow the imports the component or its nearest peers already use. Where neither is present, use the CSS cross-fade and never add a dependency just for icon transitions.
 
 ### When to animate icons
 

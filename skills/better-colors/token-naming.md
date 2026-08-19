@@ -1,10 +1,10 @@
 # Token naming
 
-Naming is what makes a palette usable by anyone who did not build it. For which ramps exist and what each step is for, see [palette-structure.md](palette-structure.md).
+Naming is what makes a palette usable by anyone who did not build it. For which ramps exist and what each step does, see [palette-structure.md](palette-structure.md).
 
 ## Two tiers
 
-**Primitives** name a value. They are the ramp, and you name them by hue and step: `--blue-500`, `--neutral-200`. A primitive describes what the color *is*, so it never changes meaning between themes and is never applied directly in a component.
+**Primitives** name a value. They are the ramp, named by hue and step: `--blue-500`, `--neutral-200`. A primitive describes what the color *is*, so it never changes meaning between themes and is never applied directly in a component.
 
 **Semantics** name a job. They point at a primitive and take the name of the role they fill: `--color-text-secondary`, `--color-border-subtle`. Components only ever reference this tier.
 
@@ -22,13 +22,13 @@ Naming is what makes a palette usable by anyone who did not build it. For which 
 }
 ```
 
-The tiering is what makes theming possible. Dark mode, a white-label theme, and an increased-contrast variant all repoint the semantic tier and leave both the primitives and every component untouched. A codebase that applies `--blue-500` directly in components has no theming seam. Adding one later means auditing every usage to work out which meant "the accent" and which just wanted blue.
+The tiering is what makes theming possible. Dark mode, a white-label theme, and an increased-contrast variant all repoint the semantic tier, leaving the primitives and every component untouched. A codebase applying `--blue-500` directly in components has no theming seam. Adding one later means auditing every usage to work out which meant "the accent" and which just wanted blue.
 
-Add a third, component-level tier (`--color-button-danger-bg`) only when a component genuinely diverges from the system and that divergence is intentional. One component token is a documented exception; twenty are a sign the semantic tier is missing roles.
+Add a third, component-level tier (`--color-button-danger-bg`) only where a component genuinely and intentionally diverges from the system. One component token is a documented exception; twenty mean the semantic tier is missing roles.
 
 ## The role inventory
 
-A system is complete when every role below has a token. Build against this list rather than adding tokens as components demand them, or the palette ends up shaped like whichever screen was built first.
+A system is complete when every role below has a token. Build against this list rather than adding tokens as components demand them, or the palette ends up shaped like whichever screen came first.
 
 | Group | Roles |
 | --- | --- |
@@ -38,7 +38,7 @@ A system is complete when every role below has a token. Build against this list 
 | Accent | subtle background, border, solid, solid hover, text |
 | Status | per status shipped: subtle background, border, solid, text |
 
-Separator and border are separate roles even when they share a value today. A separator divides content; a border encloses a control. They diverge the first time someone restyles inputs, and a system that conflated them has to be untangled at that moment.
+Separator and border are separate roles even when they share a value today. A separator divides content; a border encloses a control. They diverge the first time someone restyles inputs, and a system that conflated them gets untangled at that moment.
 
 ## Naming grammar
 
@@ -51,7 +51,7 @@ Use one shape and never deviate: `--color-{role}-{variant}-{state}`.
 --color-accent-solid-hover
 ```
 
-Pick one word per concept and use only that word. The vocabulary matters less than its consistency. A reader who has seen `--color-text-primary` must be able to guess `--color-text-disabled` without looking:
+Pick one word per concept and use only that word. Consistency matters more than the vocabulary. A reader who has seen `--color-text-primary` must be able to guess `--color-text-disabled` without looking:
 
 | Concept | Pick one | Never mix in |
 | --- | --- | --- |
@@ -60,7 +60,7 @@ Pick one word per concept and use only that word. The vocabulary matters less th
 | Edge | `border` | `stroke`, `outline`, `line` |
 | Brand color | `accent` | `primary`, `brand`, `theme` used interchangeably |
 
-Reserve `primary` for exactly one meaning. `--color-text-primary` for body text beside `--color-primary` for the brand is the most common naming collision there is. It makes every `primary` token ambiguous until you open its definition. Use `accent` for the brand and let `primary` mean "the most prominent of its group".
+Reserve `primary` for exactly one meaning. `--color-text-primary` for body text beside `--color-primary` for the brand is the most common naming collision there is, and it makes every `primary` token ambiguous until you open its definition. Use `accent` for the brand and let `primary` mean "the most prominent of its group".
 
 ## Anti-patterns
 
@@ -92,6 +92,6 @@ Tailwind v4 generates utilities from `@theme`, so names declared there become th
 }
 ```
 
-This yields `bg-accent-solid` and `text-secondary` alongside `bg-brand-500`. Both are reachable, so the discipline is a convention rather than a constraint. Templates use the semantic utilities. A raw `bg-brand-500` in a component is the thing to flag in review.
+That yields `bg-accent-solid` and `text-secondary` alongside `bg-brand-500`. Both are reachable, so the discipline is a convention rather than a constraint. Templates use the semantic utilities, and a raw `bg-brand-500` in a component is the thing to flag.
 
-Opacity modifiers work on either tier, as in `bg-accent-solid/50`. But a color carrying alpha cannot be contrast-checked against a static background, since what it renders depends on what sits behind it. Use solid tokens for anything with text on it.
+Opacity modifiers work on either tier, as in `bg-accent-solid/50`. But a color carrying alpha cannot be contrast-checked against a static background, because what it renders depends on what sits behind it. Use solid tokens for anything with text on it.

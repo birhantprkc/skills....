@@ -7,9 +7,9 @@ description: Accessibility engineering for product interfaces. Use when building
 
 Most accessibility is free if you use the platform. Native elements ship with keyboard support, real labels announce themselves, and a visible focus ring is one CSS rule.
 
-Write every fix in the styling system the project already uses. Where a rule below gives an exact value, use that value rather than a familiar-looking substitute.
+Write every fix in the project's styling system, and use the exact values below rather than familiar-looking substitutes.
 
-Reviewing means two walks. First keyboard-only: every flow completes without a mouse. Then screen-reader: every control announces a name, a role, and its state. When unsure, take the platform default over a custom rebuild, and remove ARIA rather than add it.
+Reviewing means two walks. Keyboard-only, where every flow completes without a mouse. Then screen-reader, where every control announces a name, a role, and its state. When unsure, take the platform default over a custom rebuild, and remove ARIA rather than add it.
 
 Contrast measurement and color fixes belong to `better-colors`. Text sizing and iOS input zoom belong to `better-typography`. Spatial RTL layout belongs to `better-layout`.
 
@@ -21,7 +21,7 @@ The first rule of ARIA: don't use ARIA when a native element exists. `<button>` 
 
 Style `:focus-visible`, not bare `:focus`. Keyboard users get a ring and mouse users usually don't. Prefer the browser's unmodified indicator.
 
-A custom ring needs a project focus token or another explicit color. Verify the complete indicator against every adjacent color it crosses, and hold `currentColor` to the same check. Use at least a `2px` solid perimeter or an equivalent visible area. Never use `outline: none` without a verified replacement, and preserve system colors in forced-colors mode. Recipes are in [focus-and-keyboard.md](focus-and-keyboard.md).
+A custom ring needs a project focus token or another explicit color. Verify the whole indicator against every adjacent color it crosses, `currentColor` included. Use at least a `2px` solid perimeter or an equivalent visible area. Never use `outline: none` without a verified replacement, and preserve system colors in forced-colors mode. Recipes are in [focus-and-keyboard.md](focus-and-keyboard.md).
 
 ## Full keyboard support
 
@@ -35,9 +35,9 @@ Modals set `inert` on the background content, move focus inside on open, and ret
 
 ## Minimum hit area
 
-WCAG 2.5.8's Level AA baseline is a 24×24 CSS-pixel target, or one of its spacing, equivalent-control, inline, user-agent, and essential exceptions. For easier activation, aim for 44×44px on touch and 40×40px on desktop where density permits. Extend with a pseudo-element when the visible element should stay smaller.
+WCAG 2.5.8's Level AA baseline is a 24×24 CSS-pixel target, or one of its spacing, equivalent-control, inline, user-agent, and essential exceptions. Aim for 44×44px on touch and 40×40px on desktop where density permits. Extend with a pseudo-element when the visible element should stay smaller.
 
-Never let extended hit areas overlap. Give decorative layers `pointer-events: none`, so a glow or gradient never swallows the clicks meant for the control beneath it. Sizes and collision rules are in [hit-areas.md](hit-areas.md).
+Never let extended hit areas overlap. Give decorative layers `pointer-events: none`, so a glow never swallows the clicks meant for the control beneath it. Sizes and collision rules are in [hit-areas.md](hit-areas.md).
 
 ## Label and type every control
 
@@ -47,9 +47,9 @@ Add `autocomplete` with a meaningful `name`, and the `type` and `inputmode` that
 
 ## Errors that announce
 
-Keep submit enabled until the request starts. Then disable with a spinner, keeping the original label. Validate on submit: mark failing fields `aria-invalid="true"`, point `aria-describedby` at the inline error text, and focus the first invalid field.
+Keep submit enabled until the request starts, then disable with a spinner and the original label. Validate on submit. Mark failing fields `aria-invalid="true"`, point `aria-describedby` at the inline error text, and focus the first invalid field.
 
-Use native `disabled` when a control is genuinely unavailable. Reach for `aria-disabled="true"` only when the control should stay focusable or discoverable. Then block pointer, keyboard, and form behavior in code, and style the state explicitly.
+Use native `disabled` when a control is genuinely unavailable. Reach for `aria-disabled="true"` only when it should stay focusable, then block pointer, keyboard, and form behavior in code and style the state explicitly.
 
 ## Accessible names everywhere
 
@@ -57,7 +57,7 @@ Icon-only buttons need a descriptive `aria-label`. Visible label text must appea
 
 ## Don't rely on color alone
 
-Status needs a redundant cue: an icon, text, or an underline alongside the color. Work out which WCAG contrast requirement applies from the content and state, then use `better-colors` to measure the rendered foreground/background pair. When contrast fails, report the pair and the requirement it misses. Leave the project's colors alone unless asked.
+Status needs a redundant cue: an icon, text, or an underline alongside the color. Work out which WCAG contrast requirement applies, then use `better-colors` to measure the rendered pair. When it fails, report the pair and the requirement it misses, and leave the colors alone unless asked.
 
 ## Honor prefers-reduced-motion
 
@@ -67,9 +67,9 @@ Two rules hold regardless of the preference. Autoplaying media needs a visible p
 
 ## Announce dynamic content
 
-Three mechanisms, three jobs. `aria-describedby` carries field-specific validation. A polite live region (`role="status"`) carries non-urgent updates not tied to a control, such as toasts and result counts. `role="alert"` carries urgent errors not tied to a control, and nothing else.
+Three mechanisms, three jobs. `aria-describedby` carries field-specific validation. A polite live region (`role="status"`) carries non-urgent updates not tied to a control, such as toasts and result counts. `role="alert"` carries urgent untied errors, and nothing else.
 
-Repeated polite announcements need a stable empty region rendered before its text updates. Dynamically inserted alerts vary in support, so test them against the screen readers you target. See [screen-readers.md](screen-readers.md).
+Repeated polite announcements need a stable empty region rendered before its text updates. Dynamically inserted alerts vary in support, so test them on the screen readers you target. See [screen-readers.md](screen-readers.md).
 
 ## Alt text by purpose
 
@@ -81,19 +81,19 @@ Use headings that describe their sections and form a coherent outline. Give the 
 
 ## Survive zoom and text resize
 
-The page must work at 200% zoom and reflow at 320px width without horizontal scrolling. Use `min-height` rather than fixed `height` on text containers. Prefer `rem` breakpoints where they fit the codebase's conventions, and keep the viewport meta from capping how far the reader can zoom.
+The page must work at 200% zoom and reflow at 320px width without horizontal scrolling. Use `min-height` rather than fixed `height` on text containers. Prefer `rem` breakpoints where they fit the codebase, and never let the viewport meta cap how far the reader can zoom.
 
 ## Before you finish
 
 | Mistake | Fix |
 | --- | --- |
-| Custom focus color assumed to work everywhere | Verify the full indicator against every adjacent color and in forced-colors mode |
-| Repeated polite update inconsistently announced | Keep a stable empty status region and update its text; test the target screen readers |
+| Custom focus color assumed to work everywhere | Verify it against every adjacent color and in forced-colors mode |
+| Repeated polite update inconsistently announced | Keep a stable empty status region and update its text |
 | `assertive` live region for a routine toast | Use `polite`; reserve `assertive` for errors |
 | `aria-hidden="true"` on a focusable element | Remove it or make the element non-focusable |
 | Submit disabled until the form is valid | Keep it enabled; validate on submit and focus the first error |
 | Hover treatment stuck after a tap on touch | Gate hover styling with `@media (hover: hover)` |
-| Tooltip on a natively `disabled` control | Persistent text beside it, or `aria-disabled` so it stays focusable |
+| Tooltip on a natively `disabled` control | Text beside it, or `aria-disabled` so it stays focusable |
 
 ## Reporting
 
@@ -101,11 +101,11 @@ The page must work at 200% zoom and reflow at 320px width without horizontal scr
 
 **Verification.** Without a browser: accessible names on every interactive element, keyboard handlers on non-native controls, focus styles, `prefers-reduced-motion` guards, and form labels bound to their inputs. With one: tab the flow in order, read computed names and roles from the accessibility tree, confirm a visible focus indicator at every stop, and run an automated audit. Report every check you could not run as `Not verified`.
 
-**Format.** Group findings under the principle each violates, ordered by severity within a group:
+**Format.** Group findings under the principle each violates, ordered by severity, one row per root cause listing every location it appears in:
 
 | Severity | Location | Before | After | Why |
 | --- | --- | --- | --- | --- |
 
-`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+`Location` is `path/to/file:line`. `Why` names the principle and the user impact.
 
-End with a verdict. `Block` when any `HIGH` remains, meaning do not ship until it is fixed. `Approve` otherwise, leaving any `MEDIUM` and `LOW` findings in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable accessibility findings", report verification, and end with `Approve`.
+End with `Block` when any `HIGH` remains, `Approve` otherwise, leaving the rest in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable accessibility findings" and report verification.

@@ -1,16 +1,16 @@
 # Finding the layers behind an effect
 
-Search by property signature, not by guessing which element it is. You rarely know the markup, but you always know which CSS properties could produce what you are looking at.
+Search by property signature, not by guessing the element. You rarely know the markup, but you always know which CSS properties could produce what you are looking at.
 
 Run these through whatever browser tooling is available: `evaluate_script` in the Chrome DevTools MCP, the console, a Playwright `page.evaluate`.
 
 ## Three things that cost you the answer
 
-**Pseudo-elements carry the effect more often than elements do.** A gradient, a noise overlay, a hairline border, a glow: all commonly live on `::before` or `::after`. `getComputedStyle(el)` alone will never see them, so pass the pseudo as the second argument and check all three.
+**Pseudo-elements carry the effect more often than elements do.** A gradient, a noise overlay, a hairline border, a glow all commonly live on `::before` or `::after`. `getComputedStyle(el)` alone never sees them, so pass the pseudo as the second argument and check all three.
 
-**Idle values are not effects.** `filter: blur(0px)`, `opacity: 1`, and `transform: none` are what an animation library leaves on every element it touches. On one real page these turned a search into 97 hits, of which 10 mattered. Filter them out before you look.
+**Idle values are not effects.** `filter: blur(0px)`, `opacity: 1`, and `transform: none` are what an animation library leaves on every element it touches. On one real page they turned a search into 97 hits, of which 10 mattered. Filter them out first.
 
-**A generated stop list is one technique, not twelve stops.** Stops at `0%, 9.99%, 19.07%, ...` came from a utility following an easing curve. The extra stops keep the gradient from banding. Name the technique. Never paste the twelve stops.
+**A generated stop list is one technique, not twelve stops.** Stops at `0%, 9.99%, 19.07%, ...` came from a utility following an easing curve. The extra stops keep the gradient from banding. Name the technique, never paste the stops.
 
 ## The layer search
 
@@ -45,8 +45,8 @@ Read the result for the stack, not for one row:
 
 - **Compare `box` against the viewport.** An element wider than `window.innerWidth`, or with a negative offset, is oversized on purpose so its edges never show.
 - **Order by `y` and `z`** to get paint order. The gradient is usually the lowest layer and the frosted panel the one above it.
-- **`backdropFilter` on any row** means that layer is frosting something beneath it, so the layer beneath it is part of the answer.
-- **`mixBlendMode`** means the layer's color depends on what it covers, and you cannot explain it without naming what is underneath.
+- **`backdropFilter` on any row** means that layer frosts something beneath it, so the layer beneath is part of the answer.
+- **`mixBlendMode`** means the layer's color depends on what it covers, so you cannot explain it without naming what is underneath.
 
 ## When CSS is not the answer
 
@@ -61,7 +61,7 @@ Where the layer search comes back empty for the region you care about, the effec
 });
 ```
 
-A `canvas` reporting `webgl` means a shader, and the honest answer is that the effect is a shader plus roughly what it looks like. Say that rather than describing CSS that is not there. An `svg` may carry `<filter>` primitives worth reading directly.
+A `canvas` reporting `webgl` means a shader, and the honest answer is a shader plus roughly what it looks like. Say that rather than describing CSS that is not there. An `svg` may carry `<filter>` primitives worth reading directly.
 
 ## Narrowing to a region
 

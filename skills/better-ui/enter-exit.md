@@ -4,7 +4,7 @@ Staged entrances and the exits that follow them. For interactive state feedback 
 
 ## Enter animations: split and stagger
 
-Use this pattern for infrequent staged entrances where sequence helps communicate hierarchy, such as the first load of a page hero, success state, or empty state. Break a large container into semantic chunks and animate each individually. Do not stagger routine interactions such as row hovers, keystrokes, or repeated tab changes.
+Use this for infrequent staged entrances where sequence communicates hierarchy: the first load of a page hero, a success state, an empty state. Break a large container into semantic chunks and animate each one. Never stagger routine interactions such as row hovers, keystrokes, or repeated tab changes.
 
 ### Step by step
 
@@ -82,7 +82,7 @@ function PageHeader() {
 
 ## Exit animations
 
-Exit animations should be softer and less attention-grabbing than enter animations. The user's focus is moving to the next thing; don't fight for attention.
+Exits are softer and less attention-grabbing than enters. The user's focus is moving to the next thing, so do not fight for it.
 
 ### Subtle exit (recommended)
 
@@ -140,7 +140,7 @@ Exit animations should be softer and less attention-grabbing than enter animatio
 ```
 
 **Key points:**
-- Use a small fixed `translateY` (e.g., `-12px`) instead of the full container height
+- Use a small fixed `translateY`, say `-12px`, rather than the full container height
 - Keep some directional movement to indicate where the element went
 - Exit duration should be shorter than enter duration (150ms vs 300ms)
 - Use a subtle exit when it preserves spatial context. Remove immediately when motion adds no information, the interaction repeats frequently, or reduced motion is requested.

@@ -1,18 +1,18 @@
 # Reading the whole system
 
-Reach for this when no specific effect was named and the question is how the interface is built in general. For a question about one thing, use [find-the-effect.md](find-the-effect.md) instead.
+Use this where no specific effect was named and the question is how the interface is built in general. For one named thing, use [find-the-effect.md](find-the-effect.md).
 
-Every snippet below runs in the page context, through whatever browser tooling is available (`evaluate_script` in the Chrome DevTools MCP, the console, a Playwright `page.evaluate`). Each returns data rather than printing, so the result comes back whole.
+Every snippet runs in the page context, through whatever browser tooling is available: `evaluate_script` in the Chrome DevTools MCP, the console, a Playwright `page.evaluate`. Each returns data rather than printing, so the result comes back whole.
 
 Run them in this order. Tokens first, because a page that hands you its custom properties has already told you most of the answer.
 
 ## The gotcha that costs you the run
 
-`sheet.cssRules` throws on a cross-origin stylesheet. Every snippet that walks stylesheets wraps the access, and every one of them reports what it could not read. An explanation that silently skipped the main stylesheet describes a page nobody is looking at.
+`sheet.cssRules` throws on a cross-origin stylesheet. Every snippet that walks stylesheets wraps the access and reports what it could not read. An explanation that silently skipped the main stylesheet describes a page nobody is looking at.
 
 ## The stack first
 
-"How was this site built" wants the frontend named before it wants a type scale. Run this, then report each hit with the evidence that produced it, never as a bare claim:
+"How was this site built" wants the frontend named before a type scale. Run this, then report each hit with its evidence, never as a bare claim:
 
 ```js
 const html = document.documentElement;
@@ -53,7 +53,7 @@ const attr = sel => !!document.querySelector(sel);
 });
 ```
 
-Two rules on reporting this. A fingerprint is not a fact, so give the evidence: `/_next/static` in an asset path is strong, and a utility-looking class name alone is weak. And a `false` is not an absence, only a fingerprint that did not fire.
+Two rules. A fingerprint is not a fact, so give the evidence: `/_next/static` in an asset path is strong, a utility-looking class name alone is weak. And a `false` is not an absence, only a fingerprint that did not fire.
 
 ## Tokens
 
@@ -72,7 +72,7 @@ for (const sheet of document.styleSheets) {
 ({ tokens, unreadable, count: Object.keys(tokens).length });
 ```
 
-Group the result by prefix. The prefixes are the system's own layer names, and a two-tier structure (`--blue-500` feeding `--color-text-primary`) is the seam `better-colors` calls the semantic tier.
+Group the result by prefix. The prefixes are the system's own layer names, and a two-tier structure, `--blue-500` feeding `--color-text-primary`, is the seam `better-colors` calls the semantic tier.
 
 ## The type scale
 
@@ -89,7 +89,7 @@ for (const el of document.querySelectorAll('*')) {
 [...seen].sort((a, b) => b[1] - a[1]);
 ```
 
-Sorted by usage, so the body size is first and the one-offs are last. Derive the ratio between adjacent sizes: a consistent ratio means a scale, and scattered values mean hard-coded sizes.
+Sorted by usage, so the body size is first and the one-offs last. Derive the ratio between adjacent sizes. A consistent ratio means a scale; scattered values mean hard-coded sizes.
 
 ## The spacing rhythm
 
@@ -105,7 +105,7 @@ for (const el of document.querySelectorAll('*')) {
 [...vals].sort((a, b) => a[0] - b[0]);
 ```
 
-Look for the base unit that divides most values. Then check `better-layout`'s grouping rule: is the gap between groups at least 2× the gap within one?
+Look for the base unit that divides most values, then check `better-layout`'s grouping rule. Is the gap between groups at least 2× the gap within one?
 
 ## Radii, shadows, borders
 
@@ -167,12 +167,12 @@ Compare against the framework defaults. Breakpoints at exactly `640/768/1024/128
 });
 ```
 
-`variable: true` means one file covers a weight range. A class on `<html>` alongside a `prefers-color-scheme` query means a toggle that can override the system, which is the mechanism `better-colors` describes.
+`variable: true` means one file covers a weight range. A class on `<html>` beside a `prefers-color-scheme` query means a toggle that can override the system, the mechanism `better-colors` describes.
 
 ## Reading a second state
 
 Everything above reads one state at one width. Before writing the explanation, at minimum:
 
-- Resize to 375px and re-run the spacing and breakpoint snippets. Which values change tells you what is fluid and what is fixed.
-- Toggle the theme and re-run the token snippet. The tokens that change are the themed layer; the ones that do not are the primitives.
-- Tab through the first interactive control and read its `:focus-visible` styles, because a focus ring is one of the most common absences.
+- Resize to 375px and re-run the spacing and breakpoint snippets. The values that change are what is fluid.
+- Toggle the theme and re-run the token snippet. The tokens that change are the themed layer, the ones that do not are the primitives.
+- Tab to the first interactive control and read its `:focus-visible` styles, since a focus ring is one of the most common absences.

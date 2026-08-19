@@ -4,16 +4,16 @@ The control that switches variants. Its appearance is not a design decision, bec
 
 ## Deliberately outside the design system
 
-Never style the picker with the project's tokens, fonts, or colors. A picker that looks native to the product becomes part of what you are looking at, and then you are judging the harness.
+Never style the picker with the project's tokens, fonts, or colors. One that looks native to the product becomes part of what you are looking at, and then you are judging the harness.
 
 One dark neutral surface, the system font stack, and no project variables. Dark reads as chrome over both light and dark pages, which is why it does not follow the theme.
 
 ## Behavior
 
-- It sets a `variant` search param and reads the active variant back from it, so the URL is the source of truth and every variant is a link.
+- It sets a `variant` search param and reads the active variant back from it, so the URL is the source of truth and every variant a link.
 - Left and right arrows step through the set. Number keys jump to one directly.
 - The active item carries `aria-current="true"`, and the container carries a label.
-- Switching is instant. Flipping is the highest-frequency action in the run, so by `better-ui`'s motion restraint it gets no transition.
+- Switching is instant. Flipping is the run's highest-frequency action, so `better-ui`'s motion restraint gives it no transition.
 - It survives a resize, so you can hold a variant and drag the window rather than reloading per width.
 
 ## Structure
@@ -30,7 +30,7 @@ One button per variant, in the order they were named. Add a replay button only w
 
 ## Placement and styling
 
-Fixed, bottom centre, above everything the page can stack. Keep it clear of the piece under judgement: where the variants themselves live at the bottom of the viewport, move the picker to top centre and say so.
+Fixed, bottom centre, above everything the page can stack. Keep it clear of the piece under judgement. Where the variants live at the bottom of the viewport, move the picker to top centre and say so.
 
 ```css
 .variant-picker {

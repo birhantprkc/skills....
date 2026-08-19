@@ -9,41 +9,41 @@ Typography is mostly restraint: a sensible scale, comfortable spacing, enough co
 
 When reviewing, read the rendered page instead of scanning the code. Bad wrapping, widows, and truncation only show up at real content lengths.
 
-Write every fix in the styling system the project already uses, and take exact values from the rules below rather than substituting a familiar-looking equivalent. The [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind equivalent.
+Write every fix in the project's styling system, and use the exact values below rather than familiar-looking equivalents. The [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind equivalent.
 
 The words themselves belong to `better-writing`. Semantic heading structure belongs to `better-accessibility`. Spatial RTL layout and logical properties belong to `better-layout`. Contrast measurement belongs to `better-colors`. This skill owns how text renders, wraps, and behaves in mixed-direction content.
 
 ## Serve the right format
 
-Use `.woff2` on the web: Brotli compression, broadly supported. `.woff` is a fallback for very old browsers only. `.ttf` and `.otf` are raw desktop formats with no web compression. How the files get loaded is the project's own concern; this skill does not prescribe it.
+Use `.woff2` on the web, for Brotli compression and broad support. `.woff` is a fallback for very old browsers. `.ttf` and `.otf` are desktop formats with no web compression. How the files load is the project's concern.
 
 ## Properties over raw tags
 
 When a CSS property exists, use it. `font-weight: 650` instead of `font-variation-settings: "wght" 650`. `font-optical-sizing: auto` instead of `"opsz"`. `font-variant-numeric: tabular-nums` instead of `font-feature-settings: "tnum" 1`.
 
-Properties keep working when a non-variable fallback renders. Reserve the raw-tag properties for custom axes (`"GRAD" 80`) and niche features (`"ss01" 1`) that have no property of their own. Axes and feature tags are listed in [variable-fonts-and-opentype.md](variable-fonts-and-opentype.md).
+Properties keep working when a non-variable fallback renders. Reserve raw tags for custom axes (`"GRAD" 80`) and niche features (`"ss01" 1`) with no property of their own. Axes and feature tags are listed in [variable-fonts-and-opentype.md](variable-fonts-and-opentype.md).
 
 ## Load intended weights and styles
 
-Browsers synthesize a weight or style the active family doesn't provide, and the result is a distortion of the real face. Load the faces the design actually uses.
+Browsers synthesize a weight or style the active family doesn't provide, distorting the real face. Load the faces the design uses.
 
-`font-synthesis: none` turns synthesis off, but it erases emphasis rather than reporting it. Set it only after checking that every required bold, italic, small-cap, superscript, and subscript form stays visually distinct across the whole fallback stack.
+`font-synthesis: none` turns synthesis off, but it erases emphasis rather than reporting it. Set it only after checking every required bold, italic, small-cap, superscript, and subscript form stays distinct across the fallback stack.
 
 ## Fewer fonts, sizes and weights
 
-Rarely use more than three fonts. Weight and size define hierarchy, and overusing them hurts readability fast. Pair for contrast, not similarity: a serif headline over a sans body reads as deliberate, two near-identical sans-serifs read as a mistake.
+Rarely use more than three fonts. Weight and size define hierarchy; overusing them hurts readability fast. Pair for contrast, not similarity: a serif headline over a sans body reads as deliberate, two near-identical sans-serifs read as a mistake.
 
-Below `18px`, stay at weight `400` or heavier. Weights under `300` are display-only at `28px`+, because they disappear at text sizes. Pairing guidance is in [choosing-fonts.md](choosing-fonts.md).
+Below `18px`, stay at weight `400` or heavier. Weights under `300` are display-only at `28px`+; they disappear at text sizes. Pairing guidance is in [choosing-fonts.md](choosing-fonts.md).
 
 ## Use a type scale with semantic names
 
 Define a small set of sizes and deviate from it as little as possible. Hard-coded sizes with no system behind them break down at scale.
 
-For solo projects, default names like `text-sm` work fine as long as the usage rules are clear. On a team, name sizes by use (`text-body-sm`) rather than by size, so the rules survive contact with other people. Scale construction is in [spacing-and-sizing.md](spacing-and-sizing.md).
+Solo, default names like `text-sm` are fine when the usage rules are clear. On a team, name sizes by use (`text-body-sm`) so the rules survive other people. Scale construction is in [spacing-and-sizing.md](spacing-and-sizing.md).
 
 ## Heading sizes descend with level
 
-Map heading levels to descending steps of the type scale, so a visually subordinate heading never overpowers its parent. Adjacent levels may share a size toward the small end of the scale, as long as weight or spacing keeps them distinct. Pick the semantic heading element according to `better-accessibility`; this skill controls only the visual treatment.
+Map heading levels to descending steps of the type scale, so a visually subordinate heading never overpowers its parent. Adjacent levels may share a size toward the small end of the scale, as long as weight or spacing keeps them distinct. The semantic element is `better-accessibility`'s; this skill sets only the visual treatment.
 
 ## Line-height by role
 
@@ -57,7 +57,7 @@ Large headings often look better with slightly negative letter-spacing. Small up
 
 ## Cap the measure
 
-Long lines make it hard for the eye to find the next one. Cap long-form text around 60–75 characters per line. Any unit works; what matters is that a cap exists and the resulting line length lands in range. See [unit choices and the pixel equivalents](wrapping-and-punctuation.md#measure-line-length).
+Long lines make it hard for the eye to find the next one. Cap long-form text around 60–75 characters per line. Any unit works, as long as a cap exists and the line length lands in range. See [unit choices and the pixel equivalents](wrapping-and-punctuation.md#measure-line-length).
 
 ## Wrap deliberately
 
@@ -76,7 +76,7 @@ Digits have different widths by default, so timers, counters, and prices shift t
 
 ## Truncate without losing content
 
-For a single line, `text-overflow: ellipsis` with `overflow: hidden` and `white-space: nowrap`. For several, `line-clamp`. Truncation hides content, so when the missing text matters, keep the full value reachable in a tooltip or an expanded view.
+For a single line, `text-overflow: ellipsis` with `overflow: hidden` and `white-space: nowrap`. For several, `line-clamp`. Truncation hides content. When the missing text matters, keep the full value reachable in a tooltip or an expanded view.
 
 ## Write copy naturally, style with CSS
 
@@ -100,7 +100,7 @@ Color is the only part of a real underline that animates reliably. So unless the
 
 ## Inputs at 16px on mobile
 
-iOS Safari zooms the whole page when an input's text is smaller than `16px`. Two fixes hold the size at `16px`, and they look different, so ask which one the design wants rather than choosing silently:
+iOS Safari zooms the whole page when an input's text is smaller than `16px`. Two fixes hold the size at `16px` and look different, so ask which one the design wants:
 
 - Size the input up on mobile (`text-base sm:text-sm`). Changes how it looks on small screens.
 - Keep `font-size: 16px` and render the intended size with `transform: scale()`, compensating width and `line-height`. Identical at every viewport, more code to maintain.
@@ -127,22 +127,21 @@ Set `lang` so browsers and assistive technology pick the right pronunciation, qu
 
 Keep text selectable by default. `::selection` can carry brand into the reading experience, as long as the selected combination stays legible.
 
-`user-select: none` belongs on a draggable or gesture-driven surface where accidental selection interferes with the interaction. That is the whole of its remit: never across the interface, and never because a button label can be highlighted.
+`user-select: none` belongs on a draggable or gesture-driven surface where accidental selection interferes. Never across the interface, and never because a button label can be highlighted.
 
 ## Before you finish
 
 | Mistake | Fix |
 | --- | --- |
-| Synthesized face differs from the intended design | Load the required face; disable only the verified synthesis mode without erasing emphasis |
+| Synthesized face differs from the design | Load the real face; disable only the verified synthesis mode |
 | Child heading visually overpowers its parent | Map that section's hierarchy to descending scale steps |
-| Heading element picked for its default size | Choose semantics with `better-accessibility`, then set the visual size in CSS |
+| Heading element picked for its default size | Choose semantics first, then set the size in CSS |
 | Orphan on the last line of a paragraph | `text-wrap: pretty` |
 | Lopsided two-line heading | `text-wrap: balance` |
-| Truncated text with no way to read it | Tooltip or expanded view for the full value |
 | Justified text in an interface | `text-align: start`; reserve justify for specific editorial layouts |
 | Underline cuts through descenders | `text-decoration-skip-ink: auto`, `from-font` metrics |
-| Mixed-direction value renders in the wrong order | Set the correct `lang`/`dir`; isolate the value with `<bdi>` when needed |
-| Selection disabled across application chrome | Restore selection; suppress it only on a specific interaction that conflicts with dragging or gestures |
+| Mixed-direction value renders in the wrong order | Correct `lang`/`dir`; isolate the value with `<bdi>` |
+| Selection disabled across application chrome | Restore it; suppress only where it conflicts with a drag or gesture |
 | Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |
 | Thin/Light weight on `14px` UI text | Weight `400`+ below `18px`; thin weights are display-only |
 | `leading-none` on a three-line card description | At least `1.4` on any text that wraps to 3+ lines |
@@ -153,11 +152,11 @@ Keep text selectable by default. `::selection` can carry brand into the reading 
 
 **Verification.** Without a browser: computed size and weight for each heading level, checked descending; declared line-height and measure; truncation rules against realistic string lengths. With one: resize the viewport to catch wrapping, widows, and truncation at real content lengths. Report every check you could not run as `Not verified`.
 
-**Format.** Group findings under the principle each violates, ordered by severity within a group:
+**Format.** Group findings under the principle each violates, ordered by severity, one row per root cause listing every location it appears in:
 
 | Severity | Location | Before | After | Why |
 | --- | --- | --- | --- | --- |
 
-`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+`Location` is `path/to/file:line`. `Why` names the principle and the user impact.
 
-End with a verdict. `Block` when any `HIGH` remains, meaning do not ship until it is fixed. `Approve` otherwise, leaving any `MEDIUM` and `LOW` findings in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable typography findings", report verification, and end with `Approve`.
+End with `Block` when any `HIGH` remains, `Approve` otherwise, leaving the rest in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable typography findings" and report verification.
