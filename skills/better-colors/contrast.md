@@ -37,7 +37,7 @@ When a project must claim WCAG conformance, WCAG is the gate and APCA is the tie
 
 ## Fixing a failing pair (on request)
 
-**Change lightness first.** It is the channel contrast actually responds to; hue and saturation move the measured value far less, so trying to fix contrast by changing hue is mostly wasted effort.
+**Change lightness first.** It is the channel contrast responds to. Hue and saturation move the measured value far less, so fixing contrast by changing hue is mostly wasted effort.
 
 Move the foreground away from the background in perceived lightness, holding hue and saturation where they are, then remeasure. Keeping hue fixed is what stops a contrast fix from turning into a palette change.
 

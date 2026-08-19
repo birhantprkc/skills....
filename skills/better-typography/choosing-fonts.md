@@ -29,7 +29,7 @@ CSS exposes `cursive` and `fantasy` keywords for the last two categories.
 
 Applying or reviewing typography never requires a new typeface. Use the product's existing type system unless the task explicitly asks for a type change, and do not introduce a paid or proprietary face just to satisfy a review checklist. Rendering details like font smoothing, text wrapping and tabular numbers do not override the project's chosen font family.
 
-When a type change is asked for: a system-native macOS/iOS feel comes from the system stack; a commercial face such as Helvetica Now is a brand decision and keeps a practical fallback stack.
+When a type change is asked for, two routes. The system stack gives a native macOS and iOS feel. A commercial face such as Helvetica Now is a brand decision, and still needs a practical fallback stack.
 
 ```css
 /* System-native macOS/iOS feel */

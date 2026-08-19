@@ -8,7 +8,7 @@ A brand color arrives as a single value, usually a hex. Two decisions come befor
 
 **Which step does it occupy?** A brand color meant for buttons and links belongs on the solid-fill step: `500` in a Tailwind ramp, `9` in a Radix one. Placing it there means `bg-brand-500` renders the actual brand color rather than an approximation of it.
 
-**Is it pinned or snapped?** If the brand color is contractually fixed, pin it: it stays exact and the ramp is built outward from it, accepting slightly uneven spacing at that step. Otherwise snap it, nudging it onto the ramp so every step is evenly spaced, which is almost always the better-looking result and is invisible to everyone who has not held a swatch against the screen.
+**Is it pinned or snapped?** Pin a contractually fixed brand color. It stays exact, the ramp builds outward from it, and that one step spaces slightly unevenly. Otherwise snap it, nudging it onto the ramp so every step spaces evenly. That is almost always the better-looking result, and invisible to anyone who has not held a swatch against the screen.
 
 If the brand color fails contrast as a fill behind white text, it is still the brand color; it is just not the solid-fill step. Put it where it lands and use a darker step for interactive fills. Do not quietly darken the brand.
 
@@ -21,7 +21,7 @@ These are properties of the finished ramp, checkable against any output, in any 
 - **Vividness peaks in the middle and falls off at both ends.** The lightest and darkest steps are nearly neutral; the middle steps carry the color. A ramp that holds full vividness into the extremes produces a `50` that glows and a `950` that looks like ink spilled on the brand.
 - **Steps are denser at the light end.** Light backgrounds need finer distinctions than dark ones. `50` to `200` should be close together, `800` to `950` further apart. Evenly spaced lightness across the whole range makes the pale end unusable, because `50` and `100` will not be distinguishable as two different surfaces.
 - **No two adjacent steps are indistinguishable.** If `200` and `300` look identical on a calibrated screen, the ramp has more steps than it has decisions. Drop one.
-- **Both ends stop short of pure black and white.** Pure black and pure white cannot carry any hue, so a ramp that reaches them loses its identity exactly where the page background lives.
+- **Both ends stop short of pure black and white.** Neither can carry hue. A ramp that reaches them loses its identity exactly where the page background lives.
 
 ## Use a color library
 
@@ -35,7 +35,7 @@ const ramp = interpolate(['#eff6ff', '#3b82f6', '#172554'], 'lab')
 const steps = samples(11).map((t) => formatHex(ramp(t)))
 ```
 
-The output format is the project's choice; for a ramp the interpolation space is not, because the steps have to land evenly in perceived lightness and sRGB interpolation is what produces muddy mid-steps. Decorative gradients are the opposite case, where the space is a deliberate look ([color-usage.md](color-usage.md)).
+The output format is the project's choice. For a ramp, the interpolation space is not: the steps have to land evenly in perceived lightness, and sRGB interpolation is what produces muddy mid-steps. Decorative gradients are the opposite case, where the space is a deliberate look ([color-usage.md](color-usage.md)).
 
 ```css
 :root {
@@ -55,12 +55,12 @@ The output format is the project's choice; for a ramp the interpolation space is
 
 ## Several hues at once
 
-When a system has an accent plus status ramps, the ramps must agree step for step: `danger-500` and `brand-500` should read as equally bright and equally vivid, or a red button will look heavier than a blue one at the same step.
+When a system has an accent plus status ramps, the ramps must agree step for step. `danger-500` and `brand-500` should read as equally bright and equally vivid. Otherwise a red button looks heavier than a blue one at the same step.
 
 - **Match perceived lightness exactly.** Same step, same brightness, across every hue.
 - **Match vividness relatively, not absolutely.** Hues do not have the same maximum vividness. A saturated yellow and a saturated blue are not equally far from gray, and no format makes them so. Set each ramp to the same *proportion* of what its own hue can reach. Copying one ramp's saturation number onto another hue makes one of them look washed out.
 
-Yellows and cyans are the usual casualties: both peak much lower than reds and blues, so a status ramp built by copying numbers will have a warning color that looks weak next to the danger color.
+Yellows and cyans are the usual casualties, because both peak much lower than reds and blues. Copy the numbers across and the warning color looks weak beside the danger color.
 
 ## Dark mode
 

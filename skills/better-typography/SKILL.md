@@ -82,7 +82,13 @@ For a single line, `text-overflow: ellipsis` with `overflow: hidden` and `white-
 
 Store text in natural case and control presentation with `text-transform`, so a redesign never means rewriting copy.
 
-Use smart punctuation in rendered text: curly quotes in prose and straight quotes in code, an en dash for ranges like `2010–2020`, an em dash to set off a thought, the single ellipsis character, `&nbsp;` to hold values like `16 px` together, and `&shy;` to control where a long word may break.
+Use smart punctuation in rendered text:
+
+- Curly quotes in prose, straight quotes in code.
+- An en dash for ranges: `2010–2020`.
+- The single ellipsis character, not three periods.
+- `&nbsp;` to hold `16 px` together across a line break.
+- `&shy;` to say where a long word may break.
 
 ## Underlines from the font
 
@@ -103,7 +109,7 @@ Both recipes are in [details-and-accessibility.md](details-and-accessibility.md)
 
 ## Size and contrast floors
 
-Start long-form body text at `16px`, the browser default, and only move off it for a reason you can name: the typeface runs small, the measure is narrow, or the product is a dense professional tool.
+Start long-form body text at `16px`, the browser default. Move off it only for a reason you can name: the typeface runs small, the measure is narrow, or the product is a dense professional tool.
 
 UI text can go smaller. `14px` is a useful starting point for inputs and menus, `13px` for captions, and rarely below `12px`. Inputs still need `16px` on mobile.
 

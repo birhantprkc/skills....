@@ -216,4 +216,4 @@ img {
 
 Use `outline-black/10` and `outline-white/10` specifically, not `outline-slate-*`, `outline-zinc-*`, `outline-neutral-*`, or any tinted scale.
 
-**Why outline instead of border?** `outline` never affects layout (no added width or height at any offset), and `outline-offset: -1px` draws the ring just inside the image edge so it hugs the corner radius instead of sitting outside it.
+**Why outline instead of border?** `outline` never affects layout, adding no width or height at any offset. And `outline-offset: -1px` draws the ring just inside the image edge, so it hugs the corner radius rather than sitting outside it.

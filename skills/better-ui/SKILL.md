@@ -47,7 +47,7 @@ Without one, keep both icons in the DOM with one absolutely positioned, and cros
 
 ## Image outlines
 
-Add a subtle `1px` outline at low opacity to images for consistent depth. The color must be pure black in light mode (`oklch(0 0 0 / 0.1)`) and pure white in dark mode (`oklch(1 0 0 / 0.1)`), never a near-black like slate or zinc or any tinted neutral. A tinted outline picks up the surface color underneath it and reads as dirt on the image edge.
+Add a subtle `1px` outline at low opacity to images for consistent depth. The color is pure black in light mode (`oklch(0 0 0 / 0.1)`) and pure white in dark mode (`oklch(1 0 0 / 0.1)`). Never a near-black like slate or zinc, and never a tinted neutral. A tinted outline picks up the surface color underneath it and reads as dirt on the image edge.
 
 ## Scale on press
 

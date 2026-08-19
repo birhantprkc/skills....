@@ -30,7 +30,7 @@ Prefer the browser's unmodified focus indicator: it adapts to platform and force
 
 A custom focus indicator must meet the applicable project/WCAG target for visible area and change of contrast. Inspect the whole perimeter against every adjacent color it crosses, including component fills, page surfaces, images, gradients, and hover/selected states. A token, brand color, or `currentColor` is acceptable only when that rendered check passes.
 
-In `forced-colors: active` (Windows High Contrast), keep the default color adjustment or explicitly use a system color such as `Highlight`; never freeze the authored color with `forced-color-adjust: none` unless the control remains perceivable.
+In `forced-colors: active` (Windows High Contrast), keep the default color adjustment, or name a system color such as `Highlight`. `forced-color-adjust: none` freezes the authored color, so use it only where you have checked the control stays perceivable.
 
 Group focus styles with `:focus-within` when a wrapper should light up while an inner input has focus (e.g. a search box with an icon inside the border).
 

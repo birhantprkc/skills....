@@ -22,7 +22,7 @@ Naming is what makes a palette usable by anyone who did not build it. For which 
 }
 ```
 
-The tiering is what makes theming possible. Dark mode, a white-label theme, and an increased-contrast variant all repoint the semantic tier and leave both the primitives and every component untouched. A codebase that applies `--blue-500` directly in components has no theming seam, and adding one later means auditing every usage to work out which ones meant "the accent" and which just wanted blue.
+The tiering is what makes theming possible. Dark mode, a white-label theme, and an increased-contrast variant all repoint the semantic tier and leave both the primitives and every component untouched. A codebase that applies `--blue-500` directly in components has no theming seam. Adding one later means auditing every usage to work out which meant "the accent" and which just wanted blue.
 
 Add a third, component-level tier (`--color-button-danger-bg`) only when a component genuinely diverges from the system and that divergence is intentional. One component token is a documented exception; twenty are a sign the semantic tier is missing roles.
 
@@ -60,7 +60,7 @@ Pick one word per concept and use only that word. The vocabulary matters less th
 | Edge | `border` | `stroke`, `outline`, `line` |
 | Brand color | `accent` | `primary`, `brand`, `theme` used interchangeably |
 
-Reserve `primary` for exactly one meaning. `--color-text-primary` (the main body text) and `--color-primary` (the brand color) in one codebase is the most common naming collision there is, and it makes every `primary` token ambiguous until you open its definition. Use `accent` for the brand and let `primary` mean "the most prominent of its group".
+Reserve `primary` for exactly one meaning. `--color-text-primary` for body text beside `--color-primary` for the brand is the most common naming collision there is. It makes every `primary` token ambiguous until you open its definition. Use `accent` for the brand and let `primary` mean "the most prominent of its group".
 
 ## Anti-patterns
 
@@ -92,6 +92,6 @@ Tailwind v4 generates utilities from `@theme`, so names declared there become th
 }
 ```
 
-This yields `bg-accent-solid` and `text-secondary` alongside `bg-brand-500`. Both are reachable, so the discipline is a convention rather than a constraint: templates use the semantic utilities, and a raw `bg-brand-500` in a component is the thing to flag in review.
+This yields `bg-accent-solid` and `text-secondary` alongside `bg-brand-500`. Both are reachable, so the discipline is a convention rather than a constraint. Templates use the semantic utilities. A raw `bg-brand-500` in a component is the thing to flag in review.
 
 Opacity modifiers work on either tier, as in `bg-accent-solid/50`, but a color carrying alpha cannot be contrast-checked against a static background, since what it renders depends on what is behind it. Use solid tokens for anything with text on it.

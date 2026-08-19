@@ -37,7 +37,7 @@ a:hover {
 }
 ```
 
-Unless the only thing animating is a color change, build the underline as a custom element instead of using `text-decoration`: color is the only part of a real underline that animates reliably. Animate the custom element however the effect requires.
+Color is the only part of a real underline that animates reliably. So unless the only thing animating is the color, build the underline as a custom element rather than using `text-decoration`. Animate the custom element however the effect requires.
 
 ## Selection
 
@@ -64,7 +64,7 @@ Two fixes work, and they differ in what they do to the design rather than in cor
 <input className="text-base sm:text-sm" type="email" />
 ```
 
-**Scale the text down.** Keep `font-size` at `16px` so Safari never zooms, then render it at the intended size with a transform. The design survives at every viewport, at the cost of two compensating calcs: widen the element by the inverse of the scale so it still fills its container once shrunk, and divide `line-height` by the same factor so the intended leading survives. `origin-left` pins the text to the start edge (`origin-right` under RTL). Above the breakpoint, drop the transform and set the real size.
+**Scale the text down.** Keep `font-size` at `16px` so Safari never zooms, then render it at the intended size with a transform. The design survives at every viewport, at the cost of two compensating calcs. Widen the element by the inverse of the scale, so it still fills its container once shrunk. Divide `line-height` by the same factor, so the intended leading survives. `origin-left` pins the text to the start edge (`origin-right` under RTL). Above the breakpoint, drop the transform and set the real size.
 
 ```tsx
 // 13px rendered from a 16px font-size: 13 / 16 = 0.8125

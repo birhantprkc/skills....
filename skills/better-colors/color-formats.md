@@ -11,7 +11,7 @@ Which notation to write colors in, how to convert between them, and what happens
 | `hsl()` | Channels look like design controls | Its lightness is not perceptual and its hue drifts; a ramp built by varying lightness bunches at one end and shifts hue |
 | `oklch()` | Perceptually uniform lightness, stable hue, predictable ramps | Baseline 2023, so very old browser matrices need a fallback |
 
-**Match whatever the project already uses.** A consistent hex system is better than a hex system with a few `oklch()` values scattered through it, and introducing a second representation to fix one color makes the palette harder to reason about, not easier. Notation is not a defect: a project on hex is not doing it wrong.
+**Match whatever the project already uses.** A consistent hex system beats a hex system with a few `oklch()` values scattered through it. A second representation added to fix one color makes the palette harder to reason about, not easier. Notation is not a defect: a project on hex is not doing it wrong.
 
 **For a genuinely new color system, `oklch()` is the best default.** It is the one notation where the numbers behave the way the ramp rules in [palette-generation.md](palette-generation.md) describe. Even lightness steps stay even, and a fixed hue stays fixed. Everywhere else, a color library gets you the same ramp and emits whatever the project writes.
 
@@ -47,7 +47,7 @@ Bulk conversion is a migration, not cleanup. It changes every rendered color by 
 
 Every sRGB color exists in Display P3; the reverse is not true. P3 covers roughly 50% more colors, which matters only for the most saturated values. A color at 60% of maximum vividness looks the same on both.
 
-A color more vivid than its display can render gets clipped, and clipping is not graceful: it flattens neighbouring steps into the same rendered color, so the top of a ramp can lose its distinctions entirely on an sRGB screen. Maximum achievable vividness varies by both hue and lightness. Cyans top out far lower than reds and purples, so a ramp that clips does so at some steps and not others.
+A color more vivid than its display can render gets clipped, and clipping is not graceful. It flattens neighbouring steps into one rendered color, so the top of a ramp can lose its distinctions entirely on an sRGB screen. Maximum achievable vividness varies by both hue and lightness. Cyans top out far lower than reds and purples, so a ramp that clips does so at some steps and not others.
 
 The fix is to reduce vividness while holding hue and lightness. Generate ramps against sRGB unless the product is display-restricted, then add P3 as an enhancement:
 

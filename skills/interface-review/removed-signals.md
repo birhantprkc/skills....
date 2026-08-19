@@ -1,6 +1,6 @@
 # Removed Signals
 
-What to look for on the `-` side of a hunk, and which skill owns the judgement. A row here is a lead, never a finding on its own: route the removal to the owning skill and report it only once that skill confirms the interface actually got worse.
+What to look for on the `-` side of a hunk, and which skill owns the judgement. A row here is a lead, never a finding on its own. Route the removal to the owning skill, and report it only once that skill confirms the interface actually got worse.
 
 | Removed from the `-` side | Owner | What to check |
 | --- | --- | --- |

@@ -132,4 +132,4 @@ This skill supplies the scope block:
 
 Plus a status on every finding, per principle 5.
 
-Under `better-interface`'s **Verification**, list the exact `git` and `gh` commands and their results, including every write to `.git` (a fetch, a deepen, a `set-head`, a worktree), so the read-only claim in principle 8 is auditable.
+Under `better-interface`'s **Verification**, list the exact `git` and `gh` commands and their results. Include every write to `.git`: a fetch, a deepen, a `set-head`, a worktree. That is what makes the read-only claim in principle 8 auditable.

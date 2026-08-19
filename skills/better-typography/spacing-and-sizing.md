@@ -86,7 +86,7 @@ Heading semantics and outline quality belong to `better-accessibility`. Pick the
 
 Prefer unitless values: they scale with the font size, fixed values like `line-height: 24px` do not. Tailwind's `leading-snug`, `leading-normal` and `leading-relaxed` are sensible defaults that rarely need overriding.
 
-Tight line-height is for short text. Anything that wraps to three or more lines needs at least `1.4`, even in height-constrained places like list rows and cards: a tightly-leaded paragraph is harder to read than a taller row is to fit.
+Tight line-height is for short text. Anything that wraps to three or more lines needs at least `1.4`, even in a height-constrained list row or card. A tightly-leaded paragraph is harder to read than a taller row is to fit.
 
 ```css
 /* Bad: card description at heading leading */

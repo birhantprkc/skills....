@@ -55,13 +55,13 @@ Animations must be interruptible and driven by user input; nothing should autopl
 Motion the user didn't ask for, and UI that acts on its own schedule:
 
 - **No autoplaying media without visible controls** (WCAG 2.2.2): anything that moves, blinks or updates automatically for more than 5 seconds needs a visible pause/stop control. Muted looping hero videos included.
-- **Prefer explicit dismissal over timers.** Auto-dismissing toasts are acceptable only for low-stakes confirmations; anything containing an action, an error, or information the user may need to act on stays until dismissed. If a toast must time out, 5 seconds is the floor, and hovering or focusing it pauses the timer.
+- **Prefer explicit dismissal over timers.** Auto-dismissal suits low-stakes confirmations and nothing else. A toast carrying an action, an error, or information the user may need stays until dismissed. If a toast must time out, 5 seconds is the floor, and hovering or focusing it pauses the timer.
 - **Never put critical information only in a timed element.** A vanished toast with the only link to an undo action is data loss on a schedule.
 
 ## Zoom and reflow
 
 - **200% zoom** (WCAG 1.4.4): all content and functionality must survive text scaled to 200%, and the viewport must leave the reader able to zoom.
-- **Reflow at 320px** (WCAG 1.4.10): at 400% zoom on a 1280px viewport (equivalent to a 320px viewport) the page must work with vertical scrolling only: no two-dimensional scrolling except for genuinely 2D content (tables, maps, code blocks), which scroll inside their own container.
+- **Reflow at 320px** (WCAG 1.4.10). At 400% zoom on a 1280px viewport, equivalent to a 320px viewport, the page must work with vertical scrolling alone. Genuinely 2D content is the exception: tables, maps, and code blocks scroll inside their own container.
 
 Fixed heights are what break under zoom: use `min-height` on anything containing text and let containers grow.
 

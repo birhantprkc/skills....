@@ -15,7 +15,7 @@ Separate the conformance baseline from larger usability targets:
 
 WCAG 2.5.8 Level AA requires a 24×24 CSS-pixel target or one of its defined exceptions. Treat 44px as a recommended touch target for primary controls and 40px as a useful desktop target when the product's density permits. Smaller controls are not automatically failures: check the spacing, equivalent-control, inline, user-agent, and essential exceptions before reporting one.
 
-Under the spacing exception, an undersized target passes if a 24px circle centered on its bounding box does not intersect another target or another undersized target's circle; in the simple case, 20px targets need at least a 4px gap.
+Under the spacing exception, an undersized target passes when a 24px circle centered on its bounding box intersects no other target, and no other undersized target's circle. In the simple case, 20px targets need a 4px gap.
 
 The visible element can stay small; the hit area is what must be big. If it looks clickable, it must be clickable across its whole visual extent: no dead zones (a checkbox and its label share one hit target).
 

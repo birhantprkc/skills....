@@ -74,7 +74,7 @@ git log --format='%s%n%b' "$BASE".."refs/remotes/pr/<n>"
 
 ## Awkward repository states
 
-Three worth handling explicitly. Everything else (no remote, unrelated histories, a repo with no commits, a moved submodule pointer) fails loudly at `merge-base`: say the base is unresolvable and stop rather than reviewing a range you cannot name.
+Three worth handling explicitly. Everything else fails loudly at `merge-base`: no remote, unrelated histories, a repo with no commits, a moved submodule pointer. Say the base is unresolvable and stop. Never review a range you cannot name.
 
 **Detached HEAD.** `git symbolic-ref --quiet HEAD` fails. Use the merge base against the default branch and name the SHA, not a branch, in the scope block.
 
@@ -131,7 +131,7 @@ Exclude these from the change scope and name what you excluded in the scope bloc
 | Vendored code | `vendor/`, `third_party/`, `node_modules/` |
 | Binaries and media | `*.png`, `*.jpg`, `*.webp`, `*.avif`, `*.woff2`, `*.mp4`, `*.pdf` |
 
-Two exceptions worth keeping in scope: a **font file** added or swapped is a `better-typography` change, and an **image** added to a component is a `better-ui` and `better-accessibility` change through its `alt` text and outline. Review the code that references them, not the bytes.
+Two exceptions stay in scope. A **font file** added or swapped is a `better-typography` change. An **image** added to a component is a `better-ui` and `better-accessibility` change, through its `alt` text and its outline. Review the code that references them, not the bytes.
 
 Apply the exclusions as pathspecs so the file count in the scope block is the reviewed count:
 

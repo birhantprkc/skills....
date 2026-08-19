@@ -4,7 +4,7 @@ How to deploy color once the system exists: meaning, emphasis, gradients, and ap
 
 ## One color, one meaning
 
-Use a color for one purpose across the whole interface: interactive, destructive, featured. If the accent signals that text is interactive, that hue on non-interactive text tells users to click something that is not clickable. Treat anything within about 15° of hue as the same color for this purpose; users do not perceive a near-miss as a different color, only as a slightly different shade of the same one.
+Use a color for one purpose across the whole interface: interactive, destructive, featured. If the accent signals that text is interactive, that hue on non-interactive text tells users to click something that is not clickable. Treat anything within about 15° of hue as the same color here. Users read a near-miss as a slightly different shade, not as a different color.
 
 ```css
 /* Bad: the accent means both "link" and "decorative heading" */
@@ -22,7 +22,7 @@ Color is never the only carrier of meaning. Pair it with an icon, a label, or a 
 
 ## Use tokens in their role
 
-Apply a semantic token only for the role it names. `--color-text-secondary` is muted foreground text; using it as a background breaks every future theme change that assumes the role, because the value that happened to work as both will stop working as both.
+Apply a semantic token only for the role it names. `--color-text-secondary` is muted foreground text. Use it as a background and you break every future theme change that assumes the role, because a value that happened to work as both will stop working as both.
 
 ```css
 /* Bad: separator token repurposed as a text color because it looked right */
@@ -68,7 +68,7 @@ background: linear-gradient(in oklch, #3b82f6, #ec4899);
 
 `oklab` and sRGB are **rectangular**: they interpolate in a straight line through the color space. `oklch` is **polar**: it interpolates the hue angle, so it arcs around the wheel and passes through every hue between the two stops. That is why it stays saturated, and also why it can produce hues nobody asked for. A blue-to-pink gradient routes through purple, which may be exactly the look or may be a surprise.
 
-**The gray dead zone is a rectangular-space problem.** Two hues on opposite sides of the wheel sit on either side of the neutral axis, so a straight line between them passes near gray and the middle goes lifeless. Two fixes: switch to a polar space, which routes around the axis instead of through it, or add a third stop at a hue between the two and keep the space you have.
+**The gray dead zone is a rectangular-space problem.** Two hues on opposite sides of the wheel sit either side of the neutral axis. A straight line between them passes near gray, and the middle goes lifeless. Two fixes. Switch to a polar space, which routes around the axis rather than through it. Or add a third stop at a hue between the two and keep the space you have.
 
 With a polar space you also control which way it goes around:
 

@@ -118,7 +118,7 @@ Sticky headers and floating action buttons account for safe areas:
 
 Breakpoints belong to the content, not the device catalog:
 
-- Break where the layout actually stops fitting (when the sidebar squeezes the content below its minimum measure, when the card grid drops below a usable column width), not at `768px` because a preset says so.
+- Break where the layout actually stops fitting, not at `768px` because a preset says so. That means the point where the sidebar squeezes content below its minimum measure, or the card grid drops below a usable column width.
 - Collapse late. A layout that keeps its expanded structure as long as it genuinely fits stays stable and familiar; premature collapsing throws away space users paid for.
 - Prefer **container queries** for components: a card should adapt to the column it's in, not to the viewport.
 

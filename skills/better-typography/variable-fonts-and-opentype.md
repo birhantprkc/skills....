@@ -11,7 +11,7 @@ A variable font is not automatically better. One or two weights: static files ca
 
 ## Load intended weights and styles
 
-When you use a weight or style the active family does not provide, the browser may synthesize it. Prefer loading the faces the design actually uses. Disable synthesis only after verifying the complete fallback stack and every semantic emphasis state; `none` disables weight, style, small-cap, superscript, and subscript synthesis together and can erase distinctions when the real face is unavailable.
+When you use a weight or style the active family does not provide, the browser may synthesize it. Prefer loading the faces the design actually uses. `none` disables weight, style, small-cap, superscript, and subscript synthesis together, and can erase distinctions when the real face is unavailable. So verify the complete fallback stack and every semantic emphasis state before setting it.
 
 ```css
 .brand-wordmark {
@@ -36,7 +36,7 @@ Variable-font controls, each with a four-letter tag. A font only supports the ax
 
 Inter's variable file exposes only `wght` and `opsz`.
 
-Optical sizes predate variable fonts and many fonts still ship them as separate files: Heldane Text is sturdier and more spaced for reading sizes, Heldane Display has finer details for large sizes.
+Optical sizes predate variable fonts, and many families still ship them as separate files. Heldane Text is sturdier and more spaced for reading sizes; Heldane Display carries finer details for large ones.
 
 ## Properties over axis tags
 
