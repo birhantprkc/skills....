@@ -2,11 +2,11 @@
 
 Cross-fading an icon when it changes contextually or by state, with and without a motion library. Icon weight, color and direction live in [icons.md](icons.md).
 
-## Contextual Icon Animations
+## Contextual icon animations
 
 When icons appear or disappear contextually (on hover, on state change), animate them with `opacity`, `scale`, and `blur` rather than just toggling visibility.
 
-### Motion Example
+### Motion example
 
 This example uses the `motion` package. If the project instead has `framer-motion`, import the same APIs from `"framer-motion"`; never mix an installed package with the other package's import path.
 
@@ -32,7 +32,7 @@ function IconButton({ isActive, icon: Icon }) {
 }
 ```
 
-### CSS Transition Approach (No Motion)
+### CSS transition approach (no Motion)
 
 If the project doesn't use Motion (Framer Motion), keep both icons in the DOM and cross-fade them with CSS transitions. Because neither icon unmounts, both enter and exit animate smoothly.
 
@@ -74,7 +74,7 @@ function IconButton({ isActive, ActiveIcon, InactiveIcon }) {
 
 The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon (ActiveIcon) overlays it without affecting flow.
 
-### Choosing Between Motion and CSS
+### Choosing between Motion and CSS
 
 | | Motion (Framer Motion) | CSS transitions (both icons in DOM) |
 | --- | --- | --- |
@@ -85,7 +85,7 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 
 **Rule:** Check the project's `package.json`. Import from `"motion/react"` when `motion` is installed, or from `"framer-motion"` when `framer-motion` is installed. If both exist, follow the imports already used by the component or its nearest peers. If neither is present, use the CSS cross-fade pattern; don't add a dependency just for icon transitions.
 
-### When to Animate Icons
+### When to animate icons
 
 | Animate | Don't animate |
 | --- | --- |

@@ -2,7 +2,7 @@
 
 Space between controls, margins against the viewport, hinting at off-screen content, and layouts that survive resizing and translation.
 
-## Breathing Room Between Targets
+## Breathing room between targets
 
 Controls placed too close together get mis-tapped and read as one unit. When the project has no established density scale, use these starting points:
 
@@ -31,7 +31,7 @@ Borderless controls usually need more clearance because nothing marks where one 
 
 WCAG target-size requirements, larger usability targets, and pseudo-element expansion are covered by the `better-accessibility` skill; these clearances are in addition, so expanded hit areas never overlap.
 
-## Inset Buttons from the Edges
+## Inset buttons from the edges
 
 In content layouts, buttons pressed accidentally against the viewport can look like system chrome and clip against curved corners or gesture zones. Keep them inside the layout margins. Edge-to-edge actions remain valid when they intentionally are application/platform chrome and account for safe areas:
 
@@ -54,7 +54,7 @@ In content layouts, buttons pressed accidentally against the viewport can look l
 
 Start near `16px` inline margin on mobile when the project has no layout token; the button can still span the full content width inside those margins.
 
-## Progressive Disclosure Needs an Affordance
+## Progressive disclosure needs an affordance
 
 Hiding complexity is good; hiding it without a cue is a trap. Every piece of off-screen or collapsed content needs a visible hint that it exists. Preserve the product's established scroll indicator or disclosure pattern; use the recipes below when no clear cue exists:
 
@@ -87,7 +87,7 @@ The peeking-scroller recipe: the container's padding creates the peek, and snap 
 </div>
 ```
 
-## Content Bleeds, Controls Float
+## Content bleeds, controls float
 
 The two layers behave differently at the edges:
 
@@ -114,7 +114,7 @@ Sticky headers and floating action buttons account for safe areas:
 }
 ```
 
-## Hold Structure Until It Breaks
+## Hold structure until it breaks
 
 Breakpoints belong to the content, not the device catalog:
 
@@ -137,7 +137,7 @@ Breakpoints belong to the content, not the device catalog:
 
 Test order: the smallest supported size and the largest first (those break first), then the sizes in between.
 
-## Plan for Growth and Clipping
+## Plan for growth and clipping
 
 Layouts fail in two directions: content grows, and viewports shrink.
 

@@ -29,7 +29,7 @@ Consolidate a repeated systemic issue into one row and list every affected locat
 | MEDIUM | `src/Article.tsx:33` | `leading-none` on a body paragraph | `leading-normal` (`1.5`–`1.6`) | Wrapped body text needs enough vertical separation |
 | MEDIUM | `src/article.css:12` | Full-width article column | `max-width` near 65 characters at `16px` | Long measures make lines hard to track |
 
-## Verification and Verdict
+## Verification and verdict
 
 After the findings:
 

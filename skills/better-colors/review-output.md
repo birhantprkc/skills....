@@ -29,7 +29,7 @@ Consolidate a repeated systemic issue into one row and list every affected locat
 | HIGH | `src/Banner.tsx:31` | `--color-text-secondary` on `--color-accent-solid`, Lc 38 | Report the pair; body text needs Lc 75 | Measured against the card background, not the accent fill it renders on |
 | MEDIUM | `src/theme.css:52` | P3 color with no fallback | Declare the sRGB value first, then override in `@media (color-gamut: p3)` | The color fails outright on non-P3 displays rather than degrading |
 
-## Verification and Verdict
+## Verification and verdict
 
 After the findings:
 

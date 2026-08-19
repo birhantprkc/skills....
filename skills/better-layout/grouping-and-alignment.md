@@ -2,7 +2,7 @@
 
 How spacing, shapes, shared edges, and ordering communicate what belongs together and what matters most.
 
-## Group with Space, Not Lines
+## Group with space, not lines
 
 Three tools create grouping, in order of preference:
 
@@ -31,7 +31,7 @@ The structural rule: the gap between groups must be at least 2× the gap within 
 
 When a separator is genuinely needed, keep it quiet: hairline width, low contrast, and never combined with a large gap (the gap already did the job).
 
-## Keep Controls Distinct from Content
+## Keep controls distinct from content
 
 Interactive elements need a visual signal that they're interactive: a background, a border, an underline, or placement in a consistent control zone (toolbar, footer row). A control styled identically to static text is invisible.
 
@@ -46,7 +46,7 @@ Interactive elements need a visual signal that they're interactive: a background
 
 The inverse also holds: don't give static elements control styling. A non-clickable badge shaped exactly like the buttons beside it collects dead clicks.
 
-## Align to Shared Edges
+## Align to shared edges
 
 Pick a small set of alignment edges and put everything on them; the eye tracks straight edges to scan content.
 
@@ -65,7 +65,7 @@ Pick a small set of alignment edges and put everything on them; the eye tracks s
 .footer { padding-inline-start: 24px; }
 ```
 
-## Logical Properties, Not Physical
+## Logical properties, not physical
 
 Express direction-dependent horizontal position as leading/trailing so the layout mirrors automatically under `dir="rtl"`:
 
@@ -89,7 +89,7 @@ Reserve physical properties for things that genuinely refer to physical screen s
 
 When the arrangement of elements encodes progression (star ratings, step indicators, progress bars), the sequence mirrors in RTL: stars fill from the trailing side. Flexbox and grid with logical properties mirror automatically; hand-positioned elements don't. Digit order inside numbers never reverses; that and other bidi text rules live in the `better-typography` skill.
 
-## Order by Importance
+## Order by importance
 
 Readers scan top-to-bottom and leading-to-trailing. Place content accordingly:
 
@@ -114,7 +114,7 @@ Readers scan top-to-bottom and leading-to-trailing. Place content accordingly:
 
 Think in **leading/trailing**, not left/right: combined with logical properties, the same hierarchy mirrors correctly in RTL locales.
 
-## Don't Overload the Entry Point
+## Don't overload the entry point
 
 The first screenful is a table of contents, not the whole book. If everything is prominent, nothing is:
 

@@ -29,7 +29,7 @@ Consolidate a repeated systemic issue into one row and list every affected locat
 | HIGH | `src/DeleteDialog.tsx:29` | "OK" on the delete confirmation | "Delete project" | A consequential action must repeat the consequence |
 | MEDIUM | `src/Signup.tsx:54` | "Let's go!" | "Create account" | The label must name the action |
 
-## Verification and Verdict
+## Verification and verdict
 
 After the findings:
 

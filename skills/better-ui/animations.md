@@ -2,11 +2,11 @@
 
 Interruptible transitions, press feedback, and the restraint that decides whether to animate at all. Staged entrances and exits live in [enter-exit.md](enter-exit.md); icon swaps in [icon-transitions.md](icon-transitions.md).
 
-## Interruptible Animations
+## Interruptible animations
 
 Users change intent mid-interaction. If animations aren't interruptible, the interface feels broken.
 
-### CSS Transitions vs. Keyframes
+### CSS transitions vs. keyframes
 
 | | CSS Transitions | CSS Keyframe Animations |
 | --- | --- | --- |
@@ -39,13 +39,13 @@ Users change intent mid-interaction. If animations aren't interruptible, the int
 
 **Rule:** Always prefer CSS transitions for interactive elements. Reserve keyframes for one-shot sequences.
 
-## Scale on Press
+## Scale on press
 
 A subtle scale-down on click gives buttons tactile feedback. Always use `scale(0.96)`. Never use a value smaller than `0.95`: anything below feels exaggerated. Use CSS transitions for interruptibility, so that if the user releases mid-press, it smoothly returns.
 
 Not every button needs this. Add a `static` prop to your button component that disables the scale effect when the motion would be distracting.
 
-### CSS Example
+### CSS example
 
 ```css
 .button {
@@ -59,7 +59,7 @@ Not every button needs this. Add a `static` prop to your button component that d
 }
 ```
 
-### Tailwind Example
+### Tailwind example
 
 ```tsx
 <button className="transition-transform duration-150 ease-out active:scale-[0.96]">
@@ -67,7 +67,7 @@ Not every button needs this. Add a `static` prop to your button component that d
 </button>
 ```
 
-### Motion Example
+### Motion example
 
 ```tsx
 <motion.button whileTap={{ scale: 0.96 }}>
@@ -75,7 +75,7 @@ Not every button needs this. Add a `static` prop to your button component that d
 </motion.button>
 ```
 
-### Static Prop Pattern
+### Static prop pattern
 
 Extract the scale class into a variable and conditionally apply it based on a `static` prop:
 
@@ -102,11 +102,11 @@ function Button({ static: isStatic, className, children, ...props }) {
 <Button static>Submit</Button>       {/* no scale */}
 ```
 
-## Skip Animation on Page Load
+## Skip animation on page load
 
 Use `initial={false}` on `AnimatePresence` to prevent enter animations from firing on first render. Elements that are already in their default state shouldn't animate in on page load, only on subsequent state changes.
 
-### When It Works
+### When it works
 
 ```tsx
 // Good: icon doesn't animate in on mount, only on state change
@@ -124,7 +124,7 @@ Use `initial={false}` on `AnimatePresence` to prevent enter animations from firi
 
 Works well for: icon swaps, toggles, tabs, segmented controls: anything that has a default state on page load.
 
-### When It Breaks
+### When it breaks
 
 Don't use `initial={false}` when the component relies on its `initial` prop to set up a first-time enter animation, like a staggered page hero or a loading state. In those cases, removing the initial animation skips the entire entrance.
 
@@ -139,7 +139,7 @@ Don't use `initial={false}` when the component relies on its `initial` prop to s
 
 Verify the component still looks right on a full page refresh before applying this.
 
-## Suppress Transitions on Theme Switch
+## Suppress transitions on theme switch
 
 Flipping the theme changes `color`, `background-color`, `border-color`, and `box-shadow` on nearly every element at once. Everything carrying a transition on those properties animates simultaneously, so the switch reads as a slow smear across the page instead of an instant change. Disable transitions for the duration of the swap and restore them right after.
 
@@ -182,7 +182,7 @@ export function DisableThemeTransitions() {
 
 This component covers the OS-level change. An in-app theme toggle needs the same treatment around its own flip: apply the override, change the theme, flush, remove. `next-themes` ships this as its `disableTransitionOnChange` prop.
 
-## Motion Restraint
+## Motion restraint
 
 Motion is a budget, not a garnish. Three rules decide whether an animation belongs at all:
 

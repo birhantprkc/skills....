@@ -2,7 +2,7 @@
 
 Border radius, optical alignment, shadows, and image outlines.
 
-## Concentric Border Radius
+## Concentric border radius
 
 When nesting rounded elements, the outer radius must equal the inner radius plus the padding between them:
 
@@ -34,7 +34,7 @@ This rule is most useful when nested surfaces are close together. If padding is 
 }
 ```
 
-### Tailwind Example
+### Tailwind example
 
 ```tsx
 // Good: outer radius accounts for padding
@@ -54,11 +54,11 @@ This rule is most useful when nested surfaces are close together. If padding is 
 
 Mismatched border radii on closely nested surfaces is a common source of visual tension. Calculate concentrically when the layers share a visible, even inset; preserve an established component token when the layers are independent or the padding is intentionally asymmetric.
 
-## Optical Alignment
+## Optical alignment
 
 When geometric centering looks off, align optically instead.
 
-### Buttons with Text + Icon
+### Buttons with text + icon
 
 When an icon makes otherwise symmetric padding look unbalanced, use slightly less padding on the icon side. A useful starting point is:
 `icon-side padding = text-side padding - 2px`.
@@ -84,7 +84,7 @@ When an icon makes otherwise symmetric padding look unbalanced, use slightly les
 </button>
 ```
 
-### Play Button Triangles
+### Play button triangles
 
 Play icons are triangular and their geometric center is not their visual center. Shift slightly right:
 
@@ -100,7 +100,7 @@ Play icons are triangular and their geometric center is not their visual center.
 }
 ```
 
-### Asymmetric Icons (Stars, Arrows, Carets)
+### Asymmetric icons (stars, arrows, carets)
 
 Some icons have uneven visual weight. The best fix is adjusting the SVG directly so no extra margin/padding is needed in the component code.
 
@@ -114,13 +114,13 @@ Some icons have uneven visual weight. The best fix is adjusting the SVG directly
 </span>
 ```
 
-## Shadows Instead of Borders
+## Shadows instead of borders
 
 For **buttons, cards, and containers** that use a border for depth or elevation, prefer replacing it with a subtle `box-shadow`. Shadows adapt to any background since they use transparency; solid borders don't. This also helps when using images or multiple colors as backgrounds: solid border colors don't work well on backgrounds other than the ones they were designed for.
 
 **Do not apply this to dividers** (`border-b`, `border-t`, side borders) or any border whose purpose is layout separation rather than element depth. Those should stay as borders.
 
-### Shadow as Border (Light Mode)
+### Shadow as border (light mode)
 
 The shadow is comprised of three layers. The first acts as a 1px border ring, the second adds subtle lift, and the third provides ambient depth:
 
@@ -137,7 +137,7 @@ The shadow is comprised of three layers. The first acts as a 1px border ring, th
 }
 ```
 
-### Shadow as Border (Dark Mode)
+### Shadow as border (dark mode)
 
 In dark mode, simplify to a single white ring, since layered depth shadows aren't visible on dark backgrounds:
 
@@ -148,7 +148,7 @@ In dark mode, simplify to a single white ring, since layered depth shadows aren'
 --shadow-border-hover: 0 0 0 1px oklch(1 0 0 / 0.13);
 ```
 
-### Usage with Hover Transition
+### Usage with hover transition
 
 Apply the variable and add `transition-[box-shadow]` for a smooth hover:
 
@@ -165,7 +165,7 @@ Apply the variable and add `transition-[box-shadow]` for a smooth hover:
 }
 ```
 
-### When to Use Shadows vs. Borders
+### When to use shadows vs. borders
 
 | Use shadows | Use borders |
 | --- | --- |
@@ -175,7 +175,7 @@ Apply the variable and add `transition-[box-shadow]` for a smooth hover:
 | Elements on varied backgrounds | Hairline separators in dense UI |
 | Hover/focus states for lift effect | |
 
-## Image Outlines
+## Image outlines
 
 Add a subtle `1px` outline with low opacity to images. This creates consistent depth, especially in design systems where other elements use borders or shadows.
 
@@ -186,7 +186,7 @@ Add a subtle `1px` outline with low opacity to images. This creates consistent d
 - Never use a near-black or near-white from the project palette (e.g. slate-900, zinc-900, `#0a0a0a`, `#111827`, `#f5f5f7`). Tinted outlines pick up the surrounding surface color and read as dirt on the image edge.
 - Never match the outline to the project's accent or ink color. The outline is a neutral separator, not a themed element.
 
-### Light Mode
+### Light mode
 
 ```css
 img {
@@ -195,7 +195,7 @@ img {
 }
 ```
 
-### Dark Mode
+### Dark mode
 
 ```css
 img {
@@ -204,7 +204,7 @@ img {
 }
 ```
 
-### Tailwind with Dark Mode
+### Tailwind with dark mode
 
 ```tsx
 <img

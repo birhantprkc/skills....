@@ -2,18 +2,18 @@
 
 Staged entrances and the exits that follow them. For interactive state feedback see [animations.md](animations.md); for icon swaps see [icon-transitions.md](icon-transitions.md).
 
-## Enter Animations: Split and Stagger
+## Enter animations: split and stagger
 
 Use this pattern for infrequent staged entrances where sequence helps communicate hierarchy, such as the first load of a page hero, success state, or empty state. Break a large container into semantic chunks and animate each individually. Do not stagger routine interactions such as row hovers, keystrokes, or repeated tab changes.
 
-### Step by Step
+### Step by step
 
 1. **Split** into logical groups (title, description, buttons)
 2. **Stagger** with ~100ms delay between groups
 3. **For titles**, consider splitting into individual words with ~80ms stagger
 4. **Combine** `opacity`, `blur`, and `translateY` for the enter effect
 
-### Code Example
+### Code example
 
 ```tsx
 // Motion (Framer Motion): staggered enter
@@ -57,7 +57,7 @@ function PageHeader() {
 }
 ```
 
-### CSS-Only Stagger
+### CSS-only stagger
 
 ```css
 .stagger-item {
@@ -80,11 +80,11 @@ function PageHeader() {
 }
 ```
 
-## Exit Animations
+## Exit animations
 
 Exit animations should be softer and less attention-grabbing than enter animations. The user's focus is moving to the next thing; don't fight for attention.
 
-### Subtle Exit (Recommended)
+### Subtle exit (recommended)
 
 ```tsx
 // Small fixed translateY: indicates direction without drama
@@ -100,7 +100,7 @@ Exit animations should be softer and less attention-grabbing than enter animatio
 </motion.div>
 ```
 
-### Full Exit (When Context Matters)
+### Full exit (when context matters)
 
 ```tsx
 // Slide fully out: use when spatial context is important
@@ -116,7 +116,7 @@ Exit animations should be softer and less attention-grabbing than enter animatio
 </motion.div>
 ```
 
-### Good vs. Bad
+### Good vs. bad
 
 ```css
 /* Good: subtle exit */

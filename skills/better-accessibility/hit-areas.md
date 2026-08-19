@@ -23,7 +23,7 @@ The visible element can stay small; the hit area is what must be big. If it look
 
 If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area with a pseudo-element. Put the pseudo-element on the wrapping `<label>` or `<button>`, not on the `<input>` itself; replaced elements don't render `::before`/`::after` reliably.
 
-### CSS Example
+### CSS example
 
 ```css
 /* Small checkbox with expanded 44px hit area, on the wrapping label */
@@ -44,7 +44,7 @@ If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area
 }
 ```
 
-### Tailwind Example
+### Tailwind example
 
 ```tsx
 <button className="relative size-5 after:absolute after:top-1/2 after:left-1/2 after:size-11 after:-translate-1/2">
@@ -65,7 +65,7 @@ When the element can afford real box size, skip the pseudo-element and let the b
 }
 ```
 
-## Collision Rule
+## Collision rule
 
 If the extended hit area overlaps another interactive element, shrink the pseudo-element, but make it as large as possible without colliding. Two interactive elements should never have overlapping hit areas.
 

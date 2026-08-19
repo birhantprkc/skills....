@@ -29,7 +29,7 @@ Consolidate a repeated systemic issue into one row and list every affected locat
 | LOW | `src/Button.tsx:19` | `<button className="...">` | Add `active:scale-[0.96] transition-transform` | Press feedback makes the control feel responsive |
 | MEDIUM | `src/button.css:24` | `scale(0.9)` on press | Raise to `scale(0.96)` | Anything below `0.95` feels exaggerated |
 
-## Verification and Verdict
+## Verification and verdict
 
 After the findings:
 

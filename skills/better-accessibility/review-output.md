@@ -40,7 +40,7 @@ Consolidate a repeated systemic issue into one row and list every affected locat
 | --- | --- | --- | --- | --- |
 | MEDIUM | `src/Toolbar.tsx:22` | `size-4` icon-only button | Extend the hit area to 44×44px with `after:absolute after:size-11` | The target is too small for reliable touch input |
 
-## Verification and Verdict
+## Verification and verdict
 
 After the findings:
 

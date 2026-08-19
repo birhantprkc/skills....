@@ -2,7 +2,7 @@
 
 Icon weight, states, sizing, and direction: the details that make icons sit naturally in an interface.
 
-## Match Icon Stroke to Text Weight
+## Match icon stroke to text weight
 
 An icon next to text should carry the same optical weight as the text, or the pair looks mismatched: a hairline icon beside semibold text reads as broken, a heavy icon beside regular text shouts.
 
@@ -31,7 +31,7 @@ Two related consistency rules:
 - **One optical strategy per surface.** Do not mix icon libraries with incompatible stroke conventions on one toolbar. If the chosen library intentionally supports stroke variants, match them to adjacent text as above; otherwise preserve the set's native stroke and use size or color for emphasis.
 - **Size icons relative to the text's cap height**, typically `1em`–`1.25em` when inline with text, so the pair scales together.
 
-## One SVG, Recolored per State
+## One SVG, recolored per state
 
 Never ship separate icon assets for default/hover/selected/disabled states. Use a single SVG drawn with `currentColor` and let CSS state drive the color:
 
@@ -56,7 +56,7 @@ Never ship separate icon assets for default/hover/selected/disabled states. Use 
 
 Hardcoded fills inside the SVG (`fill="#666"`) break this; strip them to `currentColor` when importing icons.
 
-## Outline Default, Fill Active
+## Outline default, fill active
 
 When an icon set offers outline and filled variants, use them as a state pair, not interchangeably:
 
@@ -75,7 +75,7 @@ When an icon set offers outline and filled variants, use them as a state pair, n
 
 The swap between variants is a contextual icon animation; use the exact cross-fade values in [icon-transitions.md](icon-transitions.md).
 
-## Design at Render Size
+## Design at render size
 
 An icon that looks great at 48px can collapse into mush at 16px. Details that read at large sizes (thin interior lines, tight counters, fine texture) blur or alias when small.
 

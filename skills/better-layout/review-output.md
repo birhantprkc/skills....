@@ -29,7 +29,7 @@ Consolidate a repeated systemic issue into one row and list every affected locat
 | LOW | `src/Card.tsx:24` | Card text at `pl-4`, card icon at `pl-3` | Align both to the same `pl-4` edge | Shared edges create a legible structure |
 | MEDIUM | `src/Nav.css:19` | `margin-left: 16px` | `margin-inline-start: 16px` | Physical properties break direction-aware layouts |
 
-## Verification and Verdict
+## Verification and verdict
 
 After the findings:
 

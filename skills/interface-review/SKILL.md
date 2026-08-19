@@ -5,24 +5,24 @@ description: >-
   Interface review of a change rather than a screen: uncommitted work, the current branch, or a pull request. Covers interface quality, not correctness, tests, or security.
 ---
 
-# Review the change, not just the code it left behind
+# Change review
 
-A diff is not a surface. The lines a change deletes matter as much as the lines it adds, and the file it touches is rarely the whole of what it affects.
+This skill reviews a change rather than a screen. It resolves the change scope, expands the changed files to the surfaces they affect, reads both sides of the diff, and classifies every finding.
 
-This skill owns change scope only: resolving the target, expanding changed files to affected surfaces, reading both sides of the diff, and classifying each finding. Domain rules belong to the `better-*` skills. Mode, severity, consolidation, coverage, the cap, the output format, and the verdict belong to `better-interface`, which this skill hands the review to. Never duplicate or override their rules here.
+Scope is all it owns. Domain rules belong to the `better-*` skills. Mode, severity, consolidation, coverage, the cap, the output format, and the verdict belong to `better-interface`, which this skill hands the review to.
 
 Correctness, tests, security, and performance belong to the project's general code review. Name the concern once and move on.
 
-## Quick Reference
+## Quick reference
 
 | Category | When to Use |
 | --- | --- |
 | [Scope Resolution](scope-resolution.md) | Targets and commands, default branch, merge-base, PR and fork refs, repository states, nothing to review, renames, exclusions, consumer expansion |
 | [Removed Signals](removed-signals.md) | What to look for on the `-` side of a hunk and which skill owns each removal |
 
-## Core Principles
+## Core principles
 
-### 1. Resolve the Change Scope First
+### 1. Resolve the change scope first
 
 `better-interface` owns mode parsing; everything after the mode is the target, so `/interface-review quick pr 482` is a `quick` review of pull request 482. [Scope Resolution](scope-resolution.md) holds the accepted targets and the command for each.
 
@@ -36,9 +36,9 @@ Order matters: checking the working tree first lets one stray formatting edit sh
 
 Exclude lockfiles, snapshots, generated output, vendored code, and binaries, and name what you excluded. If the scope is empty after exclusions, that is principle 2 reached by a different route: name the excluded files and ask.
 
-### 2. With No Change, Ask Rather Than Invent One
+### 2. With no change, ask rather than invent one
 
-A clean tree with nothing ahead of the merge base means the user asked to review a change that does not exist. Never fall back to `HEAD~1..HEAD` on your own. The last commit is whatever happened to land — often a merge, often someone else's work — and a report on it is indistinguishable from a report on what the user meant.
+A clean tree with nothing ahead of the merge base means the user asked to review a change that does not exist. Never fall back to `HEAD~1..HEAD` on your own. The last commit is whatever happened to land, often a merge, often someone else's work. A report on it is indistinguishable from a report on what the user meant.
 
 State the repository facts you found, then offer the routes and wait. [Nothing to Review](scope-resolution.md#nothing-to-review) holds the commands:
 
@@ -50,7 +50,7 @@ Check for an open pull request on the current branch before asking, and offer it
 
 An empty scope after exclusions is the same situation reached a different way. Say which files were excluded and ask the same way, rather than reporting a review of nothing as `Approve`.
 
-### 3. A Diff Is Not a Surface
+### 3. A diff is not a surface
 
 A changed file is evidence, not the review subject. Its **blast radius** is the set of surfaces it renders in; review those.
 
@@ -58,13 +58,13 @@ Expand the blast radius one hop by default: the direct importers and callers. Ex
 
 Review at most five consumers, ordered by [the rule in Scope Resolution](scope-resolution.md#expanding-to-consumers), and state how many you did not expand. An unbounded sweep produces coverage claims you cannot support; an unstated cutoff produces a report that looks complete and is not.
 
-### 4. Read the Removed Lines
+### 4. Read the removed lines
 
 Regressions are invisible in the post-change state. Read the `-` side of every hunk against [Removed Signals](removed-signals.md).
 
 A signal is a lead, not a finding. A removal is only a regression when nothing in the change replaces it, and the domain skill owns that judgement. Route each unmatched removal to its owner and report only what that skill confirms. Then status it `Regression`, which tells the author they broke something that worked rather than made a new mistake.
 
-### 5. Classify Every Finding
+### 5. Classify every finding
 
 Give every finding one status:
 
@@ -80,7 +80,7 @@ git blame -L <line>,<line> "$BASE" -- path/to/file
 
 Hand every finding up with its status attached and let `better-interface` apply its cap and verdict rules.
 
-### 6. Hold the Change to Its Stated Intent
+### 6. Hold the change to its stated intent
 
 Read the pull request title and body, the linked issue, and the commit messages, then review whether the interface delivers what they claim.
 
@@ -93,19 +93,19 @@ This is what surfaces the **incomplete** change, which a surface review cannot s
 
 Do not report scope creep. Whether a change does too much is a process question, not an interface one.
 
-### 7. Hand the Review to `better-interface`
+### 7. Hand the review to `better-interface`
 
 With the scope, the affected surfaces, and both sides of the diff in hand, hand the review to `better-interface` with the scope block and a status on every finding. It routes to the domain skills, applies severity, consolidates, enforces the cap, and issues the verdict, including the change-scoped rules under its **Change-Scoped Reviews** section.
 
 If `better-interface` is unavailable, report the resolved scope and the file inventory, name it as the missing skill, and stop. Do not invent a severity scale, a cap, or a verdict.
 
-### 8. Never Mutate the Working Tree
+### 8. Never mutate the working tree
 
 A change review is read-only, including the checkout. Fetch pull request refs; never check them out. `git fetch` writes only to `.git` and is permitted. `gh pr checkout`, `git checkout`, `git switch`, and `git stash` rewrite the files the author has open, failing against local edits or discarding them, and are never permitted in any mode.
 
 Rendered verification is opt-in: mark visual and runtime claims **Not verified** unless the project exposes a cheap preview or the user asks for a rendered review. When they do, use an isolated worktree (`git worktree add /tmp/review-<n> refs/remotes/pr/<n>`) and remove it when done. That leaves the author's tree untouched, which a checkout does not, so a checkout is not an alternative here.
 
-## Common Mistakes
+## Common mistakes
 
 | Mistake | Fix |
 | --- | --- |
@@ -121,7 +121,7 @@ Rendered verification is opt-in: mark visual and runtime claims **Not verified**
 | Mode, severity, caps, the output format, or the verdict restated here | Defer to `better-interface` |
 | Correctness, test, or security findings in the report | Name the concern once, point at the project's code review, and drop it |
 
-## Review Output Format
+## Review output format
 
 `better-interface` owns the format, including the four change-scoped additions under its **Change-Scoped Reviews** section. Follow it as written and add nothing here.
 
