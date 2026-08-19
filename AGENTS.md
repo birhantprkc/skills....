@@ -12,20 +12,32 @@ A collection of agent skills for building great product interfaces (typography, 
 
 ## Structure
 
-Each skill lives in `skills/<skill-name>/`:
+Each skill lives in `skills/<skill-name>/`, with `SKILL.md` as the entry point and supporting `.md` files beside it.
 
-- `SKILL.md` is the entry point. YAML frontmatter with `name` (matching the directory) and `description` (one-line summary, "Use when..." guidance, and a "Triggers on ..." keyword list that agents match against). The body: a short philosophy paragraph (one or two lines, with hand-off lines naming sibling skills that own adjacent topics), a **Quick Reference** table linking to reference files, numbered **Core Principles**, and a **Common Mistakes** table. No review checklists and no trailing reference-file index; the Quick Reference is the only file listing.
-- Supporting `.md` reference files carry depth beyond the principle statements: recipes, code patterns, lookup tables. A principle states the rule and links out for the recipe; it never restates the reference file in shorter form, and the reference file never restates the principle in longer form. Link via relative paths from the Quick Reference table.
-- Every domain skill keeps its standalone review format in `review-output.md`, never in `SKILL.md`. These skills fire mostly on build tasks, where the format is dead weight in context. Two things reach it: a Quick Reference row, and a closing **Reporting** section — two lines stating that a standalone review is finished only once the findings are reported in that format. The Reporting section is what makes the pointer fire, because it sits where the agent lands before writing output; the Quick Reference row alone is read while orienting and misses that moment. `better-interface` owns the format whenever it orchestrates, and states that once, in its own principle 3 — the Reporting section names the precedence in a clause and defines nothing.
-- Each rule lives in exactly one skill; other skills point to it by skill name in backticks (e.g. `better-layout`), never via cross-skill relative links.
+There is no section template. Every skill filling one frame produces a set of files that read like instances of one file, so headings belong to the skill, not to a house style. What every `SKILL.md` does carry:
 
-Current skills: `better-interface` (cross-discipline review), `interface-review` (user-invoked change-scoped review), `better-ui` (interface polish details), `better-typography` (web typography), `better-colors` (color systems and color usage), `better-accessibility` (accessibility engineering), `better-layout` (layout structure), `better-writing` (UX writing and interface copy).
+- **Frontmatter** with `name` (matching the directory) and `description`.
+- **A plain-name H1** and a two-sentence opener saying what the skill is and what it does. Not what the domain means or why it matters: an agent does not need motivating, and a reader can tell the difference.
+- **Headings that carry the point**, in sentence case. `Native elements first`, not `Semantics`. Number them only where the steps genuinely run in order, as `better-interface` and `interface-review` do; numbering flat reference implies a sequence that isn't there and makes every insertion a renumber.
+- **A hand-off line** naming the sibling skills that own adjacent topics.
+- **One two-column Mistake / Fix table** where the domain has recurring mistakes. The left column is the detection pattern, which is what a principle statement does not give you.
+- **A `## Reporting` section** in every domain skill, carrying only that domain's severity ladder and verification checks. See below.
+
+Supporting `.md` files carry depth beyond the principle statements: recipes, code patterns, lookup tables. Link each one from the principle that needs it, so the link sits where the agent lands. A principle states the rule and links out for the recipe; it never restates the reference file in shorter form, and the reference file never restates the principle in longer form.
+
+Each rule lives in exactly one skill. Other skills point to it by skill name in backticks (`better-layout`), never by cross-skill relative link, because each skill directory ships on its own.
+
+### The review format
+
+`better-interface` holds the only definition of the review format in this repository: the findings table and its columns, scope and coverage, considered-but-rejected, verification, the verdict ladder, and the change-scoped additions. Its section states which parts an orchestrated review uses and which subset a standalone domain review uses.
+
+A domain skill's `## Reporting` section carries two things and nothing else: its severity ladder and its verification checks. For the table structure and the verdict it calls the Skill tool with `better-interface`. Those two are the only parts that were ever domain-specific; six copies of the rest is what this replaced.
 
 ### Invocation
 
 A user-invoked skill may invoke model-invoked skills, but it can never reach another user-invoked skill. That rule decides the setting; it is not a preference:
 
-- `interface-review` is the only user-invoked skill. It carries `disable-model-invocation: true` in its frontmatter **and** `policy.allow_implicit_invocation: false` in its `agents/openai.yaml` — the Claude Code and Codex halves of the same switch, which must be set together or the skill behaves differently per harness. Its `description` is human-facing: a one-line summary with no trigger list, since nothing but a person can match against it.
+- `interface-review` is the only user-invoked skill. It carries `disable-model-invocation: true` in its frontmatter **and** `policy.allow_implicit_invocation: false` in its `agents/openai.yaml`. Those are the Claude Code and Codex halves of the same switch, and must be set together, or the skill behaves differently per harness. Its `description` is human-facing: a one-line summary with no trigger list, since nothing but a person can match against it.
 - Every other skill is model-invoked and keeps a trigger list, because something must reach it: `better-interface` routes to every domain skill, and `interface-review` hands its review up to `better-interface`.
 - `better-interface` therefore cannot start `interface-review`. Where it would want to, it asks the user to run it. Making `better-interface` user-invoked too would sever the upward handoff and force `interface-review` to restate severity, the cap, the format, and the verdict.
 
@@ -60,3 +72,10 @@ When a concern crosses domains, keep the rule in the owner above and let other s
 - Skills that own a domain use the `better-*` prefix. A user-invoked review entry point may drop it when a plainer name reads better on the command line, as `interface-review` does.
 - A skill's name appears in three places: its directory, its frontmatter `name`, and `display_name` in its `agents/openai.yaml`. Renaming means changing all three, then `grep`ing for the old name to confirm nothing survived.
 - Prefer counts and lists that cannot go stale. Say "every skill in this repository" rather than a number the next skill invalidates.
+- Straight quotes, sentence-case headings.
+
+Three numbers worth checking after an edit, since prose drifts back toward the mean:
+
+- **Around 13 words per prose sentence**, measured with code blocks and tables excluded. Past 16, the file is stacking clauses where it should be ending sentences.
+- **Around 20 triggers per description.** Two words for one branch is one branch written twice.
+- **One statement of each rule.** Before adding a sentence, check whether the file already says it somewhere else; the reflex to restate a boundary "for clarity" is what produced four copies of the same ownership line in `better-interface`.
