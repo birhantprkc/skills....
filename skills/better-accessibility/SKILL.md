@@ -97,8 +97,15 @@ The page must work at 200% zoom and reflow at 320px width without horizontal scr
 
 ## Reporting
 
-A standalone accessibility review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to accessibility.
-
 **Severity.** `HIGH` prevents a task, hides content from assistive technology, or creates a systemic failure. `MEDIUM` makes an interaction meaningfully harder. `LOW` is isolated polish.
 
-**Verification.** Keyboard traversal, accessible-name inspection, and screen-reader or automated checks where the interface supports them.
+**Verification.** Without a browser: accessible names on every interactive element, keyboard handlers on non-native controls, focus styles, `prefers-reduced-motion` guards, and form labels bound to their inputs. With one: tab the flow in order, read computed names and roles from the accessibility tree, confirm a visible focus indicator at every stop, and run an automated audit. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity within a group:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+
+End with a verdict. `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` when nothing actionable remains and you verified the coverage you claimed. With nothing to report, state "No actionable accessibility findings", report verification, and end with `Approve`.

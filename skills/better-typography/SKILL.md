@@ -149,8 +149,15 @@ Keep text selectable by default. `::selection` can carry brand into the reading 
 
 ## Reporting
 
-A standalone typography review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to typography.
-
 **Severity.** `HIGH` makes text unreadable or truncates content with no way to recover it. `MEDIUM` breaks the type system or the heading hierarchy. `LOW` is isolated polish.
 
-**Verification.** One full paragraph read for comfort, the hierarchy checked by squinting, and the viewport resized to catch wrapping, widows, and truncation at real content lengths.
+**Verification.** Without a browser: computed size and weight for each heading level, checked descending; declared line-height and measure; truncation rules against realistic string lengths. With one: resize the viewport to catch wrapping, widows, and truncation at real content lengths. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity within a group:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+
+End with a verdict. `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` when nothing actionable remains and you verified the coverage you claimed. With nothing to report, state "No actionable typography findings", report verification, and end with `Approve`.

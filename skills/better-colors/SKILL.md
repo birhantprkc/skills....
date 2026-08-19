@@ -92,8 +92,15 @@ See [color-usage.md](color-usage.md).
 
 ## Reporting
 
-A standalone color review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to color.
-
 **Severity.** `HIGH` makes content unreadable or assigns a misleading semantic color. `MEDIUM` is a noticeable theme, token, or gamut failure. `LOW` is isolated polish.
 
-**Verification.** Contrast measured against the rendered background rather than the page background, gamut checks, and both light and dark appearances. A failing pair is reported, not repainted.
+**Verification.** Without a browser: token values, the gamut of every declared color, both theme blocks present, and contrast computed from the declared token pair. With one: the background actually rendered behind the text, including opacity and any image beneath it, measured in both light and dark. A failing pair is reported, not repainted. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity within a group:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+
+End with a verdict. `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` when nothing actionable remains and you verified the coverage you claimed. With nothing to report, state "No actionable color findings", report verification, and end with `Approve`.

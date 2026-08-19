@@ -103,8 +103,15 @@ A placeholder shows the expected format: `name@example.com`, `DD/MM/YYYY`. It is
 
 ## Reporting
 
-A standalone writing review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to writing.
-
 **Severity.** `HIGH` misleads the user or hides how to recover from an error. `MEDIUM` breaks voice, terminology, or capitalization consistency. `LOW` is isolated wording polish.
 
-**Verification.** Nearby copy read for voice and terminology, every label checked against the action it performs, and each error checked for a stated fix.
+**Verification.** Source alone is enough here. Check every label against the action it invokes, every error for a stated fix, and terminology against the copy around it. No browser check is required.
+
+**Format.** Group findings under the principle each violates, ordered by severity within a group:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+
+End with a verdict. `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` when nothing actionable remains and you verified the coverage you claimed. With nothing to report, state "No actionable writing findings", report verification, and end with `Approve`.

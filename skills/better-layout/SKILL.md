@@ -67,8 +67,15 @@ Never park a critical action where resizing or scrolling clips it. Keep it in th
 
 ## Reporting
 
-A standalone layout review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to layout.
-
 **Severity.** `HIGH` blocks content or an action at a supported viewport. `MEDIUM` harms hierarchy, reading order, or adaptability. `LOW` is isolated alignment or spacing polish.
 
-**Verification.** Every supported viewport width, reading order, 200% zoom, and the RTL mirror.
+**Verification.** Without a browser: logical properties in place of physical ones, container and media queries against the supported viewport list, and DOM order against the intended reading order. With one: every supported width, 200% zoom, and the RTL mirror. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity within a group:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+
+End with a verdict. `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` when nothing actionable remains and you verified the coverage you claimed. With nothing to report, state "No actionable layout findings", report verification, and end with `Approve`.

@@ -94,7 +94,7 @@ Do not report scope creep. Whether a change does too much is a process question,
 
 ### 7. Hand the review to `better-interface`
 
-With the scope, the affected surfaces, and both sides of the diff in hand, hand the review to `better-interface` with the scope block and a status on every finding. It routes to the domain skills, applies severity, consolidates, enforces the cap, and issues the verdict. Its `review-format.md` holds the format, including the four change-scoped additions.
+With the scope, the affected surfaces, and both sides of the diff in hand, hand the review to `better-interface` with the scope block and a status on every finding. It routes to the domain skills, applies severity, consolidates, enforces the cap, and issues the verdict.
 
 If `better-interface` is unavailable, report the resolved scope and the file inventory, name it as the missing skill, and stop. Do not invent a severity scale, a cap, or a verdict.
 
@@ -117,14 +117,12 @@ Rendered verification is opt-in: mark visual and runtime claims **Not verified**
 | A line near a hunk statused `Introduced` | Status by what the diff touched, confirmed with `git blame` against the base ref |
 | A pull request checked out to review it | Fetch the ref and review it in place |
 | Line numbers cited that do not exist on the reviewed ref | Cite against the head ref named in the scope block |
-| Mode, severity, caps, the output format, or the verdict restated here | Defer to `better-interface` |
+| Mode parsing, the severity scale, or the finding cap restated here | Defer to `better-interface` |
 | Correctness, test, or security findings in the report | Name the concern once, point at the project's code review, and drop it |
 
 ## Review output format
 
-`better-interface` owns the format, including the four change-scoped additions. Follow its `review-format.md` as written and add nothing here.
-
-This skill supplies the scope block:
+Open with the scope block:
 
 | Field | Value |
 | --- | --- |
@@ -136,6 +134,20 @@ This skill supplies the scope block:
 | Excluded | `pnpm-lock.yaml`, `src/__snapshots__/`: lockfile and snapshots |
 | Surfaces expanded | `CheckoutPage`, `SettingsPanel`; 3 further `Button` consumers not expanded |
 
-Plus a status on every finding, per **Classify every finding**.
+Then the findings, with a `Status` column per **Classify every finding**:
 
-Under `better-interface`'s **Verification**, list the exact `git` and `gh` commands and their results. Include every write to `.git`: a fetch, a deepen, a `set-head`, a worktree. That is what makes the read-only claim in **Never mutate the working tree** auditable.
+| # | Severity | Domain | Status | Location | Before | After | Why |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | HIGH | Accessibility | Regression | `src/Dialog.tsx:42` | `aria-label="Close"` removed in this change | Restore `aria-label="Close"` on the icon-only control | The close control had an accessible name before this change and no longer does |
+
+With no `Introduced` or `Regression` findings, omit the table and state "No actionable interface findings in this change."
+
+Then `Pre-existing` findings, at most three, highest severity first, stated plainly as not this change's responsibility. Omit the section when there are none.
+
+| Severity | Domain | Location | Issue |
+| --- | --- | --- | --- |
+| MEDIUM | Typography | `src/Toolbar.tsx:7` | Numeric badges use proportional figures; predates this change |
+
+The cap and the verdict cover `Introduced` and `Regression` only. `Pre-existing` findings sit outside the cap, so touching a legacy file cannot turn into a full-file audit. They sit outside the verdict too, so a change whose only findings are pre-existing is an `Approve`.
+
+End with `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` otherwise. When `better-interface` is available, mode, the severity scale, and the cap come from it.

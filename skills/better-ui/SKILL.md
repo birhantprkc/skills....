@@ -98,8 +98,15 @@ Every animated state change also needs a static cue: color, an icon, or a label.
 
 ## Reporting
 
-A standalone UI-polish review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to UI-polish.
-
 **Severity.** `HIGH` breaks an interaction or makes motion unusable. `MEDIUM` is a visible inconsistency in surfaces, icons, or motion. `LOW` is isolated polish.
 
-**Verification.** Every state walked (hover, focus, active, loading, empty) and motion replayed at 10% speed in the browser's Animations panel.
+**Verification.** Without a browser: every state the component defines, meaning hover, focus, active, loading and empty, plus motion durations and easings read from the code. With one: walk each state, and replay motion at 10% speed in the browser's Animations panel. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity within a group:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
+
+End with a verdict. `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` when nothing actionable remains and you verified the coverage you claimed. With nothing to report, state "No actionable UI-polish findings", report verification, and end with `Approve`.

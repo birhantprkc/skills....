@@ -1,6 +1,6 @@
 ---
 name: variant
-description: Builds several genuinely different versions of one piece of UI behind a picker, so you can flip between them in the real page and promote the one that wins.
+description: Answers "which of these?" rather than "is this right?". Builds several genuinely different versions of one piece of UI behind a picker in the real page, so you can flip between them and promote the one that wins.
 disable-model-invocation: true
 ---
 
