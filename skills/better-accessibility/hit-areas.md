@@ -54,7 +54,7 @@ If the visible element is smaller (e.g., a 20×20 checkbox), extend the hit area
 
 ### Layout alternative
 
-When the element can afford real box size, skip the pseudo-element and let the box itself be the target; this also gives the browser the real geometry for scrolling and gestures:
+When the element can afford real box size, skip the pseudo-element and let the box be the target. That also hands the browser real geometry for scrolling and gestures:
 
 ```css
 .icon-button {

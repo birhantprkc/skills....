@@ -50,11 +50,11 @@ Color is the only part of a real underline that animates reliably. So unless the
 ## Forms and editable text
 
 - `::placeholder` styles the hint in an empty field.
-- `caret-color` colors the blinking insertion bar. Color is about as far as caret styling goes: a fully custom caret is very difficult to build and usually not worth it unless a very specific effect calls for it.
+- `caret-color` colors the blinking insertion bar. Color is about as far as caret styling goes. A fully custom caret is hard to build and rarely worth it, unless a specific effect calls for one.
 
 ### iOS input zoom
 
-Focusing an input with text smaller than `16px` zooms the whole page (an accessibility feature: `16px` is the web default and Safari treats smaller as too hard to read while typing).
+Focusing an input with text smaller than `16px` zooms the whole page. That is an accessibility feature: `16px` is the web default, and Safari treats smaller as too hard to read while typing.
 
 Two fixes work, and they differ in what they do to the design rather than in correctness. Ask which one the user wants before changing an input; do not pick for them.
 

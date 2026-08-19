@@ -42,8 +42,9 @@ A domain skill's `## Reporting` section carries two things and nothing else: its
 
 A user-invoked skill may invoke model-invoked skills, but it can never reach another user-invoked skill. That rule decides the setting; it is not a preference:
 
-- `interface-review` and `variant` are the user-invoked skills. Each carries `disable-model-invocation: true` in its frontmatter **and** `policy.allow_implicit_invocation: false` in its `agents/openai.yaml`. Those are the Claude Code and Codex halves of the same switch, and must be set together, or the skill behaves differently per harness. Their `description` is human-facing: a one-line summary with no trigger list, since nothing but a person can match against it.
+- `interface-review`, `variant`, and `explain-interface` are the user-invoked skills. Each carries `disable-model-invocation: true` in its frontmatter **and** `policy.allow_implicit_invocation: false` in its `agents/openai.yaml`. Those are the Claude Code and Codex halves of the same switch, and must be set together, or the skill behaves differently per harness. Their `description` is human-facing: a one-line summary with no trigger list, since nothing but a person can match against it.
 - `variant` is user-invoked because a design exploration is never something to start on someone's behalf. It writes throwaway code and then asks a question only a person can answer, so an agent firing it unprompted produces work nobody asked for and a harness nobody deletes.
+- `explain-interface` is user-invoked because studying someone else's interface is only ever something a person asks for. Pasting a URL is not a request to analyse it, and a skill firing on every link would turn each mention of a site into a report.
 - Every other skill is model-invoked and keeps a trigger list, because something must reach it: `better-interface` routes to every domain skill, and `interface-review` hands its review up to `better-interface`.
 - `better-interface` therefore cannot start `interface-review`. Where it would want to, it asks the user to run it. Making `better-interface` user-invoked too would sever the upward handoff and force `interface-review` to restate severity, the cap, the format, and the verdict.
 
@@ -54,6 +55,7 @@ A user-invoked skill may invoke model-invoked skills, but it can never reach ano
 | `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, the shared remediation ordering, consolidation, coverage, the finding cap, the output format including its change-scoped additions, and the verdict |
 | `interface-review` | Change scope resolution including the empty-scope offer, blast radius from changed files to affected surfaces, and finding classification (`Introduced` / `Regression` / `Pre-existing`) |
 | `variant` | Design exploration: the axis set variants may diverge on, how many to build, the harness and picker, the tradeoff table, and promotion. Owns no domain rules; every variant clears `better-interface`'s escalation triggers as its floor |
+| `explain-interface` | Reading an interface you did not build: scoping to the thing asked about, the layer search, the URL and screenshot branches, the measured / derived / inferred evidence tiers, and the minimal reproduction. Owns no domain rules and issues no verdict; it names what it finds in each domain skill's vocabulary |
 | `better-accessibility` | Semantic HTML, keyboard and focus behavior, accessible names, forms, assistive technology, and accessibility requirements |
 | `better-layout` | Spatial grouping, alignment, spacing, responsive structure, logical CSS properties, and spatial RTL behavior |
 | `better-writing` | Source wording, terminology, voice, tone, labels, errors, and empty-state copy |
@@ -83,7 +85,7 @@ When a concern crosses domains, keep the rule in the owner above and let other s
 
 Four checks after an edit, since prose drifts back toward the mean:
 
-- **No sentence over 30 words.** A ceiling, not an average. Averages are the wrong instrument here: aiming for a low mean produces choppy prose, and the well-written references this collection was measured against average about 14 words with a long tail. What makes a file hard to read is the individual 40-word sentence carrying four clauses, so split those and leave the rest alone.
+- **No sentence over 30 words**, counting a code span as one word. A ceiling, not an average. Averages are the wrong instrument here: aiming for a low mean produces choppy prose, and the well-written references this collection was measured against average about 14 words with a long tail. What makes a file hard to read is the individual 40-word sentence carrying four clauses, so split those and leave the rest alone.
 - **Around 20 triggers per description.** Two words for one branch is one branch written twice.
 - **One statement of each rule.** Before adding a sentence, check whether the file already says it somewhere else. The reflex to restate a boundary "for clarity" is what produced four copies of the same ownership line in `better-interface`, and a mistake table whose every row repeated the principle above it.
 - **No prose section over about 250 words.** Check sections, not word totals. A `SKILL.md` here gets long from the number of rules it carries, and rule count is a content decision rather than a cleanup one. A section past 250 words is either two rules under one heading, or a reference file that hasn't been extracted yet: `better-interface`'s review format was the second kind at 790 words.

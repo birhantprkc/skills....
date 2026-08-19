@@ -104,7 +104,7 @@ gh pr status --json number,title,headRefName    # `currentBranch`: this branch's
 
 `gh pr status` succeeds with no pull request open. It omits `currentBranch`, so an empty result is an answer, not an error. It fails outright without `gh`, without authentication, and on a repository with no GitHub remote. Treat any failure as "no pull request found", say so, and offer the remaining routes rather than stopping.
 
-Report the current branch, whether it is the default branch, that the tree is clean, and whether a pull request is open, then offer the three routes in **With no change, ask rather than invent one**. State the last commit's SHA and subject inside the offer: the user recognises "a1b2c3d Merge pull request #482" as not what they wanted, and cannot recognise "the last commit".
+Report the current branch, whether it is the default branch, that the tree is clean, and whether a pull request is open. Then offer the three routes in **With no change, ask rather than invent one**. State the last commit's SHA and subject inside the offer: the user recognises "a1b2c3d Merge pull request #482" as not what they wanted, and cannot recognise "the last commit".
 
 A whole-repository audit is a different review, not this one with a wider net. Hand the repository to `better-interface` directly, without a scope block, statuses, or a pre-existing section.
 

@@ -94,4 +94,4 @@ Tailwind v4 generates utilities from `@theme`, so names declared there become th
 
 This yields `bg-accent-solid` and `text-secondary` alongside `bg-brand-500`. Both are reachable, so the discipline is a convention rather than a constraint. Templates use the semantic utilities. A raw `bg-brand-500` in a component is the thing to flag in review.
 
-Opacity modifiers work on either tier, as in `bg-accent-solid/50`, but a color carrying alpha cannot be contrast-checked against a static background, since what it renders depends on what is behind it. Use solid tokens for anything with text on it.
+Opacity modifiers work on either tier, as in `bg-accent-solid/50`. But a color carrying alpha cannot be contrast-checked against a static background, since what it renders depends on what sits behind it. Use solid tokens for anything with text on it.

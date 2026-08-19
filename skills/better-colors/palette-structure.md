@@ -71,6 +71,6 @@ Before restructuring a system, inventory it. Most codebases have several times m
 2. **Sort by perceived lightness within each hue family.** Duplicates surface immediately as near-identical neighbors.
 3. **Collapse near-duplicates.** Two colors closer than about one step of a ramp are one color that drifted. Pick the one already used most and retire the others; do not average them.
 4. **Assign each survivor a role** from the table above. A color that matches no role is either a missing token or a mistake. Decide which, and say which in the finding.
-5. **Count what is left.** More than one ramp per role listed in "What a system needs" means the palette has grown past its structure, not that the product needs more color.
+5. **Count what is left.** More than one ramp per role in "What a system needs" means the palette outgrew its structure, not that the product needs more color.
 
 Report the inventory before changing anything. Consolidating a palette changes rendered output on screens nobody asked you to touch, so it is a proposal until the user accepts it.

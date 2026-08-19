@@ -178,7 +178,7 @@ export function DisableThemeTransitions() {
 }
 ```
 
-`document.body.offsetHeight` is read for its side effect: it forces a synchronous style flush, so the new theme resolves while the override is still in the document and no transition ever starts. The nested `requestAnimationFrame` removes the override only after that paint, putting transitions back before the next interaction.
+`document.body.offsetHeight` is read for its side effect. It forces a synchronous style flush, so the new theme resolves while the override is still in the document and no transition starts. The nested `requestAnimationFrame` removes the override only after that paint, putting transitions back before the next interaction.
 
 This component covers the OS-level change. An in-app theme toggle needs the same treatment around its own flip: apply the override, change the theme, flush, remove. `next-themes` ships this as its `disableTransitionOnChange` prop.
 
@@ -186,8 +186,8 @@ This component covers the OS-level change. An in-app theme toggle needs the same
 
 Motion is a budget, not a garnish. Three rules decide whether an animation belongs at all:
 
-- **Give high-frequency interactions instant feedback instead of animation.** Every keystroke, every list-row hover, every tab switch in a work tool: an animation there charges its attention cost on every single trigger. Reserve expressive motion for infrequent moments (first load of a view, success states, empty states); high-frequency interactions get instant feedback or the subtlest possible transition (`opacity`/`background-color` at ≤150ms).
-- **Motion is never the only feedback channel.** Every state change an animation communicates must also be visible when the animation doesn't run: a color change, an icon swap, a label. Users with reduced motion enabled, and anyone who blinked, still need to see what happened.
+- **Give high-frequency interactions instant feedback instead of animation.** Every keystroke, every list-row hover, every tab switch in a work tool. An animation there charges its attention cost on every trigger. Reserve expressive motion for infrequent moments (first load of a view, success states, empty states); high-frequency interactions get instant feedback or the subtlest possible transition (`opacity`/`background-color` at ≤150ms).
+- **Motion is never the only feedback channel.** Every state change an animation communicates stays visible when it doesn't run: a color change, an icon swap, a label. Users with reduced motion enabled, and anyone who blinked, still need to see what happened.
 - **Brief and precise beats prominent.** If a shorter, smaller animation communicates the same thing, use it. When in doubt, cut the duration, not the clarity.
 
 ```css

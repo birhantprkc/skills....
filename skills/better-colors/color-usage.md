@@ -49,7 +49,7 @@ When the product uses a filled color to encode primary emphasis, give that treat
 <button class="bg-accent-solid text-white">Export</button>
 ```
 
-Put the color on the background, not the label: a filled button reads as primary from across the room, while accent-colored label text on a neutral button reads as a link. Selected states may use the accent on the glyph and label. An active tab or a checked segment is state, not emphasis.
+Put the color on the background, not the label. A filled button reads as primary from across the room; accent-colored label text on a neutral button reads as a link. Selected states may use the accent on the glyph and label. An active tab or a checked segment is state, not emphasis.
 
 ## Gradients
 
@@ -115,4 +115,4 @@ Every custom color needs a light and a dark variant; deriving the dark appearanc
 }
 ```
 
-The increased-contrast variant widens the foreground/background gap by at least 15 points of perceived lightness over the default, then gets re-verified against APCA's preferred thresholds (Lc 90 body, Lc 75 non-body). Widening the gap without remeasuring is not the same as fixing it.
+The increased-contrast variant widens the foreground/background gap by at least 15 points of perceived lightness over the default. Then re-verify it against APCA's preferred thresholds: Lc 90 body, Lc 75 non-body. Widening the gap without remeasuring is not the same as fixing it.

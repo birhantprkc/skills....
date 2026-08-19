@@ -13,7 +13,7 @@ Contrast requirements belong to `better-accessibility`. Surfaces, shadows, and i
 
 ## Match the project's color system
 
-Reuse the project's existing tokens and notation. A second color representation added to fix one value makes the palette harder to reason about, not easier: a consistent hex system beats a hex system with `oklch()` scattered through it.
+Reuse the project's existing tokens and notation. A second color representation added to fix one value makes the palette harder to reason about, not easier. A consistent hex system beats a hex system with `oklch()` scattered through it.
 
 For a genuinely new system, `oklch()` is the best default, because its numbers behave the way the ramp rules below describe. Everywhere else, a color library produces the same ramp in whatever notation the project already writes ([color-formats.md](color-formats.md)).
 
