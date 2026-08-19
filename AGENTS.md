@@ -42,7 +42,8 @@ A domain skill's `## Reporting` section carries two things and nothing else: its
 
 A user-invoked skill may invoke model-invoked skills, but it can never reach another user-invoked skill. That rule decides the setting; it is not a preference:
 
-- `interface-review` is the only user-invoked skill. It carries `disable-model-invocation: true` in its frontmatter **and** `policy.allow_implicit_invocation: false` in its `agents/openai.yaml`. Those are the Claude Code and Codex halves of the same switch, and must be set together, or the skill behaves differently per harness. Its `description` is human-facing: a one-line summary with no trigger list, since nothing but a person can match against it.
+- `interface-review` and `variant` are the user-invoked skills. Each carries `disable-model-invocation: true` in its frontmatter **and** `policy.allow_implicit_invocation: false` in its `agents/openai.yaml`. Those are the Claude Code and Codex halves of the same switch, and must be set together, or the skill behaves differently per harness. Their `description` is human-facing: a one-line summary with no trigger list, since nothing but a person can match against it.
+- `variant` is user-invoked because a design exploration is never something to start on someone's behalf. It writes throwaway code and then asks a question only a person can answer, so an agent firing it unprompted produces work nobody asked for and a harness nobody deletes.
 - Every other skill is model-invoked and keeps a trigger list, because something must reach it: `better-interface` routes to every domain skill, and `interface-review` hands its review up to `better-interface`.
 - `better-interface` therefore cannot start `interface-review`. Where it would want to, it asks the user to run it. Making `better-interface` user-invoked too would sever the upward handoff and force `interface-review` to restate severity, the cap, the format, and the verdict.
 
@@ -52,6 +53,7 @@ A user-invoked skill may invoke model-invoked skills, but it can never reach ano
 | --- | --- |
 | `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, the shared remediation ordering, consolidation, coverage, the finding cap, the output format including its change-scoped additions, and the verdict |
 | `interface-review` | Change scope resolution including the empty-scope offer, blast radius from changed files to affected surfaces, and finding classification (`Introduced` / `Regression` / `Pre-existing`) |
+| `variant` | Design exploration: the axis set variants may diverge on, how many to build, the harness and picker, the tradeoff table, and promotion. Owns no domain rules; every variant clears `better-interface`'s escalation triggers as its floor |
 | `better-accessibility` | Semantic HTML, keyboard and focus behavior, accessible names, forms, assistive technology, and accessibility requirements |
 | `better-layout` | Spatial grouping, alignment, spacing, responsive structure, logical CSS properties, and spatial RTL behavior |
 | `better-writing` | Source wording, terminology, voice, tone, labels, errors, and empty-state copy |
