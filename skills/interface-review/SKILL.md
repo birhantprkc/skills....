@@ -23,7 +23,7 @@ Read the change before forming an opinion of it. The stated intent decides what 
 
 ### 1. Resolve the change scope first
 
-`better-interface` owns mode parsing. Everything after the mode is the target, so `/interface-review quick pr 482` is a `quick` review of pull request 482. [Scope resolution](scope-resolution.md) holds the accepted targets and the command for each.
+The whole invocation is the target, so `/interface-review pr 482` reviews pull request 482. [Scope resolution](scope-resolution.md) holds the accepted targets and the command for each.
 
 With no target supplied, resolve in this order and stop at the first match:
 
@@ -117,7 +117,7 @@ Rendered verification is opt-in: mark visual and runtime claims **Not verified**
 | A line near a hunk statused `Introduced` | Status by what the diff touched, confirmed with `git blame` against the base ref |
 | A pull request checked out to review it | Fetch the ref and review it in place |
 | Line numbers cited that do not exist on the reviewed ref | Cite against the head ref named in the scope block |
-| Mode parsing, the severity scale, or the finding cap restated here | Defer to `better-interface` |
+| The severity scale or the finding cap restated here | Defer to `better-interface` |
 | Correctness, test, or security findings in the report | Name the concern once, point at the project's code review, and drop it |
 
 ## Review output format
@@ -134,11 +134,13 @@ Open with the scope block:
 | Excluded | `pnpm-lock.yaml`, `src/__snapshots__/`: lockfile and snapshots |
 | Surfaces expanded | `CheckoutPage`, `SettingsPanel`; 3 further `Button` consumers not expanded |
 
+The coverage table follows it unchanged. A domain with no evidence in the change scope is `Not reviewed: no evidence in the change scope`, which is a coverage statement rather than a gap.
+
 Then the findings, with a `Status` column per **Classify every finding**:
 
-| # | Severity | Domain | Status | Location | Before | After | Why |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | HIGH | Accessibility | Regression | `src/Dialog.tsx:42` | `aria-label="Close"` removed in this change | Restore `aria-label="Close"` on the icon-only control | The close control had an accessible name before this change and no longer does |
+| Severity | Domain | Status | Location | Before | After | Why |
+| --- | --- | --- | --- | --- | --- | --- |
+| HIGH | Accessibility | Regression | `src/Dialog.tsx:42` | `aria-label="Close"` removed in this change | Restore `aria-label="Close"` on the icon-only control | The close control had an accessible name before this change and no longer does |
 
 With no `Introduced` or `Regression` findings, omit the table and state "No actionable interface findings in this change."
 
@@ -150,4 +152,4 @@ Then `Pre-existing` findings, at most three, highest severity first, stated plai
 
 The cap and the verdict cover `Introduced` and `Regression` only. `Pre-existing` findings sit outside the cap, so touching a legacy file cannot turn into a full-file audit. They sit outside the verdict too, so a change whose only findings are pre-existing is an `Approve`.
 
-End with `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` otherwise. When `better-interface` is available, mode, the severity scale, and the cap come from it.
+End with `Block` when any `HIGH` remains and `Approve` otherwise, leaving the remaining findings in the table as work to do. When `better-interface` is available, the severity scale and the cap come from it.

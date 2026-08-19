@@ -114,4 +114,4 @@ A placeholder shows the expected format: `name@example.com`, `DD/MM/YYYY`. It is
 
 `Location` cites `path/to/file:line`. `Before` and `After` share one row: the current implementation, then an actionable replacement. `Why` names the principle and the user impact. One row per root cause, listing every location it appears in.
 
-End with a verdict. `Block` when any `HIGH` remains, `Needs changes` when only `MEDIUM` or `LOW` do, `Approve` when nothing actionable remains and you verified the coverage you claimed. With nothing to report, state "No actionable writing findings", report verification, and end with `Approve`.
+End with a verdict. `Block` when any `HIGH` remains, meaning do not ship until it is fixed. `Approve` otherwise, leaving any `MEDIUM` and `LOW` findings in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable writing findings", report verification, and end with `Approve`.

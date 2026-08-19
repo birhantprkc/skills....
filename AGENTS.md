@@ -36,7 +36,7 @@ Point at a principle by its heading in bold (**Classify every finding**), never 
 
 ### The review format
 
-Each skill carries the format for the review it produces. `better-interface` holds the orchestrated format in `review-format.md`: scope and coverage, the findings table, considered-but-rejected, verification, and the verdict. A domain skill's `## Reporting` holds the smaller standalone format, grouped by the principle each finding violates, with no `#` or `Domain` column. `interface-review` holds the change-scoped format, with its status column and its pre-existing section.
+Each skill carries the format for the review it produces. `better-interface` holds the orchestrated format in `review-format.md`: scope and coverage, the findings table, verification, and the verdict. A domain skill's `## Reporting` holds the smaller standalone format, grouped by the principle each finding violates and with no `Domain` column. `interface-review` holds the change-scoped format, with its status column and its pre-existing section, and `better-interface` points at it rather than keeping a second copy.
 
 Those three overlap, and that overlap is the price of a skill that works when installed alone. Someone who installs only `better-typography` has no `better-interface` on disk to read a format out of.
 
@@ -54,7 +54,7 @@ A user-invoked skill may invoke model-invoked skills, but it can never reach ano
 
 | Skill | Owns |
 | --- | --- |
-| `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, the shared remediation ordering, consolidation, coverage, the finding cap, the orchestrated output format, and the verdict |
+| `better-interface` | Review orchestration, project convention discovery, shared severity and its escalation triggers, the shared remediation ordering, consolidation, coverage, the finding cap, the orchestrated output format, and the verdict |
 | `interface-review` | Change scope resolution including the empty-scope offer, blast radius from changed files to affected surfaces, finding classification (`Introduced` / `Regression` / `Pre-existing`), and the change-scoped report format |
 | `variant` | Design exploration: the axis set variants may diverge on, how many to build, the harness and picker, the tradeoff table, and promotion. Owns no domain rules; every variant clears `better-interface`'s escalation triggers as its floor |
 | `explain-interface` | Reading an interface you did not build: scoping to the thing asked about, the layer search, the URL and screenshot branches, the measured / derived / inferred evidence tiers, and the minimal reproduction. Owns no domain rules and issues no verdict; it names what it finds in each domain skill's vocabulary |
