@@ -59,18 +59,15 @@ Never park a critical action where resizing or scrolling clips it. Keep it in th
 
 | Mistake | Fix |
 | --- | --- |
-| Separator line where spacing would do | Remove the line, double the gap between groups |
 | `margin-left` / `padding-right` in a localizable layout | `margin-inline-start` / `padding-inline-end` |
 | Content-layout button accidentally touches the viewport | Inset within the project margins; preserve intentional platform chrome |
-| Carousel/scroller that looks complete | Let the next item peek `16–32px` past the edge |
-| Adjacent controls merge or expanded hit areas overlap | Increase the gap using the project scale; use `12px`/`24px` as starting points |
 | Breakpoints at 768/1024 because they're the defaults | Break where the content actually stops fitting |
 | Fixed-width text container sized to one language | `max-width` + wrapping; test pseudo-localization and representative locales |
 | Primary action at the clip-prone bottom of a pane | Sticky positioning or stable chrome with safe-area padding |
 
 ## Reporting
 
-A standalone layout review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to layout.
+A standalone layout review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to layout.
 
 **Severity.** `HIGH` blocks content or an action at a supported viewport. `MEDIUM` harms hierarchy, reading order, or adaptability. `LOW` is isolated alignment or spacing polish.
 

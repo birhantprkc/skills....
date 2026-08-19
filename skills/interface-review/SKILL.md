@@ -88,7 +88,7 @@ Do not report scope creep. Whether a change does too much is a process question,
 
 ### 7. Hand the review to `better-interface`
 
-With the scope, the affected surfaces, and both sides of the diff in hand, hand the review to `better-interface` with the scope block and a status on every finding. It routes to the domain skills, applies severity, consolidates, enforces the cap, and issues the verdict, including the change-scoped additions in its **Change-scoped reviews** section.
+With the scope, the affected surfaces, and both sides of the diff in hand, hand the review to `better-interface` with the scope block and a status on every finding. It routes to the domain skills, applies severity, consolidates, enforces the cap, and issues the verdict. Its `review-format.md` holds the format, including the four change-scoped additions.
 
 If `better-interface` is unavailable, report the resolved scope and the file inventory, name it as the missing skill, and stop. Do not invent a severity scale, a cap, or a verdict.
 
@@ -116,7 +116,7 @@ Rendered verification is opt-in: mark visual and runtime claims **Not verified**
 
 ## Review output format
 
-`better-interface` owns the format, including the four change-scoped additions under its **Change-scoped reviews** section. Follow it as written and add nothing here.
+`better-interface` owns the format, including the four change-scoped additions. Follow its `review-format.md` as written and add nothing here.
 
 This skill supplies the scope block:
 

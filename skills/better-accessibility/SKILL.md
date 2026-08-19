@@ -85,23 +85,17 @@ The page must work at 200% zoom and reflow at 320px width without horizontal scr
 
 | Mistake | Fix |
 | --- | --- |
-| `outline: none` to remove the focus ring | Style `:focus-visible` instead; mouse clicks won't show it |
 | Custom focus color assumed to work everywhere | Verify the full indicator against every adjacent color and in forced-colors mode |
-| `<div onClick>` for a button or link | `<button>` for actions, `<a href>` for navigation |
-| Placeholder used as the only label | Add a visible `<label for>`; placeholders disappear on input |
-| Positive `tabindex` to fix focus order | Fix the DOM order; only use `0` and `-1` |
 | Repeated polite update inconsistently announced | Keep a stable empty status region and update its text; test the target screen readers |
 | `assertive` live region for a routine toast | Use `polite`; reserve `assertive` for errors |
 | `aria-hidden="true"` on a focusable element | Remove it or make the element non-focusable |
-| Functional icon alt describes the picture | Describe the action: `alt="Search"`, not `alt="magnifying glass"` |
 | Submit disabled until the form is valid | Keep it enabled; validate on submit and focus the first error |
-| Decorative glow or gradient swallowing clicks | `pointer-events: none` on the layer, plus `aria-hidden="true"` |
 | Hover treatment stuck after a tap on touch | Gate hover styling with `@media (hover: hover)` |
 | Tooltip on a natively `disabled` control | Persistent text beside it, or `aria-disabled` so it stays focusable |
 
 ## Reporting
 
-A standalone accessibility review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to accessibility.
+A standalone accessibility review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to accessibility.
 
 **Severity.** `HIGH` prevents a task, hides content from assistive technology, or creates a systemic failure. `MEDIUM` makes an interaction meaningfully harder. `LOW` is isolated polish.
 

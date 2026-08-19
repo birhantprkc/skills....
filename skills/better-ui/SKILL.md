@@ -87,22 +87,16 @@ Every animated state change also needs a static cue: color, an icon, or a label.
 
 | Mistake | Fix |
 | --- | --- |
-| Same border radius on closely nested parent and child | Calculate `outerRadius = innerRadius + padding` |
 | Icons look off-center | Adjust optically with padding or fix SVG directly |
-| Border used only to fake elevation | Use layered `box-shadow` with transparency; keep structural and state borders |
 | Jarring staged entrance or contextual exit | Stagger infrequent entrances and keep context-preserving exits subtle |
-| Stateful icon or toggle animates its default state on page load | Add `initial={false}` to that `AnimatePresence`; preserve intentional page entrances |
 | Theme toggle crossfades the whole page | Disable transitions for the swap, force a reflow, restore on the next frame |
 | `transition: all` on elements | Specify exact properties |
 | First-frame animation stutter | Add `will-change: transform` (sparingly) |
 | Hairline icon beside bold text | Match the stroke width to the text weight |
-| Separate icon assets per state | One `currentColor` SVG, states via CSS |
-| Filled icons everywhere | Outline as default, fill only for the active state |
-| Entrance animation on every hover or keystroke | Instant feedback or ≤150ms opacity/color transition |
 
 ## Reporting
 
-A standalone UI-polish review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to UI-polish.
+A standalone UI-polish review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to UI-polish.
 
 **Severity.** `HIGH` breaks an interaction or makes motion unusable. `MEDIUM` is a visible inconsistency in surfaces, icons, or motion. `LOW` is isolated polish.
 

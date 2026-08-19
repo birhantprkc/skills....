@@ -84,15 +84,13 @@ See [color-usage.md](color-usage.md).
 | Status hue that collides with the accent hue | Move it until destructive and primary actions are distinguishable side by side |
 | Dark mode made by mechanically reversing the light palette | Reverse as a starting point, then reduce vividness, widen the dark end, and recheck every pair |
 | `prefers-color-scheme` setting some tokens and a `.dark` class setting others | Pick one switching mechanism and use it throughout |
-| Failing contrast | Report the pair, its measured value, and the threshold missed; change colors only when asked |
 | Contrast fixed by changing hue | Change lightness, the channel contrast responds to |
 | P3 color with no sRGB fallback | Declare the sRGB value first, then override inside `@media (color-gamut: p3)` |
-| Gradient between opposite hues going gray in the middle | Switch to a polar space (`in oklch`) or add a mid-stop at a hue between the two |
 | Palette verified only in light mode | Recheck every foreground/background pair in both appearances |
 
 ## Reporting
 
-A standalone color review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to color.
+A standalone color review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to color.
 
 **Severity.** `HIGH` makes content unreadable or assigns a misleading semantic color. `MEDIUM` is a noticeable theme, token, or gamut failure. `LOW` is isolated polish.
 

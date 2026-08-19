@@ -127,24 +127,14 @@ Keep text selectable by default. `::selection` can carry brand into the reading 
 
 | Mistake | Fix |
 | --- | --- |
-| `.ttf`/`.otf` served on the web | Convert to `.woff2` |
-| `font-variation-settings: "wght"` for weight | `font-weight` (works with non-variable fallbacks) |
-| `font-feature-settings: "tnum" 1` | `font-variant-numeric: tabular-nums` |
 | Synthesized face differs from the intended design | Load the required face; disable only the verified synthesis mode without erasing emphasis |
-| Hard-coded one-off font sizes | Use the type scale |
 | Child heading visually overpowers its parent | Map that section's hierarchy to descending scale steps |
 | Heading element picked for its default size | Choose semantics with `better-accessibility`, then set the visual size in CSS |
-| `line-height: 24px` on scalable text | Unitless value (`1.5`) |
-| Full-width paragraphs | Cap around 60–75 characters per line |
 | Orphan on the last line of a paragraph | `text-wrap: pretty` |
 | Lopsided two-line heading | `text-wrap: balance` |
-| Numbers cause layout shift | `tabular-nums` |
 | Truncated text with no way to read it | Tooltip or expanded view for the full value |
-| `UPPERCASE` typed into copy | Natural case + `text-transform` |
 | Justified text in an interface | `text-align: start`; reserve justify for specific editorial layouts |
 | Underline cuts through descenders | `text-decoration-skip-ink: auto`, `from-font` metrics |
-| Inputs below `16px` zoom on iOS | Ask first: `text-base sm:text-sm`, or `16px` scaled down with `transform` to keep the designed size |
-| Root layout omits font smoothing | Apply `antialiased` once at the root |
 | Mixed-direction value renders in the wrong order | Set the correct `lang`/`dir`; isolate the value with `<bdi>` when needed |
 | Selection disabled across application chrome | Restore selection; suppress it only on a specific interaction that conflicts with dragging or gestures |
 | Extra-info hint with no visual cue | Dotted underline via `text-decoration-style: dotted` |
@@ -153,7 +143,7 @@ Keep text selectable by default. `::selection` can carry brand into the reading 
 
 ## Reporting
 
-A standalone typography review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to typography.
+A standalone typography review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to typography.
 
 **Severity.** `HIGH` makes text unreadable or truncates content with no way to recover it. `MEDIUM` breaks the type system or the heading hierarchy. `LOW` is isolated polish.
 

@@ -101,26 +101,9 @@ A search or filter empty state names the query and offers an exit: "No results f
 
 A placeholder shows the expected format: `name@example.com`, `DD/MM/YYYY`. It is never the field's only label, since it vanishes on input. Every field keeps a visible label.
 
-## Common mistakes
-
-| Mistake | Fix |
-| --- | --- |
-| Local rewrite ignores the product's established terminology or voice | Inspect nearby copy and the style guide before proposing a change |
-| "The user" in instructional interface copy | Address the reader directly as "you" |
-| "We're having trouble…" obscures responsibility or recovery | Use a direct status and next step: "Unable to load content" |
-| `OK` / `Yes` confirming a destructive dialog | Repeat the consequence: "Delete project" |
-| "Continue" on step 2, "Next" on step 3 | One flow vocabulary throughout |
-| "Click here" or bare "Learn more" link | Describe the destination: "Read the billing docs" |
-| "Save Changes" beside "Discard changes" | One capitalization policy per element type |
-| "Don't send read receipts" toggle | Label the ON state: "Send read receipts" |
-| "Oops! Something went wrong." | Say what to do, next to the failing field |
-| "No results." as the whole empty state | Orient and point forward with a next action |
-| Placeholder doing the label's job | Visible label; placeholder shows the format |
-| `"You have " + n + " messages"` | Full templated strings with pluralization |
-
 ## Reporting
 
-A standalone writing review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to writing.
+A standalone writing review is finished when every confirmed finding is reported with verification and a verdict. The table structure and the verdict ladder are `better-interface`'s, in its `review-format.md`; the two things below are the ones specific to writing.
 
 **Severity.** `HIGH` misleads the user or hides how to recover from an error. `MEDIUM` breaks voice, terminology, or capitalization consistency. `LOW` is isolated wording polish.
 
