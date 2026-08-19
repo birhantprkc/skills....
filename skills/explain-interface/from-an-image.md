@@ -20,7 +20,7 @@ Sample the actual pixels rather than describing what you see. Then hand the valu
 
 - Convert each to OKLCH, so lightness is comparable across hues.
 - Sort by lightness to see whether the samples form a ramp, and whether steps sit denser at the light end.
-- Check hue constancy across the ramp. A drifting hue means the ramp was picked by eye.
+- Check hue constancy across the ramp. A drifting hue means someone picked the ramp by eye.
 - Measure contrast on every foreground and background pair you can isolate. This is exact and it is the most valuable single number an image can give you.
 - Watch for a tinted neutral. A gray carrying a few percent of the accent hue is a deliberate choice worth naming.
 

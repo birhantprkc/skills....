@@ -1,4 +1,4 @@
-# Color Usage
+# Color usage
 
 How to deploy color once the system exists: meaning, emphasis, gradients, and appearance variants. For picking the values, see [palette-generation.md](palette-generation.md); for naming them, see [token-naming.md](token-naming.md); for checking pairs, see [contrast.md](contrast.md).
 

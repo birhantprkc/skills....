@@ -1,4 +1,4 @@
-# Palette Generation
+# Palette generation
 
 Producing the values once the structure is decided. For which ramps to build and what each step is for, see [palette-structure.md](palette-structure.md).
 

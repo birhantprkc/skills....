@@ -38,7 +38,7 @@ That floor is identical across variants. It is not one of the axes and it never 
 
 ## 1. Scope one piece
 
-One piece of UI per run. "The dashboard" is not a piece; the metric card is. Where the brief spans several, name the one with the most leverage, say why, and offer the rest as later runs.
+One piece of UI per run. "The dashboard" is not a piece; the metric card is. Where the brief spans several, name the one the others hang off, say why, and offer the rest as later runs.
 
 Restate the brief in one sentence: what the thing is, where it renders, what it has to do.
 

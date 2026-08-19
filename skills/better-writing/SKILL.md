@@ -95,7 +95,7 @@ An empty state says what this place is, how to fill it, and offers one clear nex
 <button class="mt-4">Create a project</button>
 ```
 
-A search or filter empty state names the query and offers an exit: "No results for 'quarterly'. Clear filters". Never park crucial persistent information in an empty state, because it disappears the moment content exists.
+A search or filter empty state names the query and offers an exit: "No results for 'quarterly'. Clear filters". Never park persistent information in an empty state. It disappears the moment content exists.
 
 ## Placeholders are examples, not labels
 

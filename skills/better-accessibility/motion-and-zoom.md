@@ -1,4 +1,4 @@
-# Motion and Zoom
+# Motion and zoom
 
 `prefers-reduced-motion`, zoom and reflow, and unit choices that respect user settings.
 

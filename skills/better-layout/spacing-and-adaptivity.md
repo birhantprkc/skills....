@@ -1,4 +1,4 @@
-# Spacing & Adaptivity
+# Spacing and adaptivity
 
 Space between controls, margins against the viewport, hinting at off-screen content, and layouts that survive resizing and translation.
 
@@ -29,7 +29,7 @@ Borderless controls usually need more clearance because nothing marks where one 
 </div>
 ```
 
-WCAG target-size requirements, larger usability targets, and pseudo-element expansion are covered by the `better-accessibility` skill; these clearances are in addition, so expanded hit areas never overlap.
+WCAG target-size requirements, larger usability targets, and pseudo-element expansion belong to `better-accessibility`; these clearances are in addition, so expanded hit areas never overlap.
 
 ## Inset buttons from the edges
 

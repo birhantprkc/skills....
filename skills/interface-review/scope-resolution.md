@@ -1,4 +1,4 @@
-# Scope Resolution
+# Scope resolution
 
 Exact commands for turning a review target into a file list. Every command here is read-only against the working tree: `git fetch` writes to `.git`, everything else only reads. Never run `gh pr checkout`, `git checkout`, `git switch`, or `git stash`; resolving a scope never requires moving the author's files. An isolated `git worktree add` at a throwaway path is the one exception, and only for opt-in rendered verification as described in the skill.
 
@@ -62,7 +62,7 @@ git diff --name-status "$BASE"..."refs/remotes/pr/<n>"
 
 Read files at that ref with `git show refs/remotes/pr/<n>:path/to/file`. Do not open the working-tree copy; on a fork PR it is a different file.
 
-`gh pr diff <n>` is a fine shortcut for the patch text, but it gives no way to read unchanged context or expand to consumers, so fetch the ref as well.
+`gh pr diff <n>` is a fine shortcut for the patch text. It gives no way to read unchanged context or expand to consumers, so fetch the ref as well.
 
 **Citations.** `better-interface` requires `path/to/file:line`. Line numbers from a fetched ref do not necessarily match the working tree. Cite against the head ref, and declare that ref and its SHA in the scope block so the numbers are resolvable.
 

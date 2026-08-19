@@ -37,7 +37,7 @@ Users change intent mid-interaction. If animations aren't interruptible, the int
 /* Closing mid-animation snaps or restarts, feels broken */
 ```
 
-**Rule:** Always prefer CSS transitions for interactive elements. Reserve keyframes for one-shot sequences.
+Prefer CSS transitions for interactive elements. Reserve keyframes for one-shot sequences.
 
 ## Scale on press
 

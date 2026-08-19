@@ -1,6 +1,6 @@
-# Color Formats
+# Color formats
 
-Which notation to write colors in, how to convert between them, and what happens at the edges of a display's gamut. This is the only file in this skill concerned with notation; every other rule here is expressed in perceptual terms and holds regardless of what you write the values in.
+Which notation to write colors in, how to convert between them, and what happens at the edges of a display's gamut. Every other rule in this skill is stated in perceptual terms and holds whatever notation you write the values in.
 
 ## Choosing a notation
 

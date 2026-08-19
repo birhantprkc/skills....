@@ -1,4 +1,4 @@
-# Palette Structure
+# Palette structure
 
 What a color system is made of, before any values exist. For computing the values themselves, see [palette-generation.md](palette-generation.md); for what to call them, see [token-naming.md](token-naming.md).
 
@@ -35,8 +35,8 @@ Each step maps to a role. Generate the steps the roles below call for, and skip 
 
 The two conventions differ in kind, not just in numbering:
 
-- **Radix's 12 steps are defined by role.** Step 9 is "the solid fill" in every ramp and every appearance. The dark scale is a separate ramp reusing the same numbers, so `--accent-9` is the fill in light and dark alike and component CSS never changes.
-- **Tailwind's 11 steps are defined by lightness.** `50` is light and `950` is dark, full stop. So the mapping above holds in light mode and inverts in dark: the page background moves to `950`, high-contrast text to `50`. Components either swap step numbers per appearance or read a semantic token that does the swapping once.
+- **Radix defines its 12 steps by role.** Step 9 is "the solid fill" in every ramp and every appearance. The dark scale is a separate ramp reusing the same numbers, so `--accent-9` is the fill in light and dark alike and component CSS never changes.
+- **Tailwind defines its 11 steps by lightness.** `50` is light and `950` is dark, full stop. So the mapping above holds in light mode and inverts in dark: the page background moves to `950`, high-contrast text to `50`. Components either swap step numbers per appearance or read a semantic token that does the swapping once.
 
 Match whichever the project already uses. For a new system, Radix's model is the one to prefer, because a role-defined step survives a theme change that a lightness-defined step does not. When the project is on Tailwind, keep `50`–`950` and put the role mapping in the semantic tier instead.
 
@@ -54,7 +54,7 @@ Neutrals need the most steps of any ramp, because they carry the most roles. Nev
 
 ## Status colors
 
-Status hues are constrained by convention before they are constrained by taste. Red reads as danger, amber as warning, green as success. See the cultural exceptions in [color-usage.md](color-usage.md).
+Convention constrains status hues before taste does. Red reads as danger, amber as warning, green as success. See the cultural exceptions in [color-usage.md](color-usage.md).
 
 Two rules govern them:
 

@@ -66,7 +66,7 @@ Add `translate="no"` to brand names, code tokens, and identifiers so auto-transl
 
 | Mistake | Why it fails |
 | --- | --- |
-| `aria-label` on a plain `<div>` or `<span>` | Names on non-interactive, role-less elements are ignored by most screen readers |
+| `aria-label` on a plain `<div>` or `<span>` | Most screen readers ignore names on non-interactive, role-less elements |
 | `<button role="button">` | Redundant role; adds noise, no benefit |
 | `aria-hidden="true"` on or above a focusable element | Creates elements you can Tab to but that don't exist for screen readers |
 | `aria-labelledby`/`aria-describedby` pointing at a missing ID | Silently produces no name or description |

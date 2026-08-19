@@ -1,4 +1,4 @@
-# Hit Areas
+# Hit areas
 
 Target sizes, expanding hit areas without changing visual size, and collision rules.
 

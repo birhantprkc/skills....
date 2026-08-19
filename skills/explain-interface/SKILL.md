@@ -67,7 +67,7 @@ Without the page there is no code to read, so the answer changes in kind. You ar
 
 Two things stay exact, because they come from the pixels themselves: the colors you sample, and the contrast between any two of them. Everything else is a ratio, since the capture scale is unknown, or an inference from appearance.
 
-Several things are simply unavailable. The tokens, the framework, the styling system, the breakpoints, the motion, and every state but the captured one. You cannot even be sure the effect is CSS: a gradient may be a flat image, a `canvas`, or a shader.
+Several things are unavailable. The tokens, the framework, the styling system, the breakpoints, the motion, and every state but the captured one. You cannot even be sure the effect is CSS: a gradient may be a flat image, a `canvas`, or a shader.
 
 So where the page is live, ask for the URL. One command replaces the whole estimate. [from-an-image.md](from-an-image.md) holds the method for when it is not.
 

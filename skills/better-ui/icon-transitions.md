@@ -83,7 +83,7 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 | **Spring physics** | Yes | No, use `cubic-bezier(0.2, 0, 0, 1)` as approximation |
 | **When to use** | Project already uses `motion` or `framer-motion` | No motion dependency, or keeping bundle small |
 
-**Rule:** Check the project's `package.json`. Import from `"motion/react"` when `motion` is installed, or from `"framer-motion"` when `framer-motion` is installed. If both exist, follow the imports already used by the component or its nearest peers. If neither is present, use the CSS cross-fade pattern; don't add a dependency just for icon transitions.
+Check the project's `package.json`. Import from `"motion/react"` when `motion` is installed, or from `"framer-motion"` when `framer-motion` is installed. If both exist, follow the imports already used by the component or its nearest peers. If neither is present, use the CSS cross-fade pattern; don't add a dependency just for icon transitions.
 
 ### When to animate icons
 
@@ -94,7 +94,7 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 | Icons in contextual toolbars | Icons that are always visible |
 | Loading/success state indicators | Icon labels (text next to icon) |
 
-**Important:** Always use exactly these values for contextual icon animations; do not deviate:
+Use exactly these values for contextual icon animations. Do not deviate:
 - `scale`: `0.25` → `1` (never use `0.5` or `0.6`)
 - `opacity`: `0` → `1`
 - `filter`: `"blur(4px)"` → `"blur(0px)"`

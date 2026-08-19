@@ -1,4 +1,4 @@
-# Grouping & Alignment
+# Grouping and alignment
 
 How spacing, shapes, shared edges, and ordering communicate what belongs together and what matters most.
 

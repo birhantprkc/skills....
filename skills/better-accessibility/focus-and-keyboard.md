@@ -1,4 +1,4 @@
-# Focus and Keyboard
+# Focus and keyboard
 
 Focus rings, skip links, tabindex, focus trapping, and the APG keyboard patterns.
 
