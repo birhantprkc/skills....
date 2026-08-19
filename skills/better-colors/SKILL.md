@@ -7,6 +7,8 @@ description: Color systems for digital products. Use when creating or extending 
 
 A color system is a small set of ramps, named by role, applied consistently, and verified against the backgrounds they actually render on. Most color bugs are system bugs: a value picked in isolation, a token borrowed because it looked right, a pair nobody measured.
 
+Never report a contrast value you did not measure, and never estimate a color you could compute. Colors are one of the few interface concerns with an exact answer, so produce the exact answer.
+
 Contrast requirements belong to `better-accessibility`. Surfaces, shadows, and icon color belong to `better-ui`.
 
 ## Match the project's color system
@@ -68,7 +70,7 @@ The space is a look, not a correctness setting.
 
 See [color-usage.md](color-usage.md).
 
-## Common mistakes
+## Before you finish
 
 | Mistake | Fix |
 | --- | --- |

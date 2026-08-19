@@ -13,6 +13,12 @@ Scope is all it owns. Domain rules belong to the `better-*` skills. Mode, severi
 
 Correctness, tests, security, and performance belong to the project's general code review. Name the concern once and move on.
 
+## The change, not the codebase
+
+The author is asking "did I make this worse?". So report what the change caused, and stay mostly quiet about what it merely touched. Three pre-existing findings is a courtesy. Thirty is a different review, and one nobody asked for.
+
+Read the change before forming an opinion of it. The stated intent decides what counts as incomplete, and a diff you have only skimmed produces findings about code that the next hunk already fixed.
+
 ## Core principles
 
 ### 1. Resolve the change scope first
@@ -98,7 +104,7 @@ A change review is read-only, including the checkout. Fetch pull request refs; n
 
 Rendered verification is opt-in: mark visual and runtime claims **Not verified** unless the project exposes a cheap preview or the user asks for a rendered review. When they do, use an isolated worktree (`git worktree add /tmp/review-<n> refs/remotes/pr/<n>`) and remove it when done.
 
-## Common mistakes
+## Before you finish
 
 | Mistake | Fix |
 | --- | --- |

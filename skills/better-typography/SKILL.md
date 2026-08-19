@@ -9,7 +9,7 @@ Typography is mostly restraint: a sensible scale, comfortable spacing, enough co
 
 When reviewing, read the page instead of scanning the code. Squint to check the hierarchy holds. Read one full paragraph for comfort. Resize the viewport to catch bad wrapping, widows, and truncation at real content lengths.
 
-Write every fix in the styling system the project already uses. The [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind equivalent.
+Write every fix in the styling system the project already uses, and take exact values from the rules below rather than substituting a familiar-looking equivalent. The [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind equivalent.
 
 The words themselves belong to `better-writing`. Semantic heading structure belongs to `better-accessibility`. Spatial RTL layout and logical properties belong to `better-layout`. Contrast measurement belongs to `better-colors`. This skill owns how text renders, wraps, and behaves in mixed-direction content.
 
@@ -129,7 +129,7 @@ Keep text selectable by default. `::selection` can carry brand into the reading 
 
 `user-select: none` belongs on a draggable or gesture-driven surface where accidental selection interferes with the interaction. That is the whole of its remit: never across the interface, and never because a button label can be highlighted.
 
-## Common mistakes
+## Before you finish
 
 | Mistake | Fix |
 | --- | --- |

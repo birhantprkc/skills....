@@ -9,7 +9,9 @@ Polish comes from a pile of small details that compound. This skill is the refer
 
 When reviewing, slow the interface down. Replay motion at 10% speed in the browser's Animations panel, then walk every state: hover, focus, active, loading, empty. What feels off at 10% speed is what is subtly wrong at full speed.
 
-Keep the project's component library, tokens, and density. Match its established motion language except where a principle below prescribes an exact interaction.
+Keep the project's component library, tokens, and density. Match its established motion language except where a rule below prescribes an exact interaction.
+
+Every duration, curve, scale, and blur below is a specific value, not a range to approximate. `cubic-bezier(0.2, 0, 0, 1)` is not `cubic-bezier(0.4, 0, 0.2, 1)`, and `0.96` is not `0.95`. Use what is written.
 
 Text wrapping, font rendering, tabular numbers, and text spacing belong to `better-typography`. Hit areas, focus, keyboard support, ARIA, and reduced motion belong to `better-accessibility`. Grouping, section spacing, breakpoints, and spatial RTL belong to `better-layout`.
 
@@ -83,7 +85,7 @@ Give high-frequency interactions instant feedback or a transition of `150ms` or 
 
 Every animated state change also needs a static cue: color, an icon, or a label. Motion is never the only feedback channel.
 
-## Common mistakes
+## Before you finish
 
 | Mistake | Fix |
 | --- | --- |

@@ -5,7 +5,9 @@ description: Accessibility engineering for product interfaces. Use when building
 
 # Accessibility
 
-Most accessibility is free if you use the platform. Native elements ship with keyboard support, real labels announce themselves, and a visible focus ring is one CSS rule. Write every fix in the styling system the project already uses.
+Most accessibility is free if you use the platform. Native elements ship with keyboard support, real labels announce themselves, and a visible focus ring is one CSS rule.
+
+Write every fix in the styling system the project already uses. Where a rule below gives an exact value, use that value rather than a familiar-looking substitute.
 
 Reviewing means two walks. First keyboard-only: every flow completes without a mouse. Then screen-reader: every control announces a name, a role, and its state. When unsure, take the platform default over a custom rebuild, and remove ARIA rather than add it.
 
@@ -81,7 +83,7 @@ Use headings that describe their sections and form a coherent outline. Give the 
 
 The page must work at 200% zoom and reflow at 320px width without horizontal scrolling. Use `min-height` rather than fixed `height` on text containers. Prefer `rem` breakpoints where they fit the codebase's conventions, and keep the viewport meta from capping how far the reader can zoom.
 
-## Common mistakes
+## Before you finish
 
 | Mistake | Fix |
 | --- | --- |

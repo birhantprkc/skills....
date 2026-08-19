@@ -7,7 +7,7 @@ description: Layout structure for web interfaces. Use when structuring a page or
 
 Position, spacing, and alignment carry hierarchy before a word is read. This skill is the reference for building that structure and for stress-testing it: resize it, translate it, mirror it for RTL.
 
-Write every fix in the styling system the project already uses. Treat the numbers below as starting points for interfaces with no established density or spacing system. Keep deliberate platform chrome, compact professional tools, and project tokens where they still pass the stress tests.
+Write every fix in the styling system the project already uses. Treat the numbers below as starting points for interfaces with no established density or spacing system, and use the numbers as written rather than a familiar-looking substitute. Keep deliberate platform chrome, compact professional tools, and project tokens where they still pass the stress tests.
 
 Hit areas and focus behavior belong to `better-accessibility`. Radius, shadows, and animation belong to `better-ui`. Line length and text spacing belong to `better-typography`.
 
@@ -55,7 +55,7 @@ Translated strings grow, and short strings grow proportionally more than long on
 
 Never park a critical action where resizing or scrolling clips it. Keep it in the normal flow, or in stable chrome suited to the product.
 
-## Common mistakes
+## Before you finish
 
 | Mistake | Fix |
 | --- | --- |

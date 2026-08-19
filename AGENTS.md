@@ -14,13 +14,16 @@ A collection of agent skills for building great product interfaces (typography, 
 
 Each skill lives in `skills/<skill-name>/`, with `SKILL.md` as the entry point and supporting `.md` files beside it.
 
-There is no section template. Every skill filling one frame produces a set of files that read like instances of one file, so headings belong to the skill, not to a house style. What every `SKILL.md` does carry:
+The content headings belong to the skill, not to a house style: a set of files all filling one section template reads like instances of one file. What is shared is the small amount of framing that calibrates behaviour rather than organising content.
+
+Every `SKILL.md` carries:
 
 - **Frontmatter** with `name` (matching the directory) and `description`.
 - **A plain-name H1** and a two-sentence opener saying what the skill is and what it does. Not what the domain means or why it matters: an agent does not need motivating, and a reader can tell the difference.
+- **A calibration line or two**, in the opener or in its own section where it needs the room. This is where a skill says how hard to press: which values are exact rather than approximate, what counts as a finding versus a preference, when the right answer is to write nothing. A skill that lists rules without saying how hard to press leaves that to chance, which is the difference between a review that blocks on evidence and one that blocks on taste. Give the section a heading that carries its own point (`Evidence, not taste`), not a generic label.
 - **Headings that carry the point**, in sentence case. `Native elements first`, not `Semantics`. Number them only where the steps genuinely run in order, as `better-interface` and `interface-review` do; numbering flat reference implies a sequence that isn't there and makes every insertion a renumber.
 - **A hand-off line** naming the sibling skills that own adjacent topics.
-- **One two-column Mistake / Fix table** where the domain has recurring mistakes. The left column is the detection pattern, which is what a principle statement does not give you.
+- **A `## Before you finish` table**, two columns, where the domain has recurring mistakes. The left column is the detection pattern, which is what a principle statement does not give you. The heading names the moment on purpose: `Common mistakes` is a label an agent reads past while orienting, and `Before you finish` names the point in the work where the table is worth consulting.
 - **A `## Reporting` section** in every domain skill, carrying only that domain's severity ladder and verification checks. See below.
 
 Supporting `.md` files carry depth beyond the principle statements: recipes, code patterns, lookup tables. Link each one from the principle that needs it, so the link sits where the agent lands. A principle states the rule and links out for the recipe; it never restates the reference file in shorter form, and the reference file never restates the principle in longer form.
@@ -47,7 +50,7 @@ A user-invoked skill may invoke model-invoked skills, but it can never reach ano
 
 | Skill | Owns |
 | --- | --- |
-| `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, consolidation, coverage, the finding cap, the output format including its change-scoped additions, and the verdict |
+| `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, the shared remediation ordering, consolidation, coverage, the finding cap, the output format including its change-scoped additions, and the verdict |
 | `interface-review` | Change scope resolution including the empty-scope offer, blast radius from changed files to affected surfaces, and finding classification (`Introduced` / `Regression` / `Pre-existing`) |
 | `better-accessibility` | Semantic HTML, keyboard and focus behavior, accessible names, forms, assistive technology, and accessibility requirements |
 | `better-layout` | Spatial grouping, alignment, spacing, responsive structure, logical CSS properties, and spatial RTL behavior |
