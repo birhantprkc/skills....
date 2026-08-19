@@ -4,7 +4,7 @@ Icon weight, states, sizing, and direction: the details that make icons sit natu
 
 ## Match icon stroke to text weight
 
-An icon next to text carries the text's optical weight, or the pair looks mismatched. A hairline icon beside semibold text reads as broken; a heavy icon beside regular text shouts.
+A hairline icon beside semibold text reads as broken; a heavy icon beside regular text shouts.
 
 | Adjacent text | Icon stroke width (24px grid) |
 | --- | --- |

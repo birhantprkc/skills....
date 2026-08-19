@@ -60,10 +60,7 @@ Heading semantics and outline quality belong to `better-accessibility`. Pick the
 ## Kerning and letter-spacing
 
 - **Kerning** adjusts specific pairs like `AV` or `Ye`. It is built into the font and browsers apply it automatically. Only switch it off deliberately with `font-kerning: none`.
-- **`letter-spacing`** adds the same space between every character:
-  - Large headings often look better slightly negative.
-  - Small uppercase labels need a little positive spacing so letters do not feel crowded.
-  - Body copy needs neither.
+- **`letter-spacing`** adds the same space between every character.
 
 ```css
 /* Good */
@@ -84,9 +81,7 @@ Heading semantics and outline quality belong to `better-accessibility`. Pick the
 | Headings | ~`1.1` |
 | Body copy | `1.5`–`1.6` |
 
-Prefer unitless values: they scale with the font size, fixed values like `line-height: 24px` do not. Tailwind's `leading-snug`, `leading-normal` and `leading-relaxed` are sensible defaults that rarely need overriding.
-
-Tight line-height is for short text. Anything that wraps to three or more lines needs at least `1.4`, even in a height-constrained list row or card. A tightly-leaded paragraph is harder to read than a taller row is to fit.
+Tailwind's `leading-snug`, `leading-normal` and `leading-relaxed` are sensible defaults that rarely need overriding. A tightly-leaded paragraph is harder to read than a taller row is to fit.
 
 ```css
 /* Bad: card description at heading leading */

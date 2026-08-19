@@ -73,7 +73,7 @@ Reserve `primary` for exactly one meaning. `--color-text-primary` for body text 
 | `--color-gray-hover` | Mixes a hue with a state and belongs to no tier | `--color-bg-surface-hover` |
 | `--blue-500` used in a component | Skips the semantic tier and removes the theming seam | Point a semantic token at it |
 
-The rule underneath all of them: **never borrow a token because its value is right today.** If a role has no token, add the token. Reusing `--color-border` as a text color works until borders get lighter, and then the text goes with it. See [color-usage.md](color-usage.md).
+Every one of them is a case of **Use a token only in its role**. See [color-usage.md](color-usage.md).
 
 ## In Tailwind projects
 

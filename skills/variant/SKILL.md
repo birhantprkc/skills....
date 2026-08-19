@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Variants
 
-This skill answers "which of these?" rather than "is this right?". It takes one described piece of UI and builds three versions that differ on purpose. They go behind a picker in the real page, so you can flip between them and choose.
+This skill takes one described piece of UI and builds three versions that differ on purpose. They go behind a picker in the real page, so you can flip between them and choose.
 
 Every other skill here judges. This one produces candidates and hands the decision back. It does not review existing UI, which is `interface-review` and `better-interface`, and it does not pick the winner.
 

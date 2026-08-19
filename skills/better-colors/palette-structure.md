@@ -12,7 +12,7 @@ Most products need three kinds of ramp and nothing else:
 | Accent | 1 | The brand hue. Interactive and selected states |
 | Status | 0–4 | `danger`, `warning`, `success`, `info`. Add one only when the product shows that state |
 
-Ship the status ramps the product actually renders. A `warning` ramp that nothing imports is eleven tokens of maintenance for zero pixels. A second accent hue earns its place only when two things must be distinguishable at a glance and never sit adjacent. Otherwise the accent ramp's own steps provide the range.
+A second accent hue must also never sit adjacent to the first. Where it would, the accent ramp's own steps provide the range.
 
 ## Every step has a job
 

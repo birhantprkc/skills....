@@ -7,7 +7,7 @@ description: Design engineering principles for making interfaces feel polished. 
 
 Polish comes from a pile of small details that compound. This skill is the reference for which details are worth having and what values they take.
 
-When reviewing, slow the interface down. Replay motion at 10% speed in the browser's Animations panel, then walk every state: hover, focus, active, loading, empty. What feels off at 10% speed is what is subtly wrong at full speed.
+When reviewing, slow the interface down. What feels off at 10% speed is what is subtly wrong at full speed.
 
 Keep the project's component library, tokens, and density. Match its established motion language except where a rule below prescribes an exact interaction.
 

@@ -112,7 +112,7 @@ Readers scan top-to-bottom and leading-to-trailing. Place content accordingly:
 </div>
 ```
 
-Think in **leading/trailing**, not left/right: combined with logical properties, the same hierarchy mirrors correctly in RTL locales.
+With logical properties, the same hierarchy mirrors correctly in RTL locales.
 
 ## Don't overload the entry point
 

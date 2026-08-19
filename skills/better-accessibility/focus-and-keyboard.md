@@ -36,7 +36,7 @@ Group focus styles with `:focus-within` when a wrapper should light up while an 
 
 ## Skip link
 
-When repeated navigation or other repeated chrome precedes the primary content, the first focusable element is a "Skip to content" link targeting `<main id="main">`. Visually hide it until focused:
+Target `<main id="main">` and visually hide the link until focused:
 
 ```css
 .skip-link {

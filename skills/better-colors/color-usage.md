@@ -4,7 +4,7 @@ How to deploy color once the system exists: meaning, emphasis, gradients, and ap
 
 ## One color, one meaning
 
-Use a color for one purpose across the whole interface: interactive, destructive, featured. If the accent signals that text is interactive, that hue on non-interactive text tells users to click something that is not clickable. Treat anything within about 15° of hue as the same color here. Users read a near-miss as a slightly different shade, not as a different color.
+Users read a near-miss in hue as a slightly different shade, not as a different color.
 
 ```css
 /* Bad: the accent means both "link" and "decorative heading" */
@@ -32,11 +32,11 @@ Apply a semantic token only for the role it names. `--color-text-secondary` is m
 .tag { background: var(--color-text-secondary); }
 ```
 
-If a role has no token yet, add the token. Never borrow one by value. The role inventory in [token-naming.md](token-naming.md) is the list of roles a system needs.
+The role inventory in [token-naming.md](token-naming.md) is the list of roles a system needs.
 
 ## One colored action per view
 
-When the product uses a filled color to encode primary emphasis, give that treatment to one primary action in the current decision context and leave peer actions neutral. Multiple colored backgrounds are fine when they encode distinct states or categories rather than competing as peer actions. Preserve an established component hierarchy that communicates emphasis another way; do not recolor controls merely to impose this recipe.
+Preserve an established component hierarchy that communicates emphasis another way. Do not recolor controls merely to impose this recipe.
 
 ```html
 <!-- Good: one filled primary action, neutral secondaries -->
@@ -49,7 +49,7 @@ When the product uses a filled color to encode primary emphasis, give that treat
 <button class="bg-accent-solid text-white">Export</button>
 ```
 
-Put the color on the background, not the label. A filled button reads as primary from across the room; accent-colored label text on a neutral button reads as a link. Selected states may use the accent on the glyph and label. An active tab or a checked segment is state, not emphasis.
+Selected states may use the accent on the glyph and label. An active tab or a checked segment is state, not emphasis.
 
 ## Gradients
 

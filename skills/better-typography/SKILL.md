@@ -7,7 +7,7 @@ description: Web typography. Use when picking or pairing typefaces, setting up a
 
 Typography is mostly restraint: a sensible scale, comfortable spacing, enough contrast. A label, a table cell, a marketing headline, and an article paragraph do not share one set of rules.
 
-When reviewing, read the page instead of scanning the code. Squint to check the hierarchy holds. Read one full paragraph for comfort. Resize the viewport to catch bad wrapping, widows, and truncation at real content lengths.
+When reviewing, read the rendered page instead of scanning the code. Bad wrapping, widows, and truncation only show up at real content lengths.
 
 Write every fix in the styling system the project already uses, and take exact values from the rules below rather than substituting a familiar-looking equivalent. The [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind equivalent.
 

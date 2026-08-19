@@ -36,7 +36,7 @@ If a native element is truly impossible, the full polyfill is `role="button"` + 
 
 - Expose one visible primary `<main>` landmark. `<header>`, `<nav>`, `<aside>`, `<footer>` map to landmarks screen-reader users jump between.
 - Multiple landmarks of the same type need distinguishing labels: `<nav aria-label="Primary">`, `<nav aria-label="Breadcrumbs">`.
-- Headings describe their sections and form a coherent outline. One page-level `<h1>` and properly nested levels are the recommended default; do not report either convention as a standalone WCAG failure without a concrete navigation or comprehension impact. Headings are structure, not styling; style a heading level with CSS instead of picking the tag by size.
+- Do not report the one-`<h1>` or the no-skipped-levels convention as a standalone WCAG failure without a concrete navigation or comprehension impact. Headings are structure, not styling; style a heading level with CSS instead of picking the tag by size.
 - `<title>` matches the current context, most specific first: `Billing · Settings · Acme`.
 
 ## Accessible names
@@ -45,7 +45,7 @@ Name precedence: `aria-labelledby` > `aria-label` > native label (`<label>`, tex
 
 - Prefer visible text or `aria-labelledby` over `aria-label`: `aria-label` is invisible, drifts out of sync with the UI, and translation tools handle it inconsistently.
 - Icon-only buttons always need a name: `<button aria-label="Close">` with the icon `aria-hidden="true"`.
-- The visible label must appear inside the accessible name (WCAG 2.5.3 Label in Name). A button showing "Send" with `aria-label="Submit message"` breaks voice control users who say "click Send".
+- WCAG 2.5.3 Label in Name: a button showing "Send" with `aria-label="Submit message"` breaks voice control users who say "click Send".
 - Accessible names must exist even when the design omits visible labels.
 
 ```tsx

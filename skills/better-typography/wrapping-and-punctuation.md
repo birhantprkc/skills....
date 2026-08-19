@@ -49,9 +49,6 @@ Keyboard characters are not always the best characters:
 
 ## Internationalization
 
-- Set the `lang` attribute so browsers choose the right quotes, hyphenation and pronunciation.
-- Set `dir` at the document or content boundary where direction changes. Spatial mirroring and the logical-property table live in `better-layout`.
-
 Two refinements for mixed-direction text:
 
 - **Long paragraphs align by their own language.** A one- or two-line snippet follows the surrounding UI's direction. A paragraph of three or more lines aligns to its own script instead, so an English paragraph stays start-aligned LTR even inside an RTL interface. `text-align: start` with the correct `lang`/`dir` on the paragraph element handles this.

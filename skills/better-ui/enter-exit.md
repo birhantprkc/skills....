@@ -145,4 +145,3 @@ Exit animations should be softer and less attention-grabbing than enter animatio
 - Exit duration should be shorter than enter duration (150ms vs 300ms)
 - Use a subtle exit when it preserves spatial context. Remove immediately when motion adds no information, the interaction repeats frequently, or reduced motion is requested.
 
-Honoring `prefers-reduced-motion` is covered by the `better-accessibility` skill; apply it to every animation in this file.

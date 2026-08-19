@@ -13,7 +13,7 @@ a {
 }
 ```
 
-The line does not have to be solid. `text-decoration-style` can draw it dotted, dashed or wavy. A dotted underline is a common hint that a word carries extra information, like an abbreviation or a defined term:
+A dotted underline on an abbreviation:
 
 ```css
 abbr {
@@ -37,13 +37,10 @@ a:hover {
 }
 ```
 
-Color is the only part of a real underline that animates reliably. So unless the only thing animating is the color, build the underline as a custom element rather than using `text-decoration`. Animate the custom element however the effect requires.
+Animate the custom element however the effect requires.
 
 ## Selection
 
-- `::selection` changes the background and color of selected text; a subtle way to embed brand. Keep the combination legible.
-- Keep text selectable by default, including application chrome; users copy labels, identifiers, errors, and values in ways the designer may not predict.
-- Use `user-select: none` only on a specific draggable or gesture-driven surface where accidental selection conflicts with the interaction. Do not apply it globally or solely to imitate native chrome.
 - `::target-text` styles the phrase a shared link scrolls to.
 - The Custom Highlight API styles ranges you pick yourself, like search matches, without extra markup.
 
@@ -54,9 +51,9 @@ Color is the only part of a real underline that animates reliably. So unless the
 
 ### iOS input zoom
 
-Focusing an input with text smaller than `16px` zooms the whole page. That is an accessibility feature: `16px` is the web default, and Safari treats smaller as too hard to read while typing.
+This is an accessibility feature: `16px` is the web default, and Safari treats smaller as too hard to read while typing.
 
-Two fixes work, and they differ in what they do to the design rather than in correctness. Ask which one the user wants before changing an input; do not pick for them.
+The two fixes differ in what they do to the design, not in correctness.
 
 **Size up on mobile.** The input genuinely renders at `16px` on small screens and drops to the design size from the `sm` breakpoint up. Nothing to compensate, but the mobile input no longer matches the desktop one.
 
@@ -102,11 +99,9 @@ Typography must survive the reader changing it: zoom, a larger browser font size
 | Captions | `13px` |
 | Floor | Rarely below `12px` |
 
-When text appears low-contrast, use `better-colors` to measure the rendered foreground/background pair and `better-accessibility` to classify the applicable requirement. Changing the project's colors remains a design decision unless the user asks for remediation.
-
 ## Font smoothing
 
-On macOS text renders heavier than intended. Apply font smoothing once on the root layout so it covers all text. Tailwind's `antialiased` sets both properties:
+Tailwind's `antialiased` sets both properties:
 
 ```css
 html {

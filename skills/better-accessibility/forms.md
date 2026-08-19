@@ -74,7 +74,6 @@ Disable spellcheck on emails, codes, and usernames: `spellcheck="false"`.
 
 ## Never fight the user's tools
 
-- Never block paste in `<input>` or `<textarea>`; users paste passwords and one-time codes.
 - Stay compatible with password managers and 2FA autofill: real `<form>`, correct `autocomplete`, no fake inputs.
 
 ## Submit behavior

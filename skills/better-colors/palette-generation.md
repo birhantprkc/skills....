@@ -21,7 +21,7 @@ These are properties of the finished ramp, checkable against any output, in any 
 - **Vividness peaks in the middle and falls off at both ends.** The lightest and darkest steps are nearly neutral; the middle steps carry the color. A ramp that holds full vividness into the extremes produces a `50` that glows and a `950` that looks like ink spilled on the brand.
 - **Steps are denser at the light end.** Light backgrounds need finer distinctions than dark ones. `50` to `200` should be close together, `800` to `950` further apart. Evenly spaced lightness across the whole range makes the pale end unusable, because `50` and `100` will not be distinguishable as two different surfaces.
 - **No two adjacent steps are indistinguishable.** If `200` and `300` look identical on a calibrated screen, the ramp has more steps than it has decisions. Drop one.
-- **Both ends stop short of pure black and white.** Neither can carry hue. A ramp that reaches them loses its identity exactly where the page background lives.
+- **Both ends stop short of pure black and white.** A ramp that reaches them loses its identity exactly where the page background lives.
 
 ## Use a color library
 

@@ -186,7 +186,7 @@ This component covers the OS-level change. An in-app theme toggle needs the same
 
 Motion is a budget, not a garnish. Three rules decide whether an animation belongs at all:
 
-- **Give high-frequency interactions instant feedback instead of animation.** Every keystroke, every list-row hover, every tab switch in a work tool. An animation there charges its attention cost on every trigger. Reserve expressive motion for infrequent moments (first load of a view, success states, empty states); high-frequency interactions get instant feedback or the subtlest possible transition (`opacity`/`background-color` at ≤150ms).
+- **Give high-frequency interactions instant feedback instead of animation.** Every keystroke, every list-row hover, every tab switch in a work tool. Reserve expressive motion for infrequent moments (first load of a view, success states, empty states); high-frequency interactions get instant feedback or the subtlest possible transition (`opacity`/`background-color` at ≤150ms).
 - **Motion is never the only feedback channel.** Every state change an animation communicates stays visible when it doesn't run: a color change, an icon swap, a label. Users with reduced motion enabled, and anyone who blinked, still need to see what happened.
 - **Brief and precise beats prominent.** If a shorter, smaller animation communicates the same thing, use it. When in doubt, cut the duration, not the clarity.
 
@@ -203,4 +203,3 @@ Motion is a budget, not a garnish. Three rules decide whether an animation belon
 }
 ```
 
-Honoring `prefers-reduced-motion` is covered by the `better-accessibility` skill; apply it to every animation in this file.

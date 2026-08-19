@@ -100,4 +100,3 @@ The non-absolute icon (InactiveIcon) defines the layout size. The absolute icon 
 - `filter`: `"blur(4px)"` → `"blur(0px)"`
 - `transition`: `{ type: "spring", duration: 0.3, bounce: 0 }`; **bounce must always be `0`**, never `0.1` or any other value
 
-Honoring `prefers-reduced-motion` is covered by the `better-accessibility` skill; apply it to every animation in this file.
