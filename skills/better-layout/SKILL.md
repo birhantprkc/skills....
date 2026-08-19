@@ -51,7 +51,7 @@ Breakpoints come from the content, not from device presets. Keep the expanded la
 
 ## Plan for growth and clipping
 
-Translated strings grow, and by how much depends on the language. German and Finnish routinely run 30% longer than English; short UI labels can double. So put no fixed width or height on a text container, and let rows wrap. Test with pseudo-localization and at least one representative locale.
+Translated strings grow, and short strings grow proportionally more than long ones, so a one-word button label is the riskiest thing on the screen. Put no fixed width or height on a text container, and let rows wrap. Test with pseudo-localization and at least one representative locale rather than budgeting a single percentage.
 
 Never park a critical action where resizing or scrolling clips it. Keep it in the normal flow, or in stable chrome suited to the product.
 
