@@ -17,7 +17,6 @@ Hit areas and focus behavior belong to `better-accessibility`. Radius, shadows, 
 | --- | --- |
 | [Grouping & Alignment](grouping-and-alignment.md) | Space vs separators, alignment edges, logical properties, importance ordering |
 | [Spacing & Adaptivity](spacing-and-adaptivity.md) | Spacing between targets, layout margins, progressive disclosure, full-bleed content, breakpoints, i18n growth |
-| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core principles
 
@@ -76,4 +75,8 @@ Plan for substantial and language-dependent string growth rather than relying on
 
 ## Reporting
 
-A standalone layout review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.
+A standalone layout review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to layout.
+
+**Severity.** `HIGH` blocks content or an action at a supported viewport. `MEDIUM` harms hierarchy, reading order, or adaptability. `LOW` is isolated alignment or spacing polish.
+
+**Verification.** Every supported viewport width, reading order, 200% zoom, and the RTL mirror.

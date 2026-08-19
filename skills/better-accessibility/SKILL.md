@@ -23,7 +23,6 @@ Contrast measurement and color fixes belong to `better-colors`. Text sizing and 
 | [Screen Readers](screen-readers.md) | Visually hidden content, live regions, toasts, alt text, SVG |
 | [Hit Areas](hit-areas.md) | Target sizes, expanding hit areas, collision rules |
 | [Motion & Zoom](motion-and-zoom.md) | `prefers-reduced-motion`, autoplay and timed UI, 200% zoom, reflow, rem vs px |
-| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core principles
 
@@ -103,4 +102,8 @@ The page must work at 200% zoom and reflow at 320px width without horizontal scr
 
 ## Reporting
 
-A standalone accessibility review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.
+A standalone accessibility review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to accessibility.
+
+**Severity.** `HIGH` prevents a task, hides content from assistive technology, or creates a systemic failure. `MEDIUM` makes an interaction meaningfully harder. `LOW` is isolated polish.
+
+**Verification.** Keyboard traversal, accessible-name inspection, and screen-reader or automated checks where the interface supports them.

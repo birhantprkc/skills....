@@ -23,7 +23,6 @@ The words themselves belong to `better-writing`. Semantic heading structure belo
 | Wrapping & punctuation | Measure, wrapping, truncation, smart punctuation, RTL | [wrapping-and-punctuation.md](wrapping-and-punctuation.md) |
 | Details & accessibility | Underlines, selection, forms, decorative text, contrast | [details-and-accessibility.md](details-and-accessibility.md) |
 | CSS cheat sheet | Quick lookup of every property covered, with Tailwind equivalents | [css-cheat-sheet.md](css-cheat-sheet.md) |
-| Review output format | Severity scale, findings table, verification, verdict | [review-output.md](review-output.md) |
 
 ## Core principles
 
@@ -133,4 +132,8 @@ Set `lang` so browsers and assistive technology choose the right pronunciation, 
 
 ## Reporting
 
-A standalone typography review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.
+A standalone typography review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to typography.
+
+**Severity.** `HIGH` makes text unreadable or truncates content with no way to recover it. `MEDIUM` breaks the type system or the heading hierarchy. `LOW` is isolated polish.
+
+**Verification.** One full paragraph read for comfort, the hierarchy checked by squinting, and the viewport resized to catch wrapping, widows, and truncation at real content lengths.

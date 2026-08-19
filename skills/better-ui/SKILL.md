@@ -23,7 +23,6 @@ Text wrapping, font rendering, tabular numbers, and text spacing belong to `bett
 | [Icon Transitions](icon-transitions.md) | Cross-fading an icon on state change, with and without a motion library |
 | [Icons](icons.md) | Icon stroke weight, states via `currentColor`, outline vs fill, sizing, RTL flipping |
 | [Performance](performance.md) | Transition specificity, `will-change` usage |
-| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core principles
 
@@ -110,4 +109,8 @@ No custom animation on high-frequency interactions: the attention cost repeats o
 
 ## Reporting
 
-A standalone UI-polish review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.
+A standalone UI-polish review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to UI-polish.
+
+**Severity.** `HIGH` breaks an interaction or makes motion unusable. `MEDIUM` is a visible inconsistency in surfaces, icons, or motion. `LOW` is isolated polish.
+
+**Verification.** Every state walked (hover, focus, active, loading, empty) and motion replayed at 10% speed in the browser's Animations panel.

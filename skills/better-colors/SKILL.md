@@ -19,7 +19,6 @@ Contrast requirements belong to `better-accessibility`. Surfaces, shadows, and i
 | Usage | One meaning per color, emphasis, gradients, culture, appearance variants | [color-usage.md](color-usage.md) |
 | Contrast | APCA and WCAG checks, reporting failures, fixing on request | [contrast.md](contrast.md) |
 | Formats | Choosing a notation, converting, gamut and P3 fallbacks | [color-formats.md](color-formats.md) |
-| Review output format | Severity scale, findings table, verification, verdict | [review-output.md](review-output.md) |
 
 ## Core principles
 
@@ -87,4 +86,8 @@ The space is a look, not a correctness setting. `in oklab` is the best default: 
 
 ## Reporting
 
-A standalone color review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.
+A standalone color review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to color.
+
+**Severity.** `HIGH` makes content unreadable or assigns a misleading semantic color. `MEDIUM` is a noticeable theme, token, or gamut failure. `LOW` is isolated polish.
+
+**Verification.** Contrast measured against the rendered background rather than the page background, gamut checks, and both light and dark appearances. A failing pair is reported, not repainted.

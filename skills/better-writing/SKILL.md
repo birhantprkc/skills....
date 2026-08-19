@@ -16,7 +16,6 @@ How copy renders (capitalization via `text-transform`, truncation, smart punctua
 
 | Category | When to Use |
 | --- | --- |
-| [Review Output Format](review-output.md) | Severity scale, findings table, verification, verdict |
 
 ## Core principles
 
@@ -114,4 +113,8 @@ Placeholders show the expected format (`name@example.com`, `DD/MM/YYYY`). A plac
 
 ## Reporting
 
-A standalone writing review is finished when every confirmed finding is reported in the format in [review-output.md](review-output.md), with verification and a verdict. Under `better-interface`, its format governs instead.
+A standalone writing review is finished when every confirmed finding is reported with verification and a verdict. Call the Skill tool with `better-interface` for the table structure and the verdict ladder; the two things below are the ones specific to writing.
+
+**Severity.** `HIGH` misleads the user or hides how to recover from an error. `MEDIUM` breaks voice, terminology, or capitalization consistency. `LOW` is isolated wording polish.
+
+**Verification.** Nearby copy read for voice and terminology, every label checked against the action it performs, and each error checked for a stated fix.
