@@ -13,82 +13,75 @@ Keep the project's component library, tokens, and density. Match its established
 
 Text wrapping, font rendering, tabular numbers, and text spacing belong to `better-typography`. Hit areas, focus, keyboard support, ARIA, and reduced motion belong to `better-accessibility`. Grouping, section spacing, breakpoints, and spatial RTL belong to `better-layout`.
 
-## Quick reference
+## Concentric border radius
 
-| Category | When to Use |
-| --- | --- |
-| [Surfaces](surfaces.md) | Border radius, optical alignment, shadows, image outlines |
-| [Animations](animations.md) | Interruptible transitions, scale on press, skipping animation on page load, theme switching, motion restraint |
-| [Enter & Exit](enter-exit.md) | Staged entrances, stagger timing, exit transitions |
-| [Icon Transitions](icon-transitions.md) | Cross-fading an icon on state change, with and without a motion library |
-| [Icons](icons.md) | Icon stroke weight, states via `currentColor`, outline vs fill, sizing, RTL flipping |
-| [Performance](performance.md) | Transition specificity, `will-change` usage |
+Outer radius = inner radius + padding. Mismatched radii on nested elements is the single most common thing that makes an interface feel off. Radius, shadow, and outline recipes are in [surfaces.md](surfaces.md).
 
-## Core principles
+## Optical over geometric alignment
 
-### Concentric border radius
+When geometric centering looks off, align optically. Buttons with icons, play triangles, and asymmetric icons all need a manual nudge.
 
-Outer radius = inner radius + padding. Mismatched radii on nested elements is the most common thing that makes interfaces feel off.
+## Shadows for elevation, borders for structure
 
-### Optical over geometric alignment
+For buttons, cards, and containers whose border exists only to create depth, prefer layered transparent `box-shadow` values. Keep the borders that communicate structure or state: dividers, layout separators, and selected or focus states.
 
-When geometric centering looks off, align optically. Buttons with icons, play triangles, and asymmetric icons all need manual adjustment.
+## Interruptible animations
 
-### Shadows for elevation, borders for structure
+Use CSS transitions for interactive state changes, because they can be interrupted mid-animation. Reserve keyframes for staged sequences that run once.
 
-For buttons, cards, and containers whose border exists only to create depth, prefer layered transparent `box-shadow` values. Keep borders that communicate structure or state: dividers, layout separators, and selected or focus states.
+## Split and stagger enter animations
 
-### Interruptible animations
+For an infrequent staged entrance where sequence helps communicate hierarchy, break the content into semantic chunks and stagger them by ~100ms. Animating one container gets you less for the same cost. Leave routine, high-frequency interactions unstaggered. See [enter-exit.md](enter-exit.md).
 
-Use CSS transitions for interactive state changes: they can be interrupted mid-animation. Reserve keyframes for staged sequences that run once.
+## Subtle exit animations
 
-### Split and stagger enter animations
+Use a small fixed `translateY` rather than full height. Exits should be softer than enters. Use `ease-out` for both directions.
 
-For an infrequent staged entrance where sequence helps communicate hierarchy, break content into semantic chunks and stagger them by ~100ms instead of animating one container. Do not stagger routine, high-frequency interactions. [Stagger and exit recipes](enter-exit.md).
+## Contextual icon animations
 
-### Subtle exit animations
+Animate icons with `opacity`, `scale`, and `blur` rather than toggling visibility. Use exactly these values: scale `0.25` to `1`, opacity `0` to `1`, blur `4px` to `0px`.
 
-Use a small fixed `translateY` instead of full height. Exits should be softer than enters. Use `ease-out` for both enter and exit transitions.
+With a motion library (`motion` or `framer-motion` in `package.json`), match that package's import path, or the established nearby imports where both exist. Use `transition: { type: "spring", duration: 0.3, bounce: 0 }`. Bounce is always `0`.
 
-### Contextual icon animations
+Without one, keep both icons in the DOM with one absolutely positioned, and cross-fade with CSS transitions using `cubic-bezier(0.2, 0, 0, 1)`. That gives you enter and exit with no dependency. Both recipes are in [icon-transitions.md](icon-transitions.md).
 
-Animate icons with `opacity`, `scale`, and `blur` instead of toggling visibility. Use exactly these values: scale from `0.25` to `1`, opacity from `0` to `1`, blur from `4px` to `0px`. If the project has `motion` or `framer-motion` in `package.json`, match that package's import path (or the established nearby imports when both exist) and use `transition: { type: "spring", duration: 0.3, bounce: 0 }`; bounce must always be `0`. If no motion library is installed, keep both icons in the DOM (one absolute-positioned) and cross-fade with CSS transitions using `cubic-bezier(0.2, 0, 0, 1)`; this gives both enter and exit animations without any dependency. [Both recipes](icon-transitions.md).
+## Image outlines
 
-### Image outlines
+Add a subtle `1px` outline at low opacity to images for consistent depth. The color must be pure black in light mode (`oklch(0 0 0 / 0.1)`) and pure white in dark mode (`oklch(1 0 0 / 0.1)`), never a near-black like slate or zinc or any tinted neutral. A tinted outline picks up the surface color underneath it and reads as dirt on the image edge.
 
-Add a subtle `1px` outline with low opacity to images for consistent depth. The color must be pure black in light mode (`oklch(0 0 0 / 0.1)`) and pure white in dark mode (`oklch(1 0 0 / 0.1)`), never a near-black like slate, zinc, or any tinted neutral. A tinted outline picks up the surface color underneath it and reads as dirt on the image edge.
+## Scale on press
 
-### Scale on press
+A `scale(0.96)` on click gives a button tactile feedback. Always use `0.96`; anything below `0.95` feels exaggerated. Add a `static` prop to switch it off where motion would distract. See [recipes for CSS, Tailwind, and Motion](animations.md#scale-on-press).
 
-A subtle `scale(0.96)` on click gives buttons tactile feedback. Always use `0.96`; anything below `0.95` feels exaggerated. Add a `static` prop to disable it when motion would be distracting. [Recipes for CSS, Tailwind, and Motion](animations.md#scale-on-press).
+## Skip animation on page load
 
-### Skip animation on page load
+Use `initial={false}` on `AnimatePresence` to keep enter animations off the first render. Check that it leaves intentional page entrances intact.
 
-Use `initial={false}` on `AnimatePresence` to prevent enter animations on first render. Verify it doesn't break intentional entrance animations.
+## Suppress transitions on theme switch
 
-### Suppress transitions on theme switch
+A theme flip changes color, background, border, and shadow on nearly every element at once. Every transition on those properties fires together, and the switch smears instead of snapping. Inject `*,*::before,*::after{transition:none !important}`, force a reflow, then remove it on the next frame. See the [recipe](animations.md#suppress-transitions-on-theme-switch).
 
-A theme flip changes color, background, border, and shadow on nearly every element at once, so every transition on those properties fires together and the switch smears instead of snapping. Inject `*,*::before,*::after{transition:none !important}`, force a reflow, then remove it on the next frame. [Recipe](animations.md#suppress-transitions-on-theme-switch).
+## Transition only what changes
 
-### Transition only what changes
+Always name the exact properties: `transition-property: scale, opacity`. Tailwind's `transition-transform` covers `transform, translate, scale, rotate`.
 
-Always specify exact properties: `transition-property: scale, opacity`. Tailwind's `transition-transform` covers `transform, translate, scale, rotate`.
+## Use `will-change` sparingly
 
-### Use `will-change` sparingly
+Only for `transform`, `opacity`, and `filter`, the properties the GPU can composite. Never `will-change: all`. Add it when you notice first-frame stutter, and not before. See [performance.md](performance.md).
 
-Only for `transform`, `opacity`, `filter`, the properties the GPU can composite. Never use `will-change: all`. Only add when you notice first-frame stutter.
+## Match icon stroke to text weight
 
-### Match icon stroke to text weight
+An icon next to text carries the text's optical weight: `1.5px` stroke beside regular (400) text, `2px` beside semibold (600). One stroke weight per icon set, and one icon library per surface. Sizing and RTL flipping are in [icons.md](icons.md).
 
-An icon next to text carries the text's optical weight: `1.5px` stroke beside regular (400) text, `2px` beside semibold (600). One stroke weight per icon set; never mix libraries on one surface.
+## One SVG, recolored per state
 
-### One SVG, recolored per state
+Icons use `currentColor` and take their states (hover, selected, disabled) from CSS color and opacity, never from separate assets. Outline is the default variant; fill marks the active state.
 
-Icons use `currentColor` and get their states (hover, selected, disabled) from CSS color and opacity, never from separate assets. Outline variant is the default; fill variant marks the active state.
+## Motion restraint
 
-### Motion restraint
+Give high-frequency interactions instant feedback or a transition of `150ms` or less on opacity and color. A custom animation there charges its attention cost on every single trigger.
 
-No custom animation on high-frequency interactions: the attention cost repeats on every trigger. Motion is never the only feedback channel; every animated state change also needs a static cue (color, icon, label).
+Every animated state change also needs a static cue: color, an icon, or a label. Motion is never the only feedback channel.
 
 ## Common mistakes
 

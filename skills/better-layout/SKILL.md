@@ -11,54 +11,49 @@ Write every fix in the styling system the project already uses. Treat the number
 
 Hit areas and focus behavior belong to `better-accessibility`. Radius, shadows, and animation belong to `better-ui`. Line length and text spacing belong to `better-typography`.
 
-## Quick reference
+## Group with space, not lines
 
-| Category | When to Use |
-| --- | --- |
-| [Grouping & Alignment](grouping-and-alignment.md) | Space vs separators, alignment edges, logical properties, importance ordering |
-| [Spacing & Adaptivity](spacing-and-adaptivity.md) | Spacing between targets, layout margins, progressive disclosure, full-bleed content, breakpoints, i18n growth |
+Space groups first. Background shapes second. Separator lines last, and only where space alone can't carry the structure. The gap between groups must be at least 2× the gap within a group (`8px` intra-group to `16px`+ inter-group), or the grouping reads as noise. Alignment edges and importance ordering are in [grouping-and-alignment.md](grouping-and-alignment.md).
 
-## Core principles
+## Keep controls distinct from content
 
-### Group with space, not lines
+Give every interactive element a background shape, a border, or a consistent placement zone. A control styled like the static text beside it is not readable as a control.
 
-Negative space is the primary grouping tool; background shapes second; separator lines last, only where space alone can't carry the structure. The gap between groups must be at least 2× the gap within a group (`8px` intra-group → `16px`+ inter-group), or the grouping reads as noise.
+## Align to shared edges
 
-### Keep controls distinct from content
+Pick alignment edges and stick to them; every stray edge reads as noise. Use one project spacing step per level of subordination, where `16px` is a useful default.
 
-Interactive elements must look interactive: a background shape, a border, or a consistent placement zone. Never style a control identically to adjacent static text.
+Use logical properties for direction-dependent layout: `padding-inline-start`, `margin-inline-end`. Reserve physical left and right for genuinely physical geometry.
 
-### Align to shared edges
+## Order by importance
 
-Pick alignment edges and stick to them; every stray edge reads as noise. Use one project spacing step for each level of subordination (`16px` is a useful default). Use logical properties (`padding-inline-start`, `margin-inline-end`) for direction-dependent layout; reserve physical left/right for genuinely physical geometry.
+The most important content sits near the top and the leading edge. Reading order flows top-to-bottom, leading-to-trailing. Think in leading and trailing, not left and right.
 
-### Order by importance
+## Hint at hidden content
 
-The most important content sits near the top and the leading edge; reading order flows top-to-bottom, leading-to-trailing. Think in leading/trailing, not left/right.
+Progressive disclosure needs a visible affordance. Use the project's established cue. Without one, let the next item peek `16–32px` past the scroll edge, or show a disclosure control. Content hidden with zero cue may as well not exist.
 
-### Hint at hidden content
+## Breathing room between targets
 
-Progressive disclosure needs a visible affordance. Use the project's established cue; without one, let the next item peek `16–32px` past the scroll edge or show a disclosure control. Content hidden with zero cue may as well not exist.
+Without an established density system, start with `12px` between adjacent bordered or filled controls, and `24px` of clearance around borderless text- and icon-only controls. Compact layouts may use less, as long as `better-accessibility` hit areas don't overlap and the controls stay visually distinct. Layout margins and breakpoint recipes are in [spacing-and-adaptivity.md](spacing-and-adaptivity.md).
 
-### Breathing room between targets
+## Inset buttons from the edges
 
-Without an established density system, start with `12px` between adjacent bordered or filled controls and `24px` of clearance around borderless text- and icon-only controls. Compact layouts may use less when `better-accessibility` hit areas do not overlap and the controls remain visually distinct.
+In content layouts, keep full-width buttons inside the layout margins with a visible radius. Start near `16px` inline on mobile. Edge-to-edge actions work when they deliberately follow established platform or application chrome, account for safe areas, and stay distinguishable from system UI.
 
-### Inset buttons from the edges
+## Content bleeds, controls float
 
-In content layouts, keep full-width buttons inside the layout margins (start near `16px` inline on mobile) with a visible radius. Edge-to-edge actions are acceptable when they intentionally follow established platform or application chrome, account for safe areas, and remain distinguishable from system UI.
+Backgrounds and media extend to the viewport edges. Controls and text stay inside the layout margins and safe areas (`env(safe-area-inset-*)`). Sticky chrome floats above the content layer rather than blocking it.
 
-### Content bleeds, controls float
+## Hold structure until it breaks
 
-Backgrounds and media extend to the viewport edges; controls and text stay inside the layout margins and safe areas (`env(safe-area-inset-*)`). Sticky chrome floats above the content layer, it doesn't dam it.
+Breakpoints come from the content, not from device presets. Keep the expanded layout as long as it genuinely fits, and collapse late. Prefer container queries for component-level adaptation. Test the smallest and largest sizes first.
 
-### Hold structure until it breaks
+## Plan for growth and clipping
 
-Breakpoints come from the content, not device presets. Keep the expanded layout as long as it genuinely fits and collapse late; prefer container queries for component-level adaptation. Test the smallest and largest sizes first.
+Translated strings grow, and by how much depends on the language. German and Finnish routinely run 30% longer than English; short UI labels can double. So put no fixed width or height on a text container, and let rows wrap. Test with pseudo-localization and at least one representative locale.
 
-### Plan for growth and clipping
-
-Plan for substantial and language-dependent string growth rather than relying on a universal percentage: no fixed widths or heights on text containers, and let rows wrap. Never park critical actions where resizing or scrolling clips them; keep them reachable in the normal flow or stable chrome appropriate to the product.
+Never park a critical action where resizing or scrolling clips it. Keep it in the normal flow, or in stable chrome suited to the product.
 
 ## Common mistakes
 

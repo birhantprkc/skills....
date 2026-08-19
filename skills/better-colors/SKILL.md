@@ -9,58 +9,64 @@ A color system is a small set of ramps, named by role, applied consistently, and
 
 Contrast requirements belong to `better-accessibility`. Surfaces, shadows, and icon color belong to `better-ui`.
 
-## Quick reference
+## Match the project's color system
 
-| Category | When to use | Reference |
-| --- | --- | --- |
-| Structure | Which ramps a system needs, step roles, neutrals, status colors, auditing an existing palette | [palette-structure.md](palette-structure.md) |
-| Generation | Building a ramp from a brand color, multi-hue systems, dark mode | [palette-generation.md](palette-generation.md) |
-| Naming | Primitive and semantic tiers, role inventory, naming grammar, anti-patterns | [token-naming.md](token-naming.md) |
-| Usage | One meaning per color, emphasis, gradients, culture, appearance variants | [color-usage.md](color-usage.md) |
-| Contrast | APCA and WCAG checks, reporting failures, fixing on request | [contrast.md](contrast.md) |
-| Formats | Choosing a notation, converting, gamut and P3 fallbacks | [color-formats.md](color-formats.md) |
+Reuse the project's existing tokens and notation. A second color representation added to fix one value makes the palette harder to reason about, not easier: a consistent hex system beats a hex system with `oklch()` scattered through it.
 
-## Core principles
+For a genuinely new system, `oklch()` is the best default, because its numbers behave the way the ramp rules below describe. Everywhere else, a color library produces the same ramp in whatever notation the project already writes ([color-formats.md](color-formats.md)).
 
-### Match the project's color system
+## A system is ramps, not colors
 
-Reuse the project's existing tokens and notation. Introducing a second color representation to fix one value makes the palette harder to reason about, not easier. A consistent hex system beats a hex system with `oklch()` scattered through it. Notation is not a defect. For a genuinely new system, `oklch()` is the best default because its numbers behave the way the ramp rules below describe; everywhere else a color library produces the same ramp in whatever the project writes ([color-formats.md](color-formats.md)).
+One neutral ramp, one accent ramp, and only the status ramps the product actually renders. A `warning` ramp nothing imports is maintenance for zero pixels. A second accent hue earns its place only when two things must be distinguishable at a glance.
 
-### A system is ramps, not colors
-
-One neutral ramp, one accent ramp, and only the status ramps the product actually renders. A `warning` ramp nothing imports is maintenance for zero pixels, and a second accent hue earns its place only when two things must be distinguishable at a glance.
-
-### Every step has a job
+## Every step has a job
 
 A ramp is not a gradient to pick from by eye. Each step exists because a role needs it: page background, component hover, border, solid fill, body text. A step no role consumes should not be generated. Both the Tailwind `50`–`950` and Radix `1`–`12` conventions map to those roles ([palette-structure.md](palette-structure.md)).
 
-### Name primitives by hue, semantics by role
+## Name primitives by hue, semantics by role
 
-Primitives name a value (`--blue-500`) and are never applied in a component. Semantic tokens name a job (`--color-text-secondary`), point at a primitive, and are the only tier components reference. That seam is what makes theming possible; without it, dark mode means auditing every usage to work out which ones meant "the accent" and which just wanted blue ([token-naming.md](token-naming.md)).
+Primitives name a value (`--blue-500`) and are never applied in a component. Semantic tokens name a job (`--color-text-secondary`), point at a primitive, and are the only tier components reference.
 
-### Use a token only in its role
+That seam is what makes theming possible. Without it, dark mode means auditing every usage to work out which ones meant "the accent" and which just wanted blue ([token-naming.md](token-naming.md)).
+
+## Use a token only in its role
 
 Never borrow a token because its value is right today. A separator used as a text color works until borders get lighter, and then the text goes with them. If a role has no token, add the token.
 
-### Hold the hue across the ramp
+## Hold the hue across the ramp
 
-Steps step evenly in *perceived* lightness, hue stays constant end to end, vividness peaks mid-ramp and falls off at both ends, and steps sit denser at the light end than the dark. Both ends stop short of pure black and white, which cannot carry hue at all. Use a color library rather than eyeballing it ([palette-generation.md](palette-generation.md)).
+Four properties define a well-formed ramp:
 
-### One color, one meaning
+- Steps step evenly in *perceived* lightness, not in whatever the format calls lightness.
+- Hue stays constant end to end.
+- Vividness peaks mid-ramp and falls off at both ends.
+- Steps sit denser at the light end than at the dark end.
 
-Use a color for one purpose across the whole interface, treating anything within `15°` of hue as the same color. If the accent means interactive, that hue on static text tells users to click something that is not clickable, and an interactive element rendered neutral is just as misleading. Color is never the only carrier of meaning; `better-accessibility` owns that requirement.
+Both ends stop short of pure black and white, which cannot carry hue at all. Use a color library rather than eyeballing it ([palette-generation.md](palette-generation.md)).
 
-### Fill exactly one action per view
+## One color, one meaning
 
-When filled color encodes primary emphasis, one primary action gets it and peer actions stay neutral. Put the color on the background rather than the label: a filled button reads as primary across the room, while accent-colored text on a neutral button reads as a link. Several colored backgrounds are fine when they encode distinct states or categories rather than competing as peers.
+Use a color for one purpose across the whole interface. Treat anything within `15°` of hue as the same color. If the accent means interactive, that hue on static text tells users to click something that is not clickable, and an interactive element rendered neutral misleads just as badly. Color is never the only carrier of meaning; `better-accessibility` owns that requirement.
 
-### Measure the rendered pair, then report
+## Fill exactly one action per view
 
-Measure a foreground against the background it actually renders on, not the page background. When a pair fails, report the pair, its measured value, and the threshold it misses. Leave the colors alone. A project's colors are a design decision; change them only when asked, and remeasure after ([contrast.md](contrast.md)).
+When filled color encodes primary emphasis, one primary action gets it and peer actions stay neutral. Put the color on the background rather than the label: a filled button reads as primary across the room, while accent-colored text on a neutral button reads as a link.
 
-### Pick a gradient's interpolation space
+Several colored backgrounds are fine when they encode distinct states or categories rather than competing as peers.
 
-The space is a look, not a correctness setting. `in oklab` is the best default: even brightness, no hue surprises. `in oklch` travels around the hue wheel rather than through the middle, staying vivid and sweeping through the hues between the stops: a distinct look, and the fix when a two-hue gradient goes gray in the middle. The sRGB default is the classic, and its darker, muted midpoint is the one most interfaces already look like ([color-usage.md](color-usage.md)).
+## Measure the rendered pair, then report
+
+Measure a foreground against the background it actually renders on, not the page background. When a pair fails, report the pair, its measured value, and the threshold it misses, then leave the colors alone. A project's colors are a design decision. Change them only when asked, and remeasure after ([contrast.md](contrast.md)).
+
+## Pick a gradient's interpolation space
+
+The space is a look, not a correctness setting.
+
+- **`in oklab`** is the best default: even brightness, no hue surprises.
+- **`in oklch`** travels around the hue wheel instead of through the middle, so it stays vivid and sweeps through every hue between the stops. Reach for it when a two-hue gradient goes gray in the middle.
+- **The sRGB default** darkens and mutes the midpoint. It is the look most interfaces already have, because it is what you get without asking.
+
+See [color-usage.md](color-usage.md).
 
 ## Common mistakes
 

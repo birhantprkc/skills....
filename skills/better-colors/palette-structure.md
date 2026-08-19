@@ -16,7 +16,7 @@ Ship the status ramps the product actually renders. A `warning` ramp that nothin
 
 ## Every step has a job
 
-A ramp is not a gradient to pick from by eye. Each step exists because a specific role needs it, and a step no role consumes should not be generated.
+Each step maps to a role. Generate the steps the roles below call for, and skip the rest.
 
 | Role | Tailwind | Radix |
 | --- | --- | --- |
