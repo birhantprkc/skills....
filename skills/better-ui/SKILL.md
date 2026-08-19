@@ -98,7 +98,7 @@ Every animated state change also needs a static cue: color, an icon, or a label.
 
 ## Reporting
 
-**Severity.** `HIGH` breaks an interaction or makes motion unusable. `MEDIUM` is a visible inconsistency in surfaces, icons, or motion. `LOW` is isolated polish.
+**Severity.** `HIGH` breaks an interaction, makes motion unusable, or leaves a state change visible only while the animation runs. `MEDIUM` is a visible inconsistency in surfaces, icons, or motion. `LOW` is isolated polish.
 
 **Verification.** Without a browser: every state the component defines, meaning hover, focus, active, loading and empty, plus motion durations and easings read from the code. With one: walk each state, and replay motion at 10% speed in the browser's Animations panel. Report every check you could not run as `Not verified`.
 
