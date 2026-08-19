@@ -14,19 +14,21 @@ A collection of agent skills for building great product interfaces (typography, 
 
 Each skill lives in `skills/<skill-name>/`, with `SKILL.md` as the entry point and supporting `.md` files beside it.
 
+Skills come in two shapes. A domain skill holds knowledge: what is true about typography, color, or layout. A verb skill holds a procedure: review this change, explore these variants, explain this interface. A procedure sitting inside a domain skill is a candidate for extraction, and a domain rule sitting inside a verb skill belongs to its owner instead.
+
 The content headings belong to the skill, not to a house style: a set of files all filling one section template reads like instances of one file. What is shared is the small amount of framing that calibrates behaviour rather than organising content.
 
 Every `SKILL.md` carries:
 
 - **Frontmatter** with `name` (matching the directory) and `description`.
 - **A plain-name H1** and a two-sentence opener saying what the skill is and what it does. Not what the domain means or why it matters: an agent does not need motivating, and a reader can tell the difference.
-- **A calibration line or two**, in the opener or in its own section where it needs the room. This is where a skill says how hard to press: which values are exact rather than approximate, what counts as a finding versus a preference, when the right answer is to write nothing. A skill that lists rules without saying how hard to press leaves that to chance, which is the difference between a review that blocks on evidence and one that blocks on taste. Give the section a heading that carries its own point (`Evidence, not taste`), not a generic label.
+- **A calibration line or two**, in the opener or in its own section where it needs the room. This is where a skill says how hard to press: which values are exact rather than approximate, what counts as a finding versus a preference, when the right answer is to write nothing. A skill that lists rules without saying how hard to press leaves that to chance. That is the difference between a review that blocks on evidence and one that blocks on taste. Give the section a heading that carries its own point (`Evidence, not taste`), not a generic label.
 - **Headings that carry the point**, in sentence case. `Native elements first`, not `Semantics`. Number them only where the steps genuinely run in order, as `better-interface` and `interface-review` do; numbering flat reference implies a sequence that isn't there and makes every insertion a renumber.
 - **A hand-off line** naming the sibling skills that own adjacent topics.
 - **A `## Before you finish` table**, two columns, where the domain has recurring mistakes. The left column is the detection pattern, which is what a principle statement does not give you. The heading names the moment on purpose: `Common mistakes` is a label an agent reads past while orienting, and `Before you finish` names the point in the work where the table is worth consulting.
-- **A `## Reporting` section** in every domain skill, carrying only that domain's severity ladder and verification checks. See below.
+- **A `## Reporting` section** in every domain skill, carrying that domain's severity ladder, its verification checks, and the format for a standalone review. See below.
 
-Supporting `.md` files carry depth beyond the principle statements: recipes, code patterns, lookup tables. Link each one from the principle that needs it, so the link sits where the agent lands. A principle states the rule and links out for the recipe; it never restates the reference file in shorter form, and the reference file never restates the principle in longer form.
+Supporting `.md` files carry depth beyond the principle statements: recipes, code patterns, lookup tables. Link each one from the principle that needs it, so the link sits where the agent lands. A principle states the rule and links out for the recipe. It never restates the reference file in shorter form, and the reference file never restates the principle in longer form.
 
 Each rule lives in exactly one skill. Other skills point to it by skill name in backticks (`better-layout`), never by cross-skill relative link, because each skill directory ships on its own.
 
@@ -34,9 +36,9 @@ Point at a principle by its heading in bold (**Classify every finding**), never 
 
 ### The review format
 
-`better-interface` holds the only definition of the review format in this repository: the findings table and its columns, scope and coverage, considered-but-rejected, verification, the verdict ladder, and the change-scoped additions. Its section states which parts an orchestrated review uses and which subset a standalone domain review uses.
+Each skill carries the format for the review it produces. `better-interface` holds the orchestrated format in `review-format.md`: scope and coverage, the findings table, considered-but-rejected, verification, and the verdict. A domain skill's `## Reporting` holds the smaller standalone format, grouped by the principle each finding violates, with no `#` or `Domain` column. `interface-review` holds the change-scoped format, with its status column and its pre-existing section.
 
-A domain skill's `## Reporting` section carries two things and nothing else: its severity ladder and its verification checks. For the table structure and the verdict it calls the Skill tool with `better-interface`. Those two are the only parts that were ever domain-specific; six copies of the rest is what this replaced.
+Those three overlap, and that overlap is the price of a skill that works when installed alone. Someone who installs only `better-typography` has no `better-interface` on disk to read a format out of.
 
 ### Invocation
 
@@ -52,8 +54,8 @@ A user-invoked skill may invoke model-invoked skills, but it can never reach ano
 
 | Skill | Owns |
 | --- | --- |
-| `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, the shared remediation ordering, consolidation, coverage, the finding cap, the output format including its change-scoped additions, and the verdict |
-| `interface-review` | Change scope resolution including the empty-scope offer, blast radius from changed files to affected surfaces, and finding classification (`Introduced` / `Regression` / `Pre-existing`) |
+| `better-interface` | Review orchestration, mode parsing, project convention discovery, shared severity and its escalation triggers, the shared remediation ordering, consolidation, coverage, the finding cap, the orchestrated output format, and the verdict |
+| `interface-review` | Change scope resolution including the empty-scope offer, blast radius from changed files to affected surfaces, finding classification (`Introduced` / `Regression` / `Pre-existing`), and the change-scoped report format |
 | `variant` | Design exploration: the axis set variants may diverge on, how many to build, the harness and picker, the tradeoff table, and promotion. Owns no domain rules; every variant clears `better-interface`'s escalation triggers as its floor |
 | `explain-interface` | Reading an interface you did not build: scoping to the thing asked about, the layer search, the URL and screenshot branches, the measured / derived / inferred evidence tiers, and the minimal reproduction. Owns no domain rules and issues no verdict; it names what it finds in each domain skill's vocabulary |
 | `better-accessibility` | Semantic HTML, keyboard and focus behavior, accessible names, forms, assistive technology, and accessibility requirements |
@@ -70,22 +72,22 @@ When a concern crosses domains, keep the rule in the owner above and let other s
 - `better-layout` owns logical CSS properties and spatial mirroring; `better-typography` owns language metadata, punctuation, and mixed-direction text.
 - `better-typography` owns truncation mechanics; `better-layout` owns whether the surrounding layout has room or an expansion affordance; `better-writing` owns the source copy.
 - `better-accessibility` owns reduced-motion requirements; `better-ui` owns the optional animation recipe used when motion is appropriate.
-- `interface-review` owns what to review when the scope is a diff; `better-interface` owns how that review is routed, ranked, consolidated, and reported. The dependency runs one way: `interface-review` hands its scope and statuses up, and `better-interface` hosts every format and verdict rule that consumes them. Neither file may restate the other's rules.
+- `interface-review` owns what to review when the scope is a diff; `better-interface` owns how that review is routed, ranked, consolidated, and reported. The dependency runs one way: `interface-review` hands its scope and statuses up, and `better-interface` ranks, caps, and issues the verdict. Neither file may restate the other's rules.
 
 ## Authoring conventions
 
 - Principles are prescriptive and specific: exact CSS properties, exact values (e.g. scale `0.25` → `1`, blur `4px` → `0px`), not vague advice.
 - Match the degree of prescription to the decision: requirements may be unconditional, while design heuristics name the context and escape conditions before giving exact recipe values.
 - Skills instruct agents to match the target project's existing styling system (Tailwind vs. plain CSS vs. CSS-in-JS) rather than impose one.
-- Frontmatter `description` is the discovery surface; when adding or changing a skill's scope, update its trigger keywords accordingly. It is loaded on every turn, so it earns harder pruning than the body: one trigger per distinct branch, never two phrasings of the same one, and no identity the body already carries (which skills it coordinates, which modes it supports, how it does its work).
+- Frontmatter `description` is how a skill gets found. Update its triggers whenever the skill's scope changes. It loads on every turn, so it earns harder pruning than the body: one trigger per distinct branch, and never two phrasings of the same one. Leave out identity the body already carries, such as which skills it coordinates or which modes it supports.
 - Skills that own a domain use the `better-*` prefix. A user-invoked review entry point may drop it when a plainer name reads better on the command line, as `interface-review` does.
 - A skill's name appears in three places: its directory, its frontmatter `name`, and `display_name` in its `agents/openai.yaml`. Renaming means changing all three, then `grep`ing for the old name to confirm nothing survived.
 - Prefer counts and lists that cannot go stale. Say "every skill in this repository" rather than a number the next skill invalidates.
-- Straight quotes, sentence-case headings.
+- Straight quotes, sentence-case headings. No em dashes, and no parentheses or mid-sentence colons standing in for one: end the sentence or use a comma. En dashes are for numeric ranges only.
 
 Four checks after an edit, since prose drifts back toward the mean:
 
 - **No sentence over 30 words**, counting a code span as one word. A ceiling, not an average. Averages are the wrong instrument here: aiming for a low mean produces choppy prose, and the well-written references this collection was measured against average about 14 words with a long tail. What makes a file hard to read is the individual 40-word sentence carrying four clauses, so split those and leave the rest alone.
 - **Around 20 triggers per description.** Two words for one branch is one branch written twice.
-- **One statement of each rule.** Before adding a sentence, check whether the file already says it somewhere else. The reflex to restate a boundary "for clarity" is what produced four copies of the same ownership line in `better-interface`, and a mistake table whose every row repeated the principle above it.
-- **No prose section over about 250 words.** Check sections, not word totals. A `SKILL.md` here gets long from the number of rules it carries, and rule count is a content decision rather than a cleanup one. A section past 250 words is either two rules under one heading, or a reference file that hasn't been extracted yet: `better-interface`'s review format was the second kind at 790 words.
+- **One statement of each rule.** Before adding a sentence, check whether the file already says it somewhere else. The reflex to restate a boundary "for clarity" produced four copies of one ownership line in `better-interface`. It also produced a mistake table whose every row repeated the principle above it.
+- **A pruning pass, not a word ceiling.** No reference collection caps skill length; `anthropics/skills` runs to nearly 10,000 words in a single file. Read each sentence and ask what it changes. A sentence that cannot be restated as an instruction, a fact, or a number is cut. A sentence that could appear unchanged in another project's docs says nothing about this one. Prose about this repository's own filing decisions belongs in this file, never in a skill.
