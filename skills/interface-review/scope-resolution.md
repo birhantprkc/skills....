@@ -66,7 +66,7 @@ Read files at that ref with `git show refs/remotes/pr/<n>:path/to/file`. Do not 
 
 **Citations.** `better-interface` requires `path/to/file:line`. Line numbers from a fetched ref do not necessarily match the working tree. Cite against the head ref, and declare that ref and its SHA in the scope block so the numbers are resolvable.
 
-**Intent.** The `title` and `body` from `gh pr view` are the stated intent for principle 6. Add the commit subjects when the body is empty:
+**Intent.** The `title` and `body` from `gh pr view` are the stated intent for **Hold the change to its stated intent**. Add the commit subjects when the body is empty:
 
 ```bash
 git log --format='%s%n%b' "$BASE".."refs/remotes/pr/<n>"
@@ -104,7 +104,7 @@ gh pr status --json number,title,headRefName    # `currentBranch`: this branch's
 
 `gh pr status` succeeds with no pull request open. It omits `currentBranch`, so an empty result is an answer, not an error. It fails outright without `gh`, without authentication, and on a repository with no GitHub remote. Treat any failure as "no pull request found", say so, and offer the remaining routes rather than stopping.
 
-Report the current branch, whether it is the default branch, that the tree is clean, and whether a pull request is open, then offer the three routes in principle 2. State the last commit's SHA and subject inside the offer: the user recognises "a1b2c3d Merge pull request #482" as not what they wanted, and cannot recognise "the last commit".
+Report the current branch, whether it is the default branch, that the tree is clean, and whether a pull request is open, then offer the three routes in **With no change, ask rather than invent one**. State the last commit's SHA and subject inside the offer: the user recognises "a1b2c3d Merge pull request #482" as not what they wanted, and cannot recognise "the last commit".
 
 A whole-repository audit is a different review, not this one with a wider net. Hand the repository to `better-interface` directly, without a scope block, statuses, or a pre-existing section.
 

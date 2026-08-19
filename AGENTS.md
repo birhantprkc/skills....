@@ -27,6 +27,8 @@ Supporting `.md` files carry depth beyond the principle statements: recipes, cod
 
 Each rule lives in exactly one skill. Other skills point to it by skill name in backticks (`better-layout`), never by cross-skill relative link, because each skill directory ships on its own.
 
+Point at a principle by its heading in bold (**Classify every finding**), never by its number. A numbered reference breaks silently the moment a principle is inserted above it, and nothing in the file fails when it does.
+
 ### The review format
 
 `better-interface` holds the only definition of the review format in this repository: the findings table and its columns, scope and coverage, considered-but-rejected, verification, the verdict ladder, and the change-scoped additions. Its section states which parts an orchestrated review uses and which subset a standalone domain review uses.
@@ -74,8 +76,9 @@ When a concern crosses domains, keep the rule in the owner above and let other s
 - Prefer counts and lists that cannot go stale. Say "every skill in this repository" rather than a number the next skill invalidates.
 - Straight quotes, sentence-case headings.
 
-Three numbers worth checking after an edit, since prose drifts back toward the mean:
+Four checks after an edit, since prose drifts back toward the mean:
 
-- **Around 13 words per prose sentence**, measured with code blocks and tables excluded. Past 16, the file is stacking clauses where it should be ending sentences.
+- **No sentence over 30 words.** A ceiling, not an average. Averages are the wrong instrument here: aiming for a low mean produces choppy prose, and the well-written references this collection was measured against average about 14 words with a long tail. What makes a file hard to read is the individual 40-word sentence carrying four clauses, so split those and leave the rest alone.
 - **Around 20 triggers per description.** Two words for one branch is one branch written twice.
-- **One statement of each rule.** Before adding a sentence, check whether the file already says it somewhere else; the reflex to restate a boundary "for clarity" is what produced four copies of the same ownership line in `better-interface`.
+- **One statement of each rule.** Before adding a sentence, check whether the file already says it somewhere else. The reflex to restate a boundary "for clarity" is what produced four copies of the same ownership line in `better-interface`, and a mistake table whose every row repeated the principle above it.
+- **No prose section over about 250 words.** Check sections, not word totals. A `SKILL.md` here gets long from the number of rules it carries, and rule count is a content decision rather than a cleanup one. A section past 250 words is either two rules under one heading, or a reference file that hasn't been extracted yet: `better-interface`'s review format was the second kind at 790 words.

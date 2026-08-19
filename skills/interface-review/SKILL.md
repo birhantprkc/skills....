@@ -23,11 +23,11 @@ With no target supplied, resolve in this order and stop at the first match:
 
 1. `HEAD` is ahead of `git merge-base origin/<default-branch> HEAD`: that range **plus** any uncommitted changes, with the commit count and the uncommitted file count stated separately.
 2. The working tree is dirty: the uncommitted changes.
-3. Neither: there is no change to review. Stop and ask, per principle 2.
+3. Neither: there is no change to review. Stop and ask, per **With no change, ask rather than invent one**.
 
 Order matters. Check the working tree first and one stray formatting edit shadows a twelve-commit branch, while the report still claims full coverage.
 
-Exclude lockfiles, snapshots, generated output, vendored code, and binaries, and name what you excluded. An empty scope after exclusions is principle 2 reached by a different route.
+Exclude lockfiles, snapshots, generated output, vendored code, and binaries, and name what you excluded. An empty scope after exclusions reaches the same place by a different route.
 
 ### 2. With no change, ask rather than invent one
 
@@ -36,7 +36,7 @@ A clean tree with nothing ahead of the merge base means the user asked to review
 State the repository facts you found, then offer the routes and wait. [Nothing to Review](scope-resolution.md#nothing-to-review) holds the commands:
 
 - **The last commit**, `HEAD~1..HEAD`, named by short SHA and subject, so the user sees what they would get before choosing it.
-- **A target they name**: `pr <n>`, a branch, a ref, or a range, resolved per principle 1.
+- **A target they name**: `pr <n>`, a branch, a ref, or a range, resolved per **Resolve the change scope first**.
 - **A whole-repository interface audit**, which is not a change review. Hand it to `better-interface` as a repository-scope review and drop this skill's scope block, statuses, and pre-existing section. With no change, every finding is pre-existing and the classification carries no information.
 
 Check for an open pull request on the current branch before asking, and offer it first when one exists. A branch whose commits already landed on the base resolves to no change, while its pull request is still exactly what the user meant.
@@ -130,6 +130,6 @@ This skill supplies the scope block:
 | Excluded | `pnpm-lock.yaml`, `src/__snapshots__/`: lockfile and snapshots |
 | Surfaces expanded | `CheckoutPage`, `SettingsPanel`; 3 further `Button` consumers not expanded |
 
-Plus a status on every finding, per principle 5.
+Plus a status on every finding, per **Classify every finding**.
 
-Under `better-interface`'s **Verification**, list the exact `git` and `gh` commands and their results. Include every write to `.git`: a fetch, a deepen, a `set-head`, a worktree. That is what makes the read-only claim in principle 8 auditable.
+Under `better-interface`'s **Verification**, list the exact `git` and `gh` commands and their results. Include every write to `.git`: a fetch, a deepen, a `set-head`, a worktree. That is what makes the read-only claim in **Never mutate the working tree** auditable.
