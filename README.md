@@ -48,4 +48,4 @@ There is no plugin per skill, so `/plugin install better-interface@interfaces` f
 
 Plugin skills are namespaced under the plugin, so run the change review as `/interfaces:interface-review` and ask for variants with `/interfaces:variant`. Typing `/interface-review` matches nothing and looks like a failed install, even when the install succeeded.
 
-To pick up later versions, run `/plugin marketplace update interfaces`.
+To pick up later versions, run `/plugin update interfaces@interfaces` and restart. `/plugin marketplace update interfaces` only refreshes the marketplace listing and leaves the installed skills untouched.
