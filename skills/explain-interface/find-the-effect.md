@@ -90,3 +90,5 @@ Where the page is large, sample what actually paints at a point instead of walki
 ```
 
 `getAnimations()` catches CSS animations, transitions, and Web Animations API playback in one call, which a stylesheet walk misses entirely.
+
+It returns nothing on a page at rest, because a one-shot reveal has either finished or never started. A headless browser producing no frames never starts it at all, so reload, then take a screenshot every 100ms while you poll.
