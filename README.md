@@ -21,6 +21,8 @@ A collection of agent skills that help you build a great interface. They cover U
 
 ## Install
 
+Both methods install the same skills. They differ in what you type to run one, so pick a method and use its names.
+
 ### CLI
 
 Works in Claude Code, Codex, Opencode and other agents. You can choose which skills to install or install all of them.
@@ -28,6 +30,8 @@ Works in Claude Code, Codex, Opencode and other agents. You can choose which ski
 ```bash
 npx skills add jakubkrehel/skills
 ```
+
+Skills installed this way keep their plain names, so the change review runs as `/interface-review`.
 
 ### Claude Code plugin
 
@@ -37,3 +41,7 @@ Installs every skill in this repository together and updates in place. Run these
 /plugin marketplace add jakubkrehel/skills
 /plugin install interfaces@interfaces
 ```
+
+Plugin skills are namespaced under the plugin, so the change review runs as `/interfaces:interface-review` and variants as `/interfaces:variant`.
+
+To update later, run `/plugin update interfaces@interfaces` and restart.
