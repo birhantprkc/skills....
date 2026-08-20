@@ -11,7 +11,7 @@ A collection of agent skills that help you build a great interface. They cover U
 - [**better-interface**](skills/better-interface/SKILL.md): A cross-discipline interface review that coordinates every skill below.
 - [**interface-review**](skills/interface-review/SKILL.md): A user-invoked review of your uncommitted changes, current branch or a pull request against every skill below. Run it by name; it never starts on its own.
 - [**variant**](skills/variant/SKILL.md): Builds several genuinely different versions of one piece of UI behind a picker, so you can flip between them in the real page and promote the one that wins. Run it by name.
-- [**explain-interface**](skills/explain-interface/SKILL.md): Ask how something was built. Point it at a URL or a screenshot, name the thing you're curious about, and it finds the layers behind the effect and shows you the smallest way to rebuild it. Run it by name.
+- [**explain-interface**](skills/explain-interface/SKILL.md): Ask how something was built. Point it at a URL or a screenshot, name the thing you're curious about, and it finds the layers behind the effect and explains what each one does. Run it by name.
 - [**better-ui**](skills/better-ui/SKILL.md): Design engineering details that make interfaces feel polished: border radius, shadows, animations and micro-interactions.
 - [**better-typography**](skills/better-typography/SKILL.md): Choosing and pairing typefaces, type scales, spacing, wrapping and truncation.
 - [**better-colors**](skills/better-colors/SKILL.md): Color systems: building and naming palettes, applying color with meaning, contrast and theming.
