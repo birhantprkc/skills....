@@ -8,7 +8,7 @@ Run these through whatever browser tooling is available: `evaluate_script` in th
 
 **Pseudo-elements carry the effect more often than elements do.** A gradient, a noise overlay, a hairline border, a glow all commonly live on `::before` or `::after`. `getComputedStyle(el)` alone never sees them, so pass the pseudo as the second argument and check all three.
 
-**Idle values are not effects.** `filter: blur(0px)`, `opacity: 1`, and `transform: none` are what an animation library leaves on every element it touches. On one real page they turned a search into 97 hits, of which 10 mattered. Filter them out first.
+**Idle values are not effects.** `filter: blur(0px)`, `opacity: 1` and `transform: none` are what an animation library leaves on every element it touches. On one real page they turned a search into 97 hits, of which 10 mattered. Filter them out first.
 
 **A generated stop list is one technique, not twelve stops.** Stops at `0%, 9.99%, 19.07%, ...` came from a utility following an easing curve. The extra stops keep the gradient from banding. Name the technique, never paste the stops.
 
@@ -44,9 +44,9 @@ for (const el of document.querySelectorAll('*')) {
 Read the result for the stack, not for one row:
 
 - **Compare `box` against the viewport.** An element wider than `window.innerWidth`, or with a negative offset, is oversized on purpose so its edges never show.
-- **Order by `y` and `z`** to get paint order. The gradient is usually the lowest layer and the frosted panel the one above it.
-- **`backdropFilter` on any row** means that layer frosts something beneath it, so the layer beneath is part of the answer.
-- **`mixBlendMode`** means the layer's color depends on what it covers, so you cannot explain it without naming what is underneath.
+- **Order by `y` and `z`.** That is paint order. The gradient is usually the lowest layer and the frosted panel the one above it.
+- **`backdropFilter` on any row.** That layer frosts something beneath it, so the layer beneath is part of the answer.
+- **`mixBlendMode` on any row.** The layer's color depends on what it covers, so you cannot explain it without naming what is underneath.
 
 ## When CSS is not the answer
 
@@ -89,6 +89,6 @@ Where the page is large, sample what actually paints at a point instead of walki
 }));
 ```
 
-`getAnimations()` catches CSS animations, transitions, and Web Animations API playback in one call, which a stylesheet walk misses entirely.
+`getAnimations()` catches CSS animations, transitions and Web Animations API playback in one call, which a stylesheet walk misses.
 
 It returns nothing on a page at rest, because a one-shot reveal has either finished or never started. A headless browser producing no frames never starts it at all, so reload, then take a screenshot every 100ms while you poll.

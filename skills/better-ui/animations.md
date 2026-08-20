@@ -1,6 +1,6 @@
 # Animations
 
-Interruptible transitions, press feedback, and the restraint that decides whether to animate at all. Staged entrances and exits live in [enter-exit.md](enter-exit.md); icon swaps in [icon-transitions.md](icon-transitions.md).
+Interruptible transitions, press feedback and the restraint that decides whether to animate at all. Staged entrances and exits live in [enter-exit.md](enter-exit.md); icon swaps in [icon-transitions.md](icon-transitions.md).
 
 ## Interruptible animations
 
@@ -122,7 +122,7 @@ Use `initial={false}` on `AnimatePresence` to stop enter animations firing on fi
 </AnimatePresence>
 ```
 
-Works well for icon swaps, toggles, tabs, and segmented controls, anything with a default state on page load.
+Works well for icon swaps, toggles, tabs and segmented controls, anything with a default state on page load.
 
 ### When it breaks
 
@@ -141,7 +141,7 @@ Verify the component still looks right on a full page refresh before applying th
 
 ## Suppress transitions on theme switch
 
-Flipping the theme changes `color`, `background-color`, `border-color`, and `box-shadow` on nearly every element at once. Everything carrying a transition on those properties animates together, so the switch reads as a slow smear rather than an instant change. Disable transitions for the swap and restore them right after.
+Flipping the theme changes `color`, `background-color`, `border-color` and `box-shadow` on nearly every element at once. Everything carrying a transition on those properties animates together, so the switch reads as a slow smear rather than an instant change. Disable transitions for the swap and restore them right after.
 
 Inject a stylesheet that turns off every transition, force a reflow so the new colors commit while it still applies, then drop it on the next frame:
 
@@ -187,7 +187,7 @@ That covers the OS-level change. An in-app toggle needs the same treatment aroun
 Motion is a budget, not a garnish. Three rules decide whether an animation belongs at all:
 
 - **Give high-frequency interactions instant feedback instead of animation.** Every keystroke, every list-row hover, every tab switch in a work tool. Reserve expressive motion for infrequent moments (first load of a view, success states, empty states); high-frequency interactions get instant feedback or the subtlest possible transition (`opacity`/`background-color` at ≤150ms).
-- **Motion is never the only feedback channel.** Every state change an animation communicates stays visible when it doesn't run: a color change, an icon swap, a label. Users with reduced motion enabled, and anyone who blinked, still need to see what happened.
+- **Motion is never the only feedback channel.** Every state change an animation communicates stays visible when it doesn't run: a color change, an icon swap, a label. Users with reduced motion enabled and anyone who blinked still need to see what happened.
 - **Brief and precise beats prominent.** Where a shorter, smaller animation says the same thing, use it. When in doubt cut the duration, not the clarity.
 
 ```css

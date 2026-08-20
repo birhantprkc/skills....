@@ -1,6 +1,6 @@
 # Forms
 
-Labels, autocomplete, error messaging, input types, and submit behavior.
+Labels, autocomplete, error messaging, input types and submit behavior.
 
 ## Labels
 
@@ -46,7 +46,7 @@ The complete pattern:
 
 ## Autocomplete and input types
 
-`autocomplete` with a meaningful `name` fills forms in one tap, and is a WCAG requirement (1.3.5) for fields about the user. The common tokens:
+`autocomplete` with a meaningful `name` fills forms in one tap and is a WCAG requirement (1.3.5) for fields about the user. The common tokens:
 
 | Field | `autocomplete` |
 | --- | --- |
@@ -70,7 +70,7 @@ Correct `type` and `inputmode` pick the right mobile keyboard:
 | Money, decimals | `type="text" inputmode="decimal"` |
 | True numeric quantity | `type="number"` |
 
-Disable spellcheck on emails, codes, and usernames: `spellcheck="false"`.
+Disable spellcheck on emails, codes and usernames: `spellcheck="false"`.
 
 ## Never fight the user's tools
 

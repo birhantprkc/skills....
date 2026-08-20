@@ -1,6 +1,6 @@
 # Grouping and alignment
 
-How spacing, shapes, shared edges, and ordering communicate what belongs together and what matters most.
+How spacing, shapes, shared edges and ordering communicate what belongs together and what matters most.
 
 ## Group with space, not lines
 
@@ -87,7 +87,7 @@ Express direction-dependent horizontal position as leading/trailing so the layou
 
 Reserve physical properties for things that refer to physical screen sides whatever the language, such as positioning against a device notch or matching a gesture direction.
 
-Where arrangement encodes progression, as in star ratings, step indicators, and progress bars, the sequence mirrors in RTL and stars fill from the trailing side. Flexbox and grid with logical properties mirror automatically; hand-positioned elements do not. Digit order inside numbers never reverses, which with other bidi rules belongs to `better-typography`.
+Where arrangement encodes progression, as in star ratings, step indicators and progress bars, the sequence mirrors in RTL and stars fill from the trailing side. Flexbox and grid with logical properties mirror automatically; hand-positioned elements do not. Digit order inside numbers never reverses, which with other bidi rules belongs to `better-typography`.
 
 ## Order by importance
 

@@ -1,6 +1,6 @@
 # Screen readers
 
-Visually hidden content, live regions, toasts, alt text, and SVG.
+Visually hidden content, live regions, toasts, alt text and SVG.
 
 ## Visually hidden content
 

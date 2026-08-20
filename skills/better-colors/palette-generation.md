@@ -8,7 +8,7 @@ A brand color arrives as one value, usually a hex. Two decisions come before any
 
 **Which step does it occupy?** A brand color meant for buttons and links belongs on the solid-fill step: `500` in Tailwind, `9` in Radix. Then `bg-brand-500` renders the actual brand color, not an approximation.
 
-**Is it pinned or snapped?** Pin a contractually fixed brand color. It stays exact, the ramp builds outward from it, and that one step spaces slightly unevenly. Otherwise snap it onto the ramp so every step spaces evenly. That looks better almost always, and nobody notices without a swatch held to the screen.
+**Is it pinned or snapped?** Pin a contractually fixed brand color. It stays exact, the ramp builds outward from it and that one step spaces slightly unevenly. Otherwise snap it onto the ramp so every step spaces evenly. That looks better almost always, and nobody notices without a swatch held to the screen.
 
 A brand color that fails contrast behind white text is still the brand color, just not the solid-fill step. Put it where it lands and use a darker step for interactive fills. Never quietly darken the brand.
 
@@ -17,7 +17,7 @@ A brand color that fails contrast behind white text is still the brand color, ju
 Properties of the finished ramp, checkable against any output in any notation:
 
 - **Steps are evenly spaced in perceived lightness.** Not in the number your format calls "lightness". HSL's is not perceptual, and evenly spaced HSL values bunch at one end.
-- **Hue is constant end to end.** Every step is recognisably the same color. A wandering hue reads as two colors blended, and will not sit correctly against a neutral built on a different hue.
+- **Hue is constant end to end.** Every step is recognisably the same color. A wandering hue reads as two colors blended and will not sit correctly against a neutral built on a different hue.
 - **Vividness peaks in the middle and falls off at both ends.** The lightest and darkest steps are nearly neutral; the middle carries the color. Holding full vividness into the extremes gives a `50` that glows and a `950` like ink spilled on the brand.
 - **Steps are denser at the light end.** Light backgrounds need finer distinctions than dark ones. Keep `50` to `200` close together and `800` to `950` further apart. Even spacing across the whole range makes the pale end unusable, because `50` and `100` stop reading as two surfaces.
 - **No two adjacent steps are indistinguishable.** If `200` and `300` look identical on a calibrated screen, the ramp has more steps than decisions. Drop one.
@@ -25,7 +25,7 @@ Properties of the finished ramp, checkable against any output in any notation:
 
 ## Use a color library
 
-Never compute these by hand or by eye. `culori`, `colorjs.io`, and `chroma.js` all convert between notations, measure perceived lightness, and interpolate perceptually. Read the brand color in whatever format it arrives, do the math in a perceptual space, and emit the project's notation:
+Never compute these by hand or by eye. `culori`, `colorjs.io` and `chroma.js` all convert between notations, measure perceived lightness and interpolate perceptually. Read the brand color in whatever format it arrives, do the math in a perceptual space and emit the project's notation:
 
 ```js
 import { formatHex, interpolate, samples } from 'culori'

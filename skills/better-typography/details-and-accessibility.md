@@ -1,6 +1,6 @@
 # Details and accessibility
 
-Underlines, selection, forms, decorative text, and the floors that keep everything readable.
+Underlines, selection, forms, decorative text and the floors that keep everything readable.
 
 ## Underlines
 

@@ -4,7 +4,7 @@ Cross-fading an icon when it changes contextually or by state, with and without 
 
 ## Contextual icon animations
 
-When icons appear or disappear contextually, on hover or a state change, animate them with `opacity`, `scale`, and `blur` rather than toggling visibility.
+When icons appear or disappear contextually, on hover or a state change, animate them with `opacity`, `scale` and `blur` rather than toggling visibility.
 
 ### Motion example
 

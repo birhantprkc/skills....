@@ -6,7 +6,7 @@ The control that switches variants. Its appearance is not a design decision, bec
 
 Never style the picker with the project's tokens, fonts, or colors. One that looks native to the product becomes part of what you are looking at, and then you are judging the harness.
 
-One dark neutral surface, the system font stack, and no project variables. Dark reads as chrome over both light and dark pages, which is why it does not follow the theme.
+One dark neutral surface, the system font stack and no project variables. Dark reads as chrome over both light and dark pages, which is why it does not follow the theme.
 
 ## Behavior
 

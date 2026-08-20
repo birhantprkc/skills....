@@ -11,7 +11,7 @@ Use this for infrequent staged entrances where sequence communicates hierarchy: 
 1. **Split** into logical groups (title, description, buttons)
 2. **Stagger** with ~100ms delay between groups
 3. **For titles**, consider splitting into individual words with ~80ms stagger
-4. **Combine** `opacity`, `blur`, and `translateY` for the enter effect
+4. **Combine** `opacity`, `blur` and `translateY` for the enter effect
 
 ### Code example
 

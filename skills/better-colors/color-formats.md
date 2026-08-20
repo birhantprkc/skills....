@@ -1,6 +1,6 @@
 # Color formats
 
-Which notation to write colors in, how to convert between them, and what happens at the edges of a display's gamut. Every other rule in this skill is stated perceptually and holds whatever notation you write.
+Which notation to write colors in, how to convert between them and what happens at the edges of a display's gamut. Every other rule in this skill is stated perceptually and holds whatever notation you write.
 
 ## Choosing a notation
 
@@ -22,7 +22,7 @@ oklch(L C H / alpha)  /* alpha uses a slash, never a comma */
 
 ## Converting
 
-Convert when the user asks, when an agreed migration is in scope, or when the project is standardizing on a notation and this value is the straggler. Never convert an isolated value in a project that deliberately uses something else, and never because this skill happened to load.
+Convert when the user asks, when an agreed migration is in scope, or when the project is standardizing on a notation and this value is the straggler. Never convert an isolated value in a project that deliberately uses something else and never because this skill happened to load.
 
 When conversion is in scope, change the values and nothing else:
 

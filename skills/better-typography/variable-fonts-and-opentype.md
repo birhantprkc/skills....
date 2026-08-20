@@ -1,17 +1,17 @@
 # Variable fonts and OpenType
 
-What a font file can do beyond drawing letters, and how to reach those abilities from CSS.
+What a font file can do beyond drawing letters and how to reach those abilities from CSS.
 
 ## Static vs variable
 
-- **Static font:** one weight and one style per file. Regular, medium, and bold is three files.
+- **Static font:** one weight and one style per file. Regular, medium and bold is three files.
 - **Variable font:** a whole range in one file. Any value in it works, such as `font-weight: 589`.
 
 A variable font is not automatically better. At one or two weights, static files can be smaller. At several weights, optical sizes, or custom axes, a variable font usually wins.
 
 ## Load intended weights and styles
 
-Use a weight or style the active family does not provide and the browser may synthesize it, so load the faces the design uses. `none` disables weight, style, small-cap, superscript, and subscript synthesis together, and can erase distinctions when the real face is unavailable. Verify the whole fallback stack and every emphasis state before setting it.
+Use a weight or style the active family does not provide and the browser may synthesize it, so load the faces the design uses. `none` disables weight, style, small-cap, superscript and subscript synthesis together and can erase distinctions when the real face is unavailable. Verify the whole fallback stack and every emphasis state before setting it.
 
 ```css
 .brand-wordmark {
@@ -20,7 +20,7 @@ Use a weight or style the active family does not provide and the browser may syn
 }
 ```
 
-For body and interface text, keep synthesis enabled unless a verified font setup supplies every requested form. If only one mode is unwanted, use the specific longhand (`font-synthesis-weight`, `font-synthesis-style`, and related properties) instead of the blanket shorthand.
+For body and interface text, keep synthesis enabled unless a verified font setup supplies every requested form. If only one mode is unwanted, use the specific longhand (`font-synthesis-weight`, `font-synthesis-style` and related properties) instead of the blanket shorthand.
 
 ## Axes
 

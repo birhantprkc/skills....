@@ -44,7 +44,7 @@ Tailwind's 11 steps cover 12 roles, so some do double duty. Where the table repe
 
 ## Neutrals
 
-A pure gray ramp is a perfectly good default. It sits under any accent hue without competing, and never needs revisiting when the brand color changes.
+A pure gray ramp is a perfectly good default. It sits under any accent hue without competing and never needs revisiting when the brand color changes.
 
 Tinting the neutral toward the accent hue is a stylistic option, not a correction. A trace of the accent, a few percent of its vividness, puts the greys in the same family as the accent rather than merely coexisting with it. Enough to measure, not enough to name. Neither choice reads as a mistake.
 
@@ -59,7 +59,7 @@ Convention constrains status hues before taste does. Red reads as danger, amber 
 Two rules govern them:
 
 - **Keep every status hue distinct from the accent.** If the brand is red, the danger ramp cannot also be red. Move danger toward a deeper crimson and check the two side by side, or the destructive and primary actions are the same button.
-- **Status ramps need fewer steps than the accent.** Most render four roles: a background, a border, a solid fill, and text. Generate the full ramp only where the product styles status components across the whole range.
+- **Status ramps need fewer steps than the accent.** Most render four roles: a background, a border, a solid fill and text. Generate the full ramp only where the product styles status components across the whole range.
 
 Status color is never the only signal of a state change; pair it with an icon or text. `better-accessibility` owns that requirement.
 
@@ -67,7 +67,7 @@ Status color is never the only signal of a state change; pair it with an icon or
 
 Before restructuring a system, inventory it. Most codebases hold several times more colors than the design has decisions.
 
-1. **Collect every literal.** Grep for hex, `rgb(`, `hsl(`, `oklch(`, and the project's utility-class prefixes. Include SVG `fill`/`stroke`, chart configs, and email templates. Colors hide outside stylesheets.
+1. **Collect every literal.** Grep for hex, `rgb(`, `hsl(`, `oklch(` and the project's utility-class prefixes. Include SVG `fill`/`stroke`, chart configs and email templates. Colors hide outside stylesheets.
 2. **Sort by perceived lightness within each hue family.** Duplicates surface immediately as near-identical neighbors.
 3. **Collapse near-duplicates.** Two colors closer than about one ramp step are one color that drifted. Keep the one used most and retire the others. Never average them.
 4. **Assign each survivor a role** from the table above. A color matching no role is a missing token or a mistake. Decide which, and say so in the finding.

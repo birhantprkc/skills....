@@ -1,6 +1,6 @@
 # Spacing and adaptivity
 
-Space between controls, margins against the viewport, hints at off-screen content, and layouts that survive resizing and translation.
+Space between controls, margins against the viewport, hints at off-screen content and layouts that survive resizing and translation.
 
 ## Breathing room between targets
 
@@ -29,7 +29,7 @@ Borderless controls need more clearance, because nothing marks where one target 
 </div>
 ```
 
-WCAG target-size requirements, larger usability targets, and pseudo-element expansion belong to `better-accessibility`; these clearances are in addition, so expanded hit areas never overlap.
+WCAG target-size requirements, larger usability targets and pseudo-element expansion belong to `better-accessibility`; these clearances are in addition, so expanded hit areas never overlap.
 
 ## Inset buttons from the edges
 
@@ -91,7 +91,7 @@ In the peeking-scroller recipe, the container's padding creates the peek and sna
 
 The two layers behave differently at the edges:
 
-- **Content layer**: backgrounds, hero media, and scrollable lists extend to the viewport edges.
+- **Content layer**: backgrounds, hero media and scrollable lists extend to the viewport edges.
 - **Control layer**: text and controls stay inside the layout margins and safe areas, floating above the content.
 
 ```css

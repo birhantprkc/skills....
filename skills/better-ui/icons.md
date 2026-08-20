@@ -1,6 +1,6 @@
 # Icons
 
-Icon weight, states, sizing, and direction, the details that make icons sit naturally in an interface.
+Icon weight, states, sizing and direction, the details that make icons sit naturally in an interface.
 
 ## Match icon stroke to text weight
 
@@ -33,7 +33,7 @@ Two related consistency rules:
 
 ## One SVG, recolored per state
 
-Never ship separate assets for default, hover, selected, and disabled states. Use one SVG drawn with `currentColor` and let CSS state drive the color:
+Never ship separate assets for default, hover, selected and disabled states. Use one SVG drawn with `currentColor` and let CSS state drive the color:
 
 ```html
 <!-- Good: one asset, states are CSS -->
@@ -77,7 +77,7 @@ The swap between variants is a contextual icon animation. Use the exact cross-fa
 
 ## Design at render size
 
-An icon that looks great at 48px collapses into mush at 16px. Thin interior lines, tight counters, and fine texture all blur or alias when small.
+An icon that looks great at 48px collapses into mush at 16px. Thin interior lines, tight counters and fine texture all blur or alias when small.
 
 - Test every icon at the smallest size it will render, often `16px`. It must stay recognizable there.
 - Prefer simplified glyphs for small contexts over scaling down detailed artwork.

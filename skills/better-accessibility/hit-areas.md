@@ -1,6 +1,6 @@
 # Hit areas
 
-Target sizes, expanding hit areas without changing visual size, and collision rules.
+Target sizes, expanding hit areas without changing visual size and collision rules.
 
 ## Target sizes
 
@@ -13,7 +13,7 @@ Separate the conformance baseline from larger usability targets:
 | Apple HIG | 44×44pt |
 | Material Design | 48×48dp |
 
-WCAG 2.5.8 Level AA requires a 24×24 CSS-pixel target or one of its exceptions. Treat 44px as the recommended touch target for primary controls and 40px as a useful desktop target where density permits. Smaller controls are not automatic failures. Check the spacing, equivalent-control, inline, user-agent, and essential exceptions before reporting one.
+WCAG 2.5.8 Level AA requires a 24×24 CSS-pixel target or one of its exceptions. Treat 44px as the recommended touch target for primary controls and 40px as a useful desktop target where density permits. Smaller controls are not automatic failures. Check the spacing, equivalent-control, inline, user-agent and essential exceptions before reporting one.
 
 Under the spacing exception, an undersized target passes when a 24px circle centered on its bounding box intersects no other target and no other undersized target's circle. In the simple case, 20px targets need a 4px gap.
 

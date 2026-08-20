@@ -1,6 +1,6 @@
 # Color usage
 
-Deploying color once the system exists: meaning, emphasis, gradients, and appearance variants. For picking values see [palette-generation.md](palette-generation.md), for naming them [token-naming.md](token-naming.md), for checking pairs [contrast.md](contrast.md).
+Deploying color once the system exists: meaning, emphasis, gradients and appearance variants. For picking values see [palette-generation.md](palette-generation.md), for naming them [token-naming.md](token-naming.md), for checking pairs [contrast.md](contrast.md).
 
 ## One color, one meaning
 
@@ -66,7 +66,7 @@ background: linear-gradient(in oklab, #3b82f6, #ec4899);
 background: linear-gradient(in oklch, #3b82f6, #ec4899);
 ```
 
-`oklab` and sRGB are **rectangular**, interpolating in a straight line through the color space. `oklch` is **polar**, interpolating the hue angle, so it arcs around the wheel through every hue between the stops. That is why it stays saturated, and why it can produce hues nobody asked for. A blue-to-pink gradient routes through purple, which is either the look or a surprise.
+`oklab` and sRGB are **rectangular**, interpolating in a straight line through the color space. `oklch` is **polar**, interpolating the hue angle, so it arcs around the wheel through every hue between the stops. That is why it stays saturated and why it can produce hues nobody asked for. A blue-to-pink gradient routes through purple, which is either the look or a surprise.
 
 **The gray dead zone is a rectangular-space problem.** Two hues on opposite sides of the wheel sit either side of the neutral axis. A straight line between them passes near gray, and the middle goes lifeless. Either switch to a polar space, which routes around the axis, or add a third stop between the two and keep the space you have.
 
@@ -97,7 +97,7 @@ Color meaning is not universal. Where a color is load-bearing in finance, status
 
 The classic case is stock tickers, which show gains in green for English locales and red for Chinese ones. Where the product ships to such markets, make gain and loss per-locale tokens rather than hardcoded values.
 
-## Light, dark, and increased contrast
+## Light, dark and increased contrast
 
 Every custom color needs a light and a dark variant, derived per [palette-generation.md](palette-generation.md). Beyond that, users who enable increased contrast expect visibly stronger differentiation:
 

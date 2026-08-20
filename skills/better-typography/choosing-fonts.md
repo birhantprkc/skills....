@@ -1,6 +1,6 @@
 # Choosing fonts
 
-Choosing a typeface, the right file format, and why fonts look the way they do.
+Choosing a typeface, the right file format and why fonts look the way they do.
 
 ## Choosing a typeface
 
@@ -23,13 +23,13 @@ CSS exposes `cursive` and `fantasy` keywords for the last two categories.
 - Fewer fonts is usually better. Rarely use more than three. Marketing pages can be more expressive than apps.
 - The same applies to sizes and weights. They define hierarchy, and overusing them hurts readability fast.
 - Pair for contrast, not similarity. A serif headline over a sans body reads as a deliberate display and reading split; two near-identical sans-serifs read as a mistake.
-- Thin weights are display-only. Below `18px` stay at weight `400`+, because Ultralight, Thin, and Light (`100`–`300`) strokes disappear at text sizes and on low-DPI screens. Reserve them for `28px`+ display text, and check even there that they hold against the background.
+- Thin weights are display-only. Below `18px` stay at weight `400`+, because Ultralight, Thin and Light (`100`–`300`) strokes disappear at text sizes and on low-DPI screens. Reserve them for `28px`+ display text, and check even there that they hold against the background.
 
 ## Font family scope
 
-Applying or reviewing typography never requires a new typeface. Use the product's type system unless the task asks for a type change, and never introduce a paid or proprietary face to satisfy a checklist. Rendering details such as font smoothing, wrapping, and tabular numbers do not override the project's font family.
+Applying or reviewing typography never requires a new typeface. Use the product's type system unless the task asks for a type change, and never introduce a paid or proprietary face to satisfy a checklist. Rendering details such as font smoothing, wrapping and tabular numbers do not override the project's font family.
 
-When a type change is asked for, two routes. The system stack gives a native macOS and iOS feel. A commercial face such as Helvetica Now is a brand decision, and still needs a fallback stack.
+When a type change is asked for, two routes. The system stack gives a native macOS and iOS feel. A commercial face such as Helvetica Now is a brand decision and still needs a fallback stack.
 
 ```css
 /* System-native macOS/iOS feel */

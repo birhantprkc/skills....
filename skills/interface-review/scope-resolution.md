@@ -8,7 +8,7 @@ Try `refs/remotes/origin/HEAD`, then `gh repo view --json defaultBranchRef`, the
 
 ## Targets
 
-Accepted targets are `working`, `staged`, `branch`, `pr <n>`, a bare `<ref>`, and an explicit `<a>..<b>` or `<a>...<b>` range. Anything else in the invocation is a `<ref>`.
+Accepted targets are `working`, `staged`, `branch`, `pr <n>`, a bare `<ref>` and an explicit `<a>..<b>` or `<a>...<b>` range. Anything else in the invocation is a `<ref>`.
 
 Diff a branch against the **merge base**, three dots. Two dots reports every upstream commit that landed on the base branch as part of the change.
 
@@ -36,15 +36,15 @@ Three worth handling. Everything else fails loudly at `merge-base`: no remote, u
 
 **Shallow clone**, the CI default, where `merge-base` returns nothing. Fetch `--deepen=50`, retry, then `--deepen=200`, then report the scope as unresolvable. Deepening writes to `.git` and not to the working tree, so it is permitted; note it in Verification.
 
-**Mid-rebase or mid-merge**, the one that does not fail loudly. `git diff` succeeds and returns something that is not the change, so the review looks fine and is wrong. Detect it with `git rev-parse --git-path` against `rebase-merge`, `rebase-apply`, `MERGE_HEAD`, and `CHERRY_PICK_HEAD`. Do not test `.git/` paths directly, because they are not directories inside a linked worktree. Stop and say the tree is mid-operation.
+**Mid-rebase or mid-merge**, the one that does not fail loudly. `git diff` succeeds and returns something that is not the change, so the review looks fine and is wrong. Detect it with `git rev-parse --git-path` against `rebase-merge`, `rebase-apply`, `MERGE_HEAD` and `CHERRY_PICK_HEAD`. Do not test `.git/` paths directly, because they are not directories inside a linked worktree. Stop and say the tree is mid-operation.
 
 ## Nothing to review
 
-The tree is clean and `HEAD` is not ahead of the merge base. Gather the facts before asking, so the offer is accurate rather than a guess: the current branch, whether the tree is clean, the count ahead of the base, the last commit's SHA and subject, and any open pull request from `gh pr status`.
+The tree is clean and `HEAD` is not ahead of the merge base. Gather the facts before asking, so the offer is accurate rather than a guess: the current branch, whether the tree is clean, the count ahead of the base, the last commit's SHA and subject and any open pull request from `gh pr status`.
 
-`gh pr status` succeeds when no pull request is open. It omits `currentBranch`, so an empty result is an answer, not an error. It fails outright without `gh`, without authentication, and on a repository with no GitHub remote. Treat any failure as "no pull request found", say so, and offer the remaining routes rather than stopping.
+`gh pr status` succeeds when no pull request is open. It omits `currentBranch`, so an empty result is an answer, not an error. It fails outright without `gh`, without authentication and on a repository with no GitHub remote. Treat any failure as "no pull request found", say so and offer the remaining routes rather than stopping.
 
-Report those facts, then offer the three routes in **With no change, ask rather than invent one**. State the last commit's SHA and subject inside the offer. The user recognises "a1b2c3d Merge pull request #482" as not what they wanted, and cannot recognise "the last commit".
+Report those facts, then offer the three routes in **With no change, ask rather than invent one**. State the last commit's SHA and subject inside the offer. The user recognises "a1b2c3d Merge pull request #482" as not what they wanted and cannot recognise "the last commit".
 
 A whole-repository audit is a different review, not this one with a wider net. Hand the repository to `better-interface` directly, without a scope block, statuses, or a pre-existing section.
 
@@ -85,4 +85,4 @@ Order the consumers by a rule you can evaluate, so the cutoff is reproducible in
 2. **Then by importer count**, since a component pulled in by twenty files carries more of the change than one pulled in by two.
 3. **Break ties by proximity**, same package or feature directory first.
 
-Review the first five, state how many you did not expand, and say plainly if the ordering was arbitrary past a point.
+Review the first five, state how many you did not expand and say plainly if the ordering was arbitrary past a point.

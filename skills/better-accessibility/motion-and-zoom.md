@@ -52,7 +52,7 @@ Animations are interruptible and driven by user input. Nothing autoplays or refu
 
 ## Autoplay and timed UI
 
-Motion the user didn't ask for, and UI acting on its own schedule:
+Motion the user didn't ask for and UI acting on its own schedule:
 
 - **No autoplaying media without visible controls** (WCAG 2.2.2). Anything moving, blinking, or updating on its own for more than 5 seconds needs a visible pause or stop control, muted looping hero videos included.
 - **Prefer explicit dismissal over timers.** Auto-dismissal suits low-stakes confirmations and nothing else. A toast carrying an action, an error, or information the user may need stays until dismissed. Where one must time out, 5 seconds is the floor, and hovering or focusing it pauses the timer.
@@ -61,7 +61,7 @@ Motion the user didn't ask for, and UI acting on its own schedule:
 ## Zoom and reflow
 
 - **200% zoom** (WCAG 1.4.4). All content and functionality survives text scaled to 200%, and the viewport leaves the reader able to zoom.
-- **Reflow at 320px** (WCAG 1.4.10). At 400% zoom on a 1280px viewport, equivalent to a 320px one, the page must work with vertical scrolling alone. Genuinely 2D content is the exception: tables, maps, and code blocks scroll inside their own container.
+- **Reflow at 320px** (WCAG 1.4.10). At 400% zoom on a 1280px viewport, equivalent to a 320px one, the page must work with vertical scrolling alone. Genuinely 2D content is the exception: tables, maps and code blocks scroll inside their own container.
 
 Fixed heights are what break under zoom. Use `min-height` on anything containing text and let containers grow.
 

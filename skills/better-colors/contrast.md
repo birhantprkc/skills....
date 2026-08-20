@@ -2,7 +2,7 @@
 
 Contrast is measured between a **foreground color**, meaning text, an icon, or a UI element, and the **background color** it actually renders against, usually the nearest ancestor that paints one. Identify that background first. Measuring against the page background when the element sits on a card gives the wrong answer.
 
-**Report, don't repaint.** When a check fails, report the pair, its measured value, and the threshold it misses, and leave the colors unchanged. They are a design decision. Apply the fix below only when asked.
+**Report, don't repaint.** When a check fails, report the pair, its measured value and the threshold it misses, and leave the colors unchanged. They are a design decision. Apply the fix below only when asked.
 
 `better-accessibility` decides when contrast is required and whether a given pair must pass. This file covers measuring the pair and, on request, changing it.
 
@@ -60,7 +60,7 @@ Always remeasure after changing a value. Do not assume a fix landed.
 
 ## Quick approximations
 
-Useful for a first pass, and approximations. Verify by measuring before reporting a result.
+Useful for a first pass and approximations. Verify by measuring before reporting a result.
 
 For body text targeting |Lc| ≥ 75:
 
@@ -75,5 +75,5 @@ The gap is asymmetric because APCA is polarity-aware. Mirrored pairs do not scor
 
 - **Every pair, in every appearance.** A pair passing in light mode can fail in dark. The palettes are not mirror images.
 - **Translucent surfaces.** A color on a `backdrop-filter` header or an overlay shifts with whatever scrolls behind it. Test against the lightest and darkest content it can sit over, or make the surface opaque enough that the shift cannot break the pair.
-- **Computed colors.** `color-mix()`, relative color syntax, and opacity modifiers resolve at render time; measure the rendered result, not the declaration.
+- **Computed colors.** `color-mix()`, relative color syntax and opacity modifiers resolve at render time; measure the rendered result, not the declaration.
 - **Text over images.** There is no single background color. Measure the worst region, or guarantee one with a scrim.

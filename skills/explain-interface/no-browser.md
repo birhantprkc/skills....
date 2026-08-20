@@ -1,6 +1,6 @@
 # Reading a site without a browser
 
-Fetch the HTML, then the stylesheets it links, then grep. That answers most questions a scriptable browser answers, and a few it cannot.
+Fetch the HTML, then the stylesheets it links, then grep. That answers most questions a scriptable browser answers and a few it cannot.
 
 Do not use a markdown-converting fetch for this. It strips exactly what you came for. Fetch the raw bytes.
 
@@ -21,7 +21,7 @@ grep -oE '(backdrop-)?blur-\[[^]]*\]|(backdrop-)?blur-[a-z0-9]+' page.html | sor
 grep -oE 'class="[^"]*(gradient|blur|mask|mix-blend)[^"]*"' page.html | head -20
 ```
 
-This is where the fetch method beats a browser. A class list carries every **responsive and state variant** at once, so `blur-[50px] md:h-214 md:-translate-x-1/2` says the element changes shape at the `md` breakpoint. Computed styles read at one width cannot.
+This is where the fetch method beats a browser. A class list carries every responsive and state variant at once, so `blur-[50px] md:h-214 md:-translate-x-1/2` says the element changes shape at the `md` breakpoint. Computed styles read at one width cannot.
 
 Semantic CSS gives you a hashed class name instead (`Hero_glow__a1b2c`). Take that name to the stylesheet and grep it there.
 
@@ -69,5 +69,5 @@ Say so rather than guessing past it:
 - **Which rule won.** Nine rules may match one element; only a browser resolves the cascade.
 - **Anything injected at runtime.** CSS-in-JS, a theme applied by script, styles added on interaction.
 - **Paint order and what is actually visible.** A declaration in the CSS may be overridden or never rendered.
-- **Live animation state**, and whether an effect moves at all.
+- **Live animation state.** Whether an effect moves at all.
 - **Computed values.** A `rem` stays a `rem`, and you never learn the resolved pixel size.

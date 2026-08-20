@@ -4,7 +4,7 @@ Transition specificity and GPU compositing hints.
 
 ## Transition only what changes
 
-Never use `transition: all` or Tailwind's `transition-all`. Always name the exact properties that change. Tailwind's bare `transition` maps to a curated list of colors, opacity, shadow, and transforms rather than `all`, and naming what changes is still better.
+Never use `transition: all` or Tailwind's `transition-all`. Always name the exact properties that change. Tailwind's bare `transition` maps to a curated list of colors, opacity, shadow and transforms rather than `all`, and naming what changes is still better.
 
 ### Why
 
@@ -46,7 +46,7 @@ Never use `transition: all` or Tailwind's `transition-all`. Always name the exac
 
 `will-change` hints the browser to pre-promote an element to its own GPU compositing layer. Without it the browser promotes only when the animation starts, and that one-time promotion can cause a micro-stutter on the first frame.
 
-It helps most for `scale`, `rotation`, and movement through `transform`. For other properties it does little, because the browser cannot composite them on the GPU anyway.
+It helps most for `scale`, `rotation` and movement through `transform`. For other properties it does little, because the browser cannot composite them on the GPU anyway.
 
 ### Rules
 

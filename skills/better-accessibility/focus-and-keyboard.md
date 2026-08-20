@@ -1,6 +1,6 @@
 # Focus and keyboard
 
-Focus rings, skip links, tabindex, focus trapping, and the APG keyboard patterns.
+Focus rings, skip links, tabindex, focus trapping and the APG keyboard patterns.
 
 ## Focus rings
 
@@ -62,12 +62,12 @@ Give in-page anchor targets `scroll-margin-top`, such as `80px` under a sticky h
 ## tabindex rules
 
 - `tabindex="0"`: adds an element to the natural tab order. Only for custom interactive elements that aren't natively focusable.
-- `tabindex="-1"`: focusable via JavaScript only (`el.focus()`). Use for headings you move focus to, modal containers, and roving-tabindex members.
+- `tabindex="-1"`: focusable via JavaScript only (`el.focus()`). Use for headings you move focus to, modal containers and roving-tabindex members.
 - Positive `tabindex`: never. It hijacks the tab order for the whole page. Fix the DOM order instead.
 
 ### Roving tabindex
 
-Composite widgets, meaning tabs, menus, toolbars, and radio groups, occupy one Tab stop. The active item has `tabindex="0"`, all others `tabindex="-1"`, and arrow keys move both focus and the `0`:
+Composite widgets, meaning tabs, menus, toolbars and radio groups, occupy one Tab stop. The active item has `tabindex="0"`, all others `tabindex="-1"`, and arrow keys move both focus and the `0`:
 
 ```tsx
 <div role="tablist">
@@ -100,7 +100,7 @@ document.getElementById("app-content").inert = false;
 triggerRef.current?.focus(); // always return focus to the element that opened it
 ```
 
-Prefer native `<dialog>` with `showModal()`, which gives you the trap, the `inert` background, and Escape handling for free. A custom overlay that can't use it needs `role="dialog"`, `aria-modal="true"`, and an accessible name via `aria-labelledby`. Either way:
+Prefer native `<dialog>` with `showModal()`, which gives you the trap, the `inert` background and Escape handling for free. A custom overlay that can't use it needs `role="dialog"`, `aria-modal="true"` and an accessible name via `aria-labelledby`. Either way:
 
 - On open, focus the first focusable element. For destructive confirmations, focus the least destructive action instead.
 - On close, return focus to the trigger, or to the nearest logical container if the trigger is gone.

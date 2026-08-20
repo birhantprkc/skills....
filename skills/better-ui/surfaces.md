@@ -1,6 +1,6 @@
 # Surfaces
 
-Border radius, optical alignment, shadows, and image outlines.
+Border radius, optical alignment, shadows and image outlines.
 
 ## Concentric border radius
 
@@ -116,9 +116,9 @@ Some icons carry uneven visual weight. The best fix is adjusting the SVG directl
 
 ## Shadows instead of borders
 
-Where **buttons, cards, and containers** use a border for depth or elevation, replace it with a subtle `box-shadow`. Shadows use transparency, so they adapt to any background where solid borders do not. That matters most over images or multiple background colors, which a fixed border color was never designed for.
+Where **buttons, cards and containers** use a border for depth or elevation, replace it with a subtle `box-shadow`. Shadows use transparency, so they adapt to any background where solid borders do not. That matters most over images or multiple background colors, which a fixed border color was never designed for.
 
-**Never apply this to dividers**, meaning `border-b`, `border-t`, and side borders, or any border whose purpose is layout separation rather than depth. Those stay borders.
+**Never apply this to dividers**, meaning `border-b`, `border-t` and side borders, or any border whose purpose is layout separation rather than depth. Those stay borders.
 
 ### Shadow as border (light mode)
 
