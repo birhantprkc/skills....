@@ -42,10 +42,6 @@ Installs every skill in this repository together and updates in place. Run these
 /plugin install interfaces@interfaces
 ```
 
-The repository is called `skills`, but the marketplace and the plugin inside it are both named `interfaces`. That is why the second command reads `interfaces@interfaces` rather than repeating the repository name.
+Plugin skills are namespaced under the plugin, so the change review runs as `/interfaces:interface-review` and variants as `/interfaces:variant`.
 
-There is no plugin per skill, so `/plugin install better-interface@interfaces` fails with `not found in marketplace`. One plugin carries all of them.
-
-Plugin skills are namespaced under the plugin, so run the change review as `/interfaces:interface-review` and ask for variants with `/interfaces:variant`. Typing `/interface-review` matches nothing and looks like a failed install, even when the install succeeded.
-
-To pick up later versions, run `/plugin update interfaces@interfaces` and restart. `/plugin marketplace update interfaces` only refreshes the marketplace listing and leaves the installed skills untouched.
+To update later, run `/plugin update interfaces@interfaces` and restart.
