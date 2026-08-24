@@ -1,10 +1,10 @@
 ---
-name: stress-test
+name: break
 description: Answers "does this survive?" for one component. Renders it on a throwaway page under the hostile inputs it can actually receive, and reports what visibly broke.
 disable-model-invocation: true
 ---
 
-# Stress test
+# Break
 
 This skill takes one component, renders it on a fresh page under every scenario that can actually reach it and reports what broke. A component built against one happy path looks finished right up until real content arrives.
 
@@ -36,7 +36,7 @@ Keep the harness visibly outside the design system, plain and unstyled, so nothi
 
 ## 4. Render and observe
 
-A stress test that never rendered is a code review wearing a costume. Load the page, look at every scenario and record only what you saw. Reading the CSS and predicting "this would probably overflow" is not a finding.
+A run that never rendered is a code review wearing a costume. Load the page, look at every scenario and record only what you saw. Reading the CSS and predicting "this would probably overflow" is not a finding.
 
 With a scriptable browser, screenshot the page, resize to 320px and screenshot again, and tab through the interactive scenarios. Without one, start the dev server or write the file, then ask the user to open it and continue from what they report.
 
