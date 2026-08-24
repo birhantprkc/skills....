@@ -1,12 +1,12 @@
 ---
 name: break
-description: Answers "does this survive?" for one component. Renders it on a throwaway page under the hostile inputs it can actually receive, and reports what visibly broke.
+description: Answers "does this survive?" for one component. Renders it on a page in every state real use can put it in, and hands that page over as a visual report of what broke.
 disable-model-invocation: true
 ---
 
 # Break
 
-This skill takes one component, renders it on a fresh page under every scenario that can actually reach it and reports what broke. A component built against one happy path looks finished right up until real content arrives.
+This skill takes one component and renders it on a fresh page under every scenario that can actually reach it. That page is the deliverable: a visual report the user scrolls through, every state side by side, with the breaks marked. A component built against one happy path looks finished right up until real content arrives.
 
 It observes rather than judges. A finding here is something that visibly broke on the page, named in the vocabulary of the domain skill that owns the fix. Reviewing code against a standard is `interface-review` and `better-interface`; exploring design alternatives is `variant`.
 
@@ -42,6 +42,8 @@ With a scriptable browser, screenshot the page, resize to 320px and screenshot a
 
 For each scenario record one of two outcomes: survived, or broke with what was visible. "Text escapes the card's right edge", never "spacing feels tight".
 
+Then mark each break on the page itself: a one-line note under the scenario's label saying what broke. The page has to read as the report on its own, without the table beside it.
+
 ## 5. Report what broke and stop
 
 Report findings as a table, broken scenarios first:
@@ -53,13 +55,13 @@ Report findings as a table, broken scenarios first:
 
 The owner column names the domain skill whose rules diagnose the break, so the fix starts in the right place. This skill owns no domain rules and issues no verdict.
 
-"Everything survived" is a complete and useful report. Say which scenarios ran and at which widths, and end there rather than padding the result with preferences.
+"Everything survived" is a complete and useful report. Say which scenarios ran, at which widths and where the harness is running, so the user can see every scenario themselves. End there rather than padding the result with preferences.
 
 Do not fix anything unasked. On a request to fix, follow the owner skill's rules, then re-render the failing scenarios to confirm.
 
-## 6. Delete the harness
+## 6. Leave the page up, delete it on request
 
-The harness is the instrument, not the deliverable. Once the report is delivered, delete the page and its fixtures unless asked to keep them.
+The page is half the report, so it outlives the findings table. Leave it running and delete it and its fixtures only when the user says they are done with it.
 
 ## Before you finish
 
@@ -72,4 +74,5 @@ The harness is the instrument, not the deliverable. Once the report is delivered
 | A break reported without an owner | Name the domain skill whose rules diagnose it |
 | A clean run padded with suggestions | "Everything survived" plus the scenario list is the report |
 | Judged at one width | 320px and a wide viewport at minimum |
-| Harness left behind | Delete it unless asked to keep it |
+| A break in the table but unmarked on the page | Note it under the scenario's label; the page reads as the report on its own |
+| Page deleted in the same turn as the report | The page is half the report; delete only on the user's word |
