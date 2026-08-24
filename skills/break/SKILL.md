@@ -12,6 +12,8 @@ It observes rather than judges. A finding here is something that visibly broke o
 
 Where `variant` insists on the real page, this skill isolates on purpose. You are not judging how the component looks in context. You are checking whether it defends itself when the content is worst-case.
 
+The whole run is build, look once, report: minutes, not a session. The work is rendering an existing component with different props, and nothing in it justifies instrumentation, browser debugging or a second pass.
+
 ## 1. Scope one component
 
 One component per run. "The settings page" is not a component; the profile form's text input is. Where the request spans several, list the candidates and ask which one to test, rather than picking on the user's behalf.
@@ -28,21 +30,21 @@ Write the kept scenarios down before building, one line each, so the harness ren
 
 ## 3. Build the harness page
 
-One throwaway page, holding the real component imported from the project, rendered once per scenario in a single column. Label every instance with its scenario name, and give the harness a dashed outline around each instance so overflow past the component's own box is visible.
+One throwaway page, holding the real component imported from the project, rendered once per scenario in a single column with a short text label above each instance.
 
-Use the project's own stack: a scratch route in its dev server where one exists, a single self-contained HTML file where none does. Feed scenarios as props and fixture data. The harness never imports production state, never wires to live data and production never imports from the harness.
+The component ships untouched, in its real environment. A scratch route inside the app gives it the app's own layout, fonts and global styles for free. Labels, container widths and fixture props are everything the page adds: no fonts or styles of its own, no simulated themes or token swaps, no probes. A component observed under any of those is a different component.
 
-Keep the harness visibly outside the design system, plain and unstyled, so nothing it adds is mistaken for the component's own rendering.
+Widths are scenarios on the page. Render the width cases inside fixed-width containers beside the full-width one, so a single load shows every width and nothing ever gets resized.
 
-## 4. Render and observe
+Feed scenarios as props and fixture data. The harness never imports production state, never wires to live data and production never imports from the harness.
 
-A run that never rendered is a code review wearing a costume. Load the page, look at every scenario and record only what you saw. Reading the CSS and predicting "this would probably overflow" is not a finding.
+## 4. Look once
 
-With a scriptable browser, screenshot the page, resize to 320px and screenshot again, and tab through the interactive scenarios. Without one, start the dev server or write the file, then ask the user to open it and continue from what they report.
+One pass. Load the page in a browser that is already at hand, skim every scenario top to bottom and note what visibly broke. "Text escapes the field's right edge", never "spacing feels tight". A run that never rendered is a code review wearing a costume, and a predicted failure is still not a finding.
 
-For each scenario record one of two outcomes: survived, or broke with what was visible. "Text escapes the card's right edge", never "spacing feels tight".
+One load is the budget. When there is no browser, or the browser needs launching, window-wrangling or any debugging at all, skip the look entirely: hand the URL over and let the user's own eyes be the observation. Their look is worth more than yours anyway, since the page is theirs to read.
 
-Then mark each break on the page itself: a one-line note under the scenario's label saying what broke. The page has to read as the report on its own, without the table beside it.
+Then mark each break you did see on the page, a one-line note under that scenario's label, in a single edit. The page has to read as the report on its own.
 
 ## 5. Report what broke and stop
 
@@ -55,7 +57,7 @@ Report findings as a table, broken scenarios first:
 
 The owner column names the domain skill whose rules diagnose the break, so the fix starts in the right place. This skill owns no domain rules and issues no verdict.
 
-"Everything survived" is a complete and useful report. Say which scenarios ran, at which widths and where the harness is running, so the user can see every scenario themselves. End there rather than padding the result with preferences.
+"Everything survived" is a complete and useful report. Say which scenarios are on the page and where it is running, so the user can see every one themselves. End there rather than padding the result with preferences.
 
 Do not fix anything unasked. On a request to fix, follow the owner skill's rules, then re-render the failing scenarios to confirm.
 
@@ -70,9 +72,11 @@ The page is half the report, so it outlives the findings table. Leave it running
 | Every axis run against every component | Keep only the axes whose cue matches, and say which you dropped |
 | A predicted failure reported as observed | Render it, or leave it out |
 | A rebuilt lookalike component in the harness | Import the real component from the project |
+| The harness restyles or re-themes the component | The app's layout, fonts and tokens as they are; labels and widths are all the page adds |
+| A browser launched, debugged or screenshotted per scenario | One load and one look, or hand the URL over and skip the look |
 | Findings phrased as taste | Report what was visible on the page, or nothing |
 | A break reported without an owner | Name the domain skill whose rules diagnose it |
 | A clean run padded with suggestions | "Everything survived" plus the scenario list is the report |
-| Judged at one width | 320px and a wide viewport at minimum |
+| The viewport resized scenario by scenario | Widths are fixed containers on the page; one load shows them all |
 | A break in the table but unmarked on the page | Note it under the scenario's label; the page reads as the report on its own |
 | Page deleted in the same turn as the report | The page is half the report; delete only on the user's word |

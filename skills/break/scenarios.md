@@ -47,38 +47,32 @@ Zero-item breaks land in `better-writing` for the empty state and `better-layout
 
 ## Container
 
-**Cue: always.** Everything renders inside something, and the component does not choose its container's width.
+**Cue: always.** Everything renders inside something, and the component does not choose its container's width. Each width is a fixed container on the page, never a viewport to resize.
 
 | Scenario | What it catches |
 | --- | --- |
-| 320px viewport | Clipping, horizontal scroll, controls escaping the screen |
+| A 320px container | Clipping, horizontal scroll, controls escaping the box |
 | Squeezed by a flex or grid sibling | Min-content blowout, the component refusing to shrink |
-| Very wide container | Unbounded measure, stretched controls, content pinned to opposite edges |
+| A very wide container | Unbounded measure, stretched controls, content pinned to opposite edges |
 
 Breaks land in `better-layout`.
 
 ## State
 
-**Cue: the component has the state.** Read the props and the interaction model; render only the states that exist. A static component fails the cue entirely.
+**Cue: the component has the state.** Read the props and the interaction model; render only the states that arrive as props. A static component fails the cue entirely.
 
 | Scenario | What it catches |
 | --- | --- |
 | Loading | Layout shift when content arrives, spinners with no accessible name |
 | Error | Messages that overflow, color as the only signal |
 | Disabled | Contrast collapse, focus behavior on disabled controls |
-| Focused, via keyboard | Invisible or clipped focus rings |
-| Hover, on a touch viewport | Content reachable only by hover |
+
+Focus and hover are the user's to try while they view the page. Invite them to tab through the instances in the report rather than simulating focus in the harness.
 
 Breaks land in `better-accessibility`; purely visual state polish lands in `better-ui`.
 
 ## Environment
 
-**Cue: the project supports the mode.** Dark mode only where a dark theme exists. Zoom and reduced motion always, since the user brings those.
-
-| Scenario | What it catches |
-| --- | --- |
-| Dark mode | Hardcoded colors, shadows that vanish, images with baked-in backgrounds |
-| 200% zoom | Fixed heights clipping text, layouts that never reflow |
-| `prefers-reduced-motion` | Animation that ignores the preference |
+**Cue: the project supports the mode.** These are viewing modes, not page content, so the page renders nothing for them. Name them in the report for the user to toggle while viewing: OS dark mode where a dark theme exists, browser zoom, reduced motion. Simulating one on the page, such as re-declaring dark tokens under a class, observes a different component.
 
 Dark-mode breaks land in `better-colors`; zoom and motion land in `better-accessibility`.
