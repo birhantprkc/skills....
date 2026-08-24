@@ -14,7 +14,7 @@ Where `variant` insists on the real page, this skill isolates on purpose. You ar
 
 ## 1. Scope one component
 
-One component per run. "The settings page" is not a component; the profile form's text input is. Where the request spans several, name the one most exposed to variable content, say why and offer the rest as later runs.
+One component per run. "The settings page" is not a component; the profile form's text input is. Where the request spans several, list the candidates and ask which one to test, rather than picking on the user's behalf.
 
 Restate what the component is in one sentence: what it accepts, what it renders and where it will live.
 
