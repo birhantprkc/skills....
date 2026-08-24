@@ -34,6 +34,8 @@ One throwaway page, holding the real component imported from the project, render
 
 The component ships untouched, in its real environment. A scratch route inside the app gives it the app's own layout, fonts and global styles for free. Labels, container widths and fixture props are everything the page adds: no fonts or styles of its own, no simulated themes or token swaps, no probes. A component observed under any of those is a different component.
 
+Where the framework splits server from client components, the page itself is client code, `"use client"` in Next. Fixture props can silently vanish crossing that boundary into an interactive component, and every scenario renders empty.
+
 Widths are scenarios on the page. Render the width cases inside fixed-width containers beside the full-width one, so a single load shows every width and nothing ever gets resized.
 
 Feed scenarios as props and fixture data. The harness never imports production state, never wires to live data and production never imports from the harness.
@@ -71,6 +73,7 @@ The page is half the report, so it outlives the findings table. Leave it running
 | --- | --- |
 | Every axis run against every component | Keep only the axes whose cue matches, and say which you dropped |
 | A predicted failure reported as observed | Render it, or leave it out |
+| A scenario missing the content it was fed | The harness is broken, not the component; make the page client code and re-check |
 | A rebuilt lookalike component in the harness | Import the real component from the project |
 | The harness restyles or re-themes the component | The app's layout, fonts and tokens as they are; labels and widths are all the page adds |
 | A browser launched, debugged or screenshotted per scenario | One load and one look, or hand the URL over and skip the look |
