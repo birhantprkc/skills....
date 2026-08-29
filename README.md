@@ -6,7 +6,9 @@
 
 A collection of agent skills that cover UI, typography, colors, accessibility, layout, product writing and help you build a great interface.
 
-## Skills to build great interfaces
+These skills are contain topics that I write about on [my personal website](https://jakub.kr/) and my design engineering magazine, [Interfaces](https://interfaces.dev/).
+
+## Skills that help build great interfaces
 
 - [**better-interface**](skills/better-interface/SKILL.md): Combines all of the `better-*` skills into a single review.
 - [**better-ui**](skills/better-ui/SKILL.md): Improves UI in your project across the board. Covers things like **concentric border radius**, **optical alignment**, **contextual icons**, **hit areas**, **animation** and more.
