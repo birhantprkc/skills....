@@ -8,17 +8,17 @@ A collection of agent skills that help you build a great interface. They cover U
 
 ## Skills
 
-- [**better-interface**](skills/better-interface/SKILL.md): A cross-discipline interface review that coordinates every skill below.
-- [**better-ui**](skills/better-ui/SKILL.md): Design engineering details that make interfaces feel polished: border radius, shadows, animations and micro-interactions.
-- [**better-typography**](skills/better-typography/SKILL.md): Choosing and pairing typefaces, type scales, spacing, wrapping and truncation.
-- [**better-colors**](skills/better-colors/SKILL.md): Color systems: building and naming palettes, applying color with meaning, contrast and theming.
-- [**better-accessibility**](skills/better-accessibility/SKILL.md): Focus states, keyboard support, ARIA, forms, screen readers, hit areas and motion.
-- [**better-layout**](skills/better-layout/SKILL.md): Layout structure, grouping, alignment, reading order, progressive disclosure and adaptive breakpoints.
-- [**better-writing**](skills/better-writing/SKILL.md): UX writing and interface copy, from button labels to errors, settings and empty states.
-- [**interface-review**](skills/interface-review/SKILL.md): A review of your uncommitted changes, current branch or a pull request against every skill above. User-invoked.
-- [**explain-interface**](skills/explain-interface/SKILL.md): Ask how something was built. Point it at a URL or a screenshot, name the thing you're curious about, and it finds the layers behind the effect and explains what each one does. User-invoked.
-- [**break**](skills/break/SKILL.md): Renders one component on a page in every state real use can put it in and hands that page over as a visual report of what broke. User-invoked.
-- [**variant**](skills/variant/SKILL.md): Builds several genuinely different versions of one piece of UI behind a picker, so you can flip between them in the real page and promote the one that wins. User-invoked.
+- [**better-interface**](skills/better-interface/SKILL.md): Combines all of the `better-*` skills into a single review across **accessibility**, **layout**, **writing**, **typography**, **color** and **UI polish**.
+- [**better-ui**](skills/better-ui/SKILL.md): Polishes and improves the UI in your project. Covers **concentric border radius**, **optical alignment**, **surface depth**, **contextual icons**, **hit areas** and more.
+- [**better-typography**](skills/better-typography/SKILL.md): Focuses on **type scale**, **spacing**, **sizing**, **variable fonts**, **OpenType features**, **wrapping**, **truncation** and other details that make typography feel great across your product.
+- [**better-colors**](skills/better-colors/SKILL.md): Helps you build a color system and answer anything about color in your project. You can **generate palettes**, **use semantic tokens**, **convert between formats**, **check contrast** and more.
+- [**better-accessibility**](skills/better-accessibility/SKILL.md): Helps your project comply with accessibility standards and best practices.
+- [**better-layout**](skills/better-layout/SKILL.md): Helps with **grouping**, **alignment**, **reading order**, **progressive disclosure** and other details that make a good layout.
+- [**better-writing**](skills/better-writing/SKILL.md): Focuses on improving product copy in your project.
+- [**interface-review**](skills/interface-review/SKILL.md): Reviews your work across multiple categories like **UI**, **typography**, **layout**, **color**, **writing** and **accessibility** and gives you a detailed analysis of the findings. User-invoked.
+- [**explain-interface**](skills/explain-interface/SKILL.md): Helps you figure out how something was built on the web. User-invoked.
+- [**break**](skills/break/SKILL.md): Renders a component you choose in **every state and scenario** on a temporary page and stress tests it. User-invoked.
+- [**variant**](skills/variant/SKILL.md): Builds multiple **variants** of a component you're working on and helps you iterate and pick one. User-invoked.
 
 ## Install
 
