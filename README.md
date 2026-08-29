@@ -9,16 +9,16 @@ A collection of agent skills that help you build a great interface. They cover U
 ## Skills
 
 - [**better-interface**](skills/better-interface/SKILL.md): A cross-discipline interface review that coordinates every skill below.
-- [**interface-review**](skills/interface-review/SKILL.md): A review of your uncommitted changes, current branch or a pull request against every skill below. User-invoked.
-- [**variant**](skills/variant/SKILL.md): Builds several genuinely different versions of one piece of UI behind a picker, so you can flip between them in the real page and promote the one that wins. User-invoked.
-- [**break**](skills/break/SKILL.md): Renders one component on a page in every state real use can put it in and hands that page over as a visual report of what broke. User-invoked.
-- [**explain-interface**](skills/explain-interface/SKILL.md): Ask how something was built. Point it at a URL or a screenshot, name the thing you're curious about, and it finds the layers behind the effect and explains what each one does. User-invoked.
 - [**better-ui**](skills/better-ui/SKILL.md): Design engineering details that make interfaces feel polished: border radius, shadows, animations and micro-interactions.
 - [**better-typography**](skills/better-typography/SKILL.md): Choosing and pairing typefaces, type scales, spacing, wrapping and truncation.
 - [**better-colors**](skills/better-colors/SKILL.md): Color systems: building and naming palettes, applying color with meaning, contrast and theming.
 - [**better-accessibility**](skills/better-accessibility/SKILL.md): Focus states, keyboard support, ARIA, forms, screen readers, hit areas and motion.
 - [**better-layout**](skills/better-layout/SKILL.md): Layout structure, grouping, alignment, reading order, progressive disclosure and adaptive breakpoints.
 - [**better-writing**](skills/better-writing/SKILL.md): UX writing and interface copy, from button labels to errors, settings and empty states.
+- [**interface-review**](skills/interface-review/SKILL.md): A review of your uncommitted changes, current branch or a pull request against every skill above. User-invoked.
+- [**explain-interface**](skills/explain-interface/SKILL.md): Ask how something was built. Point it at a URL or a screenshot, name the thing you're curious about, and it finds the layers behind the effect and explains what each one does. User-invoked.
+- [**break**](skills/break/SKILL.md): Renders one component on a page in every state real use can put it in and hands that page over as a visual report of what broke. User-invoked.
+- [**variant**](skills/variant/SKILL.md): Builds several genuinely different versions of one piece of UI behind a picker, so you can flip between them in the real page and promote the one that wins. User-invoked.
 
 ## Install
 
